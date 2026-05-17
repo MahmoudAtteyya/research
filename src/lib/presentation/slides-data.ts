@@ -71,10 +71,22 @@ export const COGNITIVE_DATA = [
 ];
 
 export const TEAM_MEMBERS = [
-  "Mahmoud ElSayed","Fatma Ali","Mahmoud Attia","Abd ElRahman Mostafa",
-  "Kyrollos Ashraf","Salah Mohammed","Ahmed Shaban","Mahmoud Eldoreay",
-  "Laila Roshdy","Deng Ajou Luol","Rehab Shaban","Nagwa Adel",
-  "Fatma Saad","Abd ElRahman Mahmoud","Mohamed Abd Elhady","Mohammed Elshahat",
+  "Rehab Shaban",
+  "Mahmoud Attia",
+  "Nagwa Adel",
+  "Abd ElRahman Mahmoud",
+  "Abd ElRahman Mostafa",
+  "Ahmed Shaban",
+  "Deng Ajou Luol",
+  "Fatma Ali",
+  "Fatma Saad",
+  "Kyrollos Ashraf",
+  "Laila Roshdy",
+  "Mahmoud Eldoreay",
+  "Mahmoud ElSayed",
+  "Mohamed Abd Elhady",
+  "Mohammed Elshahat",
+  "Salah Mohammed",
 ];
 
 export const SUPERVISORS = [

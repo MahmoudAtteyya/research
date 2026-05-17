@@ -31,10 +31,15 @@ export default function Intro1Slide({ lang }: { lang: Lang }) {
             initial={{ opacity: 0, x: ar ? 24 : -24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.1 }}
-            style={{ display: "flex", alignItems: "center", gap: "14px", padding: "14px 18px" }}
+            whileHover={{ scale: 1.015, x: ar ? -4 : 4 }}
+            style={{ display: "flex", alignItems: "center", gap: "14px", padding: "12px 18px" }}
           >
-            <span style={{ fontSize: "24px", flexShrink: 0 }}>{p.icon}</span>
-            <span className="pres-body-text" style={{ fontSize: "15px" }}>
+            <motion.span
+              style={{ fontSize: "24px", flexShrink: 0 }}
+              animate={{ scale: [1, 1.15, 1] }}
+              transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+            >{p.icon}</motion.span>
+            <span style={{ fontSize: "15px", color: "var(--c-text-muted)" }}>
               {ar ? p.ar : p.en}
             </span>
           </motion.div>

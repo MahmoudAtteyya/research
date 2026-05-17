@@ -20,43 +20,50 @@ export default function Literature1Slide({ lang }: { lang: Lang }) {
         <div className="pres-divider" />
       </motion.div>
 
-      {/* Big visual */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.15 }}
         style={{
           display: "flex", alignItems: "center", justifyContent: "center",
-          gap: "32px", marginBottom: "20px",
-          padding: "20px",
-          background: "rgba(244,63,94,0.06)",
-          border: "1px solid rgba(244,63,94,0.2)",
-          borderRadius: "14px",
+          gap: "28px", marginBottom: "16px", padding: "16px",
+          background: "rgba(244,63,94,0.06)", border: "1px solid rgba(244,63,94,0.2)", borderRadius: "14px",
         }}
       >
         <div style={{ textAlign: "center" }}>
-          <div className="anim-heartbeat" style={{ fontSize: "48px", marginBottom: "6px" }}>❤️</div>
-          <div style={{ fontSize: "11px", color: "var(--c-text-dim)" }}>{ar ? "معدل القلب" : "Heart Rate"}</div>
+          <div className="anim-heartbeat" style={{ fontSize: "42px", marginBottom: "4px" }}>❤️</div>
+          <div style={{ fontSize: "12px", color: "var(--c-text-dim)" }}>{ar ? "معدل القلب" : "Heart Rate"}</div>
         </div>
-        <div style={{ fontSize: "32px", color: "var(--c-rose)", fontWeight: 900 }}>↑</div>
+        <motion.div animate={{ x: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}
+          style={{ fontSize: "28px", color: "var(--c-rose)", fontWeight: 900 }}>↑</motion.div>
         <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "36px", fontWeight: 900, color: "var(--c-rose)" }}>BP</div>
-          <div style={{ fontSize: "11px", color: "var(--c-text-dim)" }}>{ar ? "ضغط الدم" : "Blood Pressure"}</div>
+          <div style={{ fontSize: "32px", fontWeight: 900, color: "var(--c-rose)" }}>BP</div>
+          <div style={{ fontSize: "12px", color: "var(--c-text-dim)" }}>{ar ? "ضغط الدم" : "Blood Pressure"}</div>
         </div>
-        <div style={{ fontSize: "32px", color: "var(--c-rose)", fontWeight: 900 }}>↑</div>
+        <motion.div animate={{ x: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
+          style={{ fontSize: "28px", color: "var(--c-rose)", fontWeight: 900 }}>↑</motion.div>
         <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "36px", fontWeight: 900, color: "var(--c-amber)" }}>⚡</div>
-          <div style={{ fontSize: "11px", color: "var(--c-text-dim)" }}>{ar ? "تأثير حاد" : "Acute Effect"}</div>
+          <motion.div animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 2, repeat: Infinity }}
+            style={{ fontSize: "32px", fontWeight: 900, color: "var(--c-amber)" }}>⚡</motion.div>
+          <div style={{ fontSize: "12px", color: "var(--c-text-dim)" }}>{ar ? "تأثير حاد" : "Acute Effect"}</div>
         </div>
       </motion.div>
 
-      <ul className="pres-list rose">
+      <div style={{ display: "flex", flexDirection: "column", gap: "8px", flex: 1, justifyContent: "center" }}>
         {POINTS.map((p, i) => (
-          <motion.li key={i} initial={{ opacity: 0, x: ar ? 16 : -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.1 }}>
-            {ar ? p.ar : p.en}
-          </motion.li>
+          <motion.div
+            key={i}
+            className="pres-card"
+            initial={{ opacity: 0, x: ar ? 16 : -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 + i * 0.1 }}
+            whileHover={{ scale: 1.01 }}
+            style={{ padding: "10px 16px", borderLeft: "3px solid var(--c-rose)" }}
+          >
+            <span style={{ fontSize: "14px", color: "var(--c-text-muted)" }}>{ar ? p.ar : p.en}</span>
+          </motion.div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

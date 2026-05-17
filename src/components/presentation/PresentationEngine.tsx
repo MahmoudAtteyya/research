@@ -69,6 +69,7 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
   const [showThumbs, setShowThumbs] = useState(false);
   const [dir, setDir] = useState(1);
   const [prevIdx, setPrevIdx] = useState(0);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
   const ar = lang === "ar";
 
   // Track direction for slide animation
@@ -76,6 +77,15 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
     setDir(pres.currentSlide >= prevIdx ? 1 : -1);
     setPrevIdx(pres.currentSlide);
   }, [pres.currentSlide]);
+
+  // Apply theme to root
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme(t => t === "dark" ? "light" : "dark");
+  }, []);
 
   const SlideComponent = SLIDE_MAP[pres.slide.id] ?? Cover1Slide;
   const notes = ar ? pres.slide.speakerNotesAr : pres.slide.speakerNotesEn;
@@ -109,7 +119,11 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
 
       {/* ── PROGRESS ── */}
       <div className="pres-progress">
-        <div className="pres-progress-fill" style={{ width: `${pres.progress}%` }} />
+        <motion.div
+          className="pres-progress-fill"
+          animate={{ width: `${pres.progress}%` }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+        />
       </div>
 
       {/* ── SLIDE AREA ── */}
@@ -188,8 +202,44 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
 
         {/* Right controls */}
         <div className="pres-footer-right">
-          <button className="pres-btn pres-btn-lang" onClick={onLangChange}>
-            {ar ? "EN" : "عربي"}
+          {/* Theme toggle — premium pill */}
+          <button
+            onClick={toggleTheme}
+            title={ar ? "تبديل المظهر" : "Toggle theme"}
+            style={{
+              display: "flex", alignItems: "center", gap: "6px",
+              background: theme === "dark"
+                ? "linear-gradient(135deg, rgba(30,27,75,0.9), rgba(49,46,129,0.7))"
+                : "linear-gradient(135deg, rgba(224,231,255,0.9), rgba(199,210,254,0.7))",
+              border: theme === "dark" ? "1px solid rgba(99,102,241,0.4)" : "1px solid rgba(99,102,241,0.3)",
+              borderRadius: "20px", padding: "5px 10px",
+              cursor: "pointer", transition: "all 0.3s ease",
+              fontSize: "11px", fontWeight: 700,
+              color: theme === "dark" ? "#a5b4fc" : "#4f46e5",
+              letterSpacing: "0.5px",
+            }}
+          >
+            <span style={{ fontSize: "13px" }}>{theme === "dark" ? "☀️" : "🌙"}</span>
+            <span>{theme === "dark" ? "LIGHT" : "DARK"}</span>
+          </button>
+
+          {/* Language toggle — AR / EN */}
+          <button
+            onClick={onLangChange}
+            title={ar ? "Switch language" : "تبديل اللغة"}
+            style={{
+              display: "flex", alignItems: "center", gap: "2px",
+              background: "transparent",
+              border: "1px solid var(--c-border)",
+              borderRadius: "20px", padding: "5px 10px",
+              cursor: "pointer", transition: "all 0.25s ease",
+              fontSize: "11px", fontWeight: 800, letterSpacing: "1px",
+              color: "var(--c-text-muted)",
+            }}
+          >
+            <span style={{ color: ar ? "var(--c-indigo)" : "var(--c-text-dim)" }}>AR</span>
+            <span style={{ color: "var(--c-text-dim)", margin: "0 2px", fontWeight: 400 }}>·</span>
+            <span style={{ color: ar ? "var(--c-text-dim)" : "var(--c-indigo)" }}>EN</span>
           </button>
 
           {/* Fullscreen — prominent */}

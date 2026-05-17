@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Lang } from "@/lib/presentation/slides-data";
 
 const POINTS = [
-  { en: "Enhanced alertness, reaction time & sustained attention (Horne & Reyner, 2001)", ar: "تحسّن في اليقظة، زمن رد الفعل والانتباه المستدام (Horne & Reyner, 2001)" },
+  { en: "Enhanced alertness, reaction time & sustained attention (Horne & Reyner, 2001)", ar: "تحسّن في اليقظة وزمن رد الفعل والانتباه المستدام (Horne & Reyner, 2001)" },
   { en: "Improvements in attention switching & subjective alertness (Haskell et al.)", ar: "تحسّن في تحويل الانتباه واليقظة الذاتية (Haskell et al.)" },
   { en: "Caffeine improves working memory at low-moderate doses (Kennedy, 2004)", ar: "الكافيين يحسّن الذاكرة العاملة بالجرعات المنخفضة–المتوسطة (Kennedy, 2004)" },
   { en: "Optimal dose: 50–200 mg; higher doses show diminishing returns (Nehlig, 2010)", ar: "الجرعة المثلى: 50–200 ملغ؛ الجرعات الأعلى تُظهر تراجعاً في الفائدة (Nehlig, 2010)" },
@@ -20,17 +20,15 @@ export default function Literature2Slide({ lang }: { lang: Lang }) {
         <div className="pres-divider" />
       </motion.div>
 
-      {/* Inverted-U curve illustration */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.15 }}
-        className="pres-card"
-        style={{ marginBottom: "18px", padding: "16px 22px", border: "1px solid rgba(99,102,241,0.25)", background: "rgba(99,102,241,0.06)" }}
+        className="pres-card anim-border-glow"
+        style={{ marginBottom: "14px", padding: "14px 18px", border: "1px solid rgba(99,102,241,0.25)", background: "rgba(99,102,241,0.06)" }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          {/* Simple dose-response curve mockup */}
-          <svg width="120" height="70" viewBox="0 0 120 70" fill="none" style={{ flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
+          <svg width="110" height="65" viewBox="0 0 120 70" fill="none" style={{ flexShrink: 0 }}>
             <path d="M10,60 Q40,5 60,8 Q80,10 110,55" stroke="#6366f1" strokeWidth="2.5" fill="none" />
             <circle cx="60" cy="8" r="4" fill="#fbbf24" />
             <text x="52" y="4" fill="#fbbf24" fontSize="7">Optimal</text>
@@ -38,34 +36,42 @@ export default function Literature2Slide({ lang }: { lang: Lang }) {
             <text x="92" y="68" fill="#94a3b8" fontSize="7">High dose</text>
           </svg>
           <div>
-            <div style={{ fontSize: "13px", fontWeight: 600, color: "var(--c-text)", marginBottom: "4px" }}>
+            <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--c-text)", marginBottom: "4px" }}>
               {ar ? "منحنى الأداء المقلوب–U" : "Inverted-U Dose-Response Curve"}
             </div>
-            <div style={{ fontSize: "12px", color: "var(--c-text-muted)", lineHeight: 1.5 }}>
+            <div style={{ fontSize: "13px", color: "var(--c-text-muted)", lineHeight: 1.5 }}>
               {ar
-                ? "الجرعة المنخفضة–المتوسطة تُعطي أفضل فائدة معرفية. الجرعات العالية تُسبّب قلقاً وتقلل الأداء."
-                : "Low-to-moderate doses yield the best cognitive benefit. High doses cause anxiety and impair performance."}
+                ? "الجرعة المنخفضة–المتوسطة تُعطي أفضل فائدة. الجرعات العالية تُسبّب قلقاً وتقلل الأداء."
+                : "Low-to-moderate doses yield best benefit. High doses cause anxiety and impair performance."}
             </div>
           </div>
         </div>
       </motion.div>
 
-      <ul className="pres-list emerald">
+      <div style={{ display: "flex", flexDirection: "column", gap: "8px", flex: 1, justifyContent: "center" }}>
         {POINTS.map((p, i) => (
-          <motion.li key={i} initial={{ opacity: 0, x: ar ? 16 : -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.1 }}>
-            {ar ? p.ar : p.en}
-          </motion.li>
+          <motion.div
+            key={i}
+            className="pres-card"
+            initial={{ opacity: 0, x: ar ? 16 : -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 + i * 0.1 }}
+            whileHover={{ scale: 1.01 }}
+            style={{ padding: "10px 16px", borderLeft: "3px solid var(--c-emerald)" }}
+          >
+            <span style={{ fontSize: "14px", color: "var(--c-text-muted)" }}>{ar ? p.ar : p.en}</span>
+          </motion.div>
         ))}
-      </ul>
+      </div>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.75 }}
         className="pres-card"
-        style={{ marginTop: "14px", padding: "10px 14px", border: "1px solid rgba(251,191,36,0.2)", background: "rgba(251,191,36,0.05)" }}
+        style={{ marginTop: "8px", padding: "8px 14px", border: "1px solid rgba(251,191,36,0.2)", background: "rgba(251,191,36,0.05)" }}
       >
-        <span style={{ fontSize: "12px", color: "var(--c-gold-light)" }}>
+        <span style={{ fontSize: "13px", color: "var(--c-gold-light)" }}>
           ⚠️ {ar
             ? "ملاحظة: أغلب الدراسات على عينات غربية — نتائجنا تضيف بيانات إقليمية نادرة"
             : "Note: Most studies used Western samples — our findings add rare regional data"}
