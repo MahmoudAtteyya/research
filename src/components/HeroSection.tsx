@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronDown, Zap, Activity, Brain, ArrowRight } from "lucide-react";
+import { ChevronDown, Zap, Activity, Brain, ArrowRight, Presentation, MonitorPlay } from "lucide-react";
 
 function AnimatedECG() {
   return (
@@ -191,25 +191,96 @@ export default function HeroSection({ lang }: { lang: "en" | "ar" }) {
 
         {/* CTA */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <motion.a href="#results" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-white transition-all btn-press text-sm"
-            style={{ background: "linear-gradient(135deg, var(--accent-cyan), var(--accent-green))", boxShadow: "0 0 30px var(--glow-cyan)" }}>
-            {isAr ? "استعرض النتائج" : "Explore Results"}
-            <ArrowRight className="w-4 h-4" />
+          className="flex flex-col items-center justify-center gap-6">
+
+          {/* ── Presentation Entry Button ── */}
+          <motion.a
+            href="/presentation"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            whileHover={{ scale: 1.06, y: -3 }}
+            whileTap={{ scale: 0.97 }}
+            style={{
+              position: "relative",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "12px",
+              padding: "16px 36px",
+              borderRadius: "16px",
+              fontWeight: 800,
+              fontSize: "15px",
+              color: "#fff",
+              background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%)",
+              boxShadow: "0 0 40px rgba(99,102,241,0.45), 0 4px 24px rgba(0,0,0,0.3)",
+              textDecoration: "none",
+              letterSpacing: "0.3px",
+              border: "1px solid rgba(165,180,252,0.3)",
+              overflow: "hidden",
+            }}
+          >
+            {/* Shimmer sweep */}
+            <motion.div
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "linear", repeatDelay: 1.2 }}
+              style={{
+                position: "absolute", inset: 0,
+                background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%)",
+                pointerEvents: "none",
+              }}
+            />
+            {/* Pulsing glow ring */}
+            <motion.div
+              animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
+              transition={{ duration: 2.5, repeat: Infinity }}
+              style={{
+                position: "absolute", inset: -4, borderRadius: "20px",
+                border: "1px solid rgba(139,92,246,0.6)",
+                pointerEvents: "none",
+              }}
+            />
+            <MonitorPlay size={22} style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.6))" }} />
+            <span style={{ position: "relative" }}>
+              {isAr ? "عرض التقديم التفاعلي" : "View Presentation"}
+            </span>
+            <motion.div
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.4, repeat: Infinity }}
+            >
+              <ArrowRight size={18} />
+            </motion.div>
           </motion.a>
-          <motion.a href="#simulator" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold transition-all btn-press text-sm border"
-            style={{ border: "1px solid var(--border-accent)", color: "var(--accent-cyan)", background: "var(--glow-cyan)" }}>
-            <Zap className="w-4 h-4" />
-            {isAr ? "جرب المحاكاة" : "Try Simulator"}
-          </motion.a>
-          <motion.a href="#quiz" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold transition-all btn-press text-sm border"
-            style={{ border: "1px solid var(--border)", color: "var(--text-secondary)", background: "var(--bg-surface-2)" }}>
-            <Brain className="w-4 h-4" />
-            {isAr ? "اختبر معلوماتك" : "Take Quiz"}
-          </motion.a>
+
+          {/* Divider */}
+          <div style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", maxWidth: 340 }}>
+            <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+            <span style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600, letterSpacing: "1.5px", textTransform: "uppercase" }}>
+              {isAr ? "أو" : "or"}
+            </span>
+            <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+          </div>
+
+          {/* Secondary CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <motion.a href="#results" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+              className="flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-white transition-all btn-press text-sm"
+              style={{ background: "linear-gradient(135deg, var(--accent-cyan), var(--accent-green))", boxShadow: "0 0 30px var(--glow-cyan)" }}>
+              {isAr ? "استعرض النتائج" : "Explore Results"}
+              <ArrowRight className="w-4 h-4" />
+            </motion.a>
+            <motion.a href="#simulator" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+              className="flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold transition-all btn-press text-sm border"
+              style={{ border: "1px solid var(--border-accent)", color: "var(--accent-cyan)", background: "var(--glow-cyan)" }}>
+              <Zap className="w-4 h-4" />
+              {isAr ? "جرب المحاكاة" : "Try Simulator"}
+            </motion.a>
+            <motion.a href="#quiz" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+              className="flex items-center gap-2 px-8 py-3.5 rounded-2xl font-bold transition-all btn-press text-sm border"
+              style={{ border: "1px solid var(--border)", color: "var(--text-secondary)", background: "var(--bg-surface-2)" }}>
+              <Brain className="w-4 h-4" />
+              {isAr ? "اختبر معلوماتك" : "Take Quiz"}
+            </motion.a>
+          </div>
         </motion.div>
       </div>
 
