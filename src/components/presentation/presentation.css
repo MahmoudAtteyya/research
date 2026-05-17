@@ -1,0 +1,531 @@
+/* ================================================================
+   PRESENTATION — Premium Design System
+   Inspired by: Apple Keynote + Google I/O + TED Talks aesthetic
+================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --c-bg:         #04071a;
+  --c-bg2:        #07102e;
+  --c-surface:    rgba(255,255,255,0.04);
+  --c-surface2:   rgba(255,255,255,0.08);
+  --c-border:     rgba(255,255,255,0.09);
+  --c-border2:    rgba(255,255,255,0.16);
+
+  /* Accent palette — Indigo / Violet / Cyan */
+  --c-indigo:     #6366f1;
+  --c-violet:     #8b5cf6;
+  --c-cyan:       #06b6d4;
+  --c-rose:       #f43f5e;
+  --c-amber:      #f59e0b;
+  --c-emerald:    #10b981;
+
+  /* Gold for university branding */
+  --c-gold:       #fbbf24;
+  --c-gold-light: #fde68a;
+
+  --c-text:       #f1f5f9;
+  --c-text-muted: rgba(241,245,249,0.55);
+  --c-text-dim:   rgba(241,245,249,0.32);
+
+  --radius-card:  14px;
+  --radius-sm:    8px;
+  --shadow-glow:  0 0 40px rgba(99,102,241,0.18);
+  --shadow-card:  0 4px 24px rgba(0,0,0,0.4);
+
+  --font:         'Inter', system-ui, sans-serif;
+}
+
+/* ─── RESET ─── */
+.pres-root * { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── ROOT WRAPPER ─── */
+.pres-root {
+  font-family: var(--font);
+  background: var(--c-bg);
+  color: var(--c-text);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  user-select: none;
+}
+
+/* ─── ANIMATED BG MESH ─── */
+.pres-bg-mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.pres-bg-mesh::before {
+  content: '';
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+  top: -200px; left: -100px;
+  animation: meshMove1 12s ease-in-out infinite alternate;
+}
+.pres-bg-mesh::after {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%);
+  bottom: -150px; right: -100px;
+  animation: meshMove2 15s ease-in-out infinite alternate;
+}
+@keyframes meshMove1 { from { transform: translate(0,0) scale(1); } to { transform: translate(60px,40px) scale(1.15); } }
+@keyframes meshMove2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-50px,-30px) scale(1.2); } }
+
+/* ─── HEADER ─── */
+.pres-header {
+  position: relative; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 28px;
+  background: rgba(4,7,26,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--c-border);
+  flex-shrink: 0;
+  height: 62px;
+}
+.pres-header-logo-group { display: flex; align-items: center; gap: 10px; }
+.pres-logo { width: 38px; height: 38px; object-fit: contain; }
+.pres-uni-name {
+  font-size: 12px; font-weight: 700;
+  color: var(--c-gold); letter-spacing: 0.4px; line-height: 1.2;
+}
+.pres-fac-name { font-size: 10px; color: var(--c-text-muted); }
+.pres-header-center {
+  font-size: 10.5px; color: var(--c-text-dim);
+  text-align: center; max-width: 360px; line-height: 1.4;
+  letter-spacing: 0.2px;
+}
+.pres-header-right { display: flex; align-items: center; gap: 10px; }
+.pres-group-badge {
+  background: rgba(99,102,241,0.15);
+  border: 1px solid rgba(99,102,241,0.3);
+  color: #a5b4fc;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 10px; font-weight: 600;
+}
+
+/* ─── PROGRESS ─── */
+.pres-progress {
+  position: relative; z-index: 20;
+  height: 2px; background: rgba(255,255,255,0.06); flex-shrink: 0;
+}
+.pres-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--c-indigo), var(--c-violet), var(--c-cyan));
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(99,102,241,0.6);
+}
+
+/* ─── SLIDE AREA ─── */
+.pres-slide-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.pres-slide-inner {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  padding: 22px 44px 14px;
+  position: absolute; inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+/* ─── SLIDE TITLE SYSTEM ─── */
+.pres-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--c-indigo);
+  margin-bottom: 10px;
+}
+.pres-h1 {
+  font-size: clamp(30px, 4.5vw, 52px);
+  font-weight: 800; line-height: 1.1;
+  color: var(--c-text); letter-spacing: -0.5px;
+}
+.pres-h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--c-indigo), var(--c-cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.pres-h2 {
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 700; line-height: 1.2;
+  color: var(--c-text);
+}
+.pres-h3 { font-size: 16px; font-weight: 600; color: var(--c-text); }
+.pres-divider {
+  width: 48px; height: 3px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--c-indigo), var(--c-violet));
+  margin: 12px 0 24px;
+}
+.pres-body-text {
+  font-size: 15px; line-height: 1.7;
+  color: var(--c-text-muted); font-weight: 400;
+}
+
+/* ─── CARDS ─── */
+.pres-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-card);
+  padding: 20px 22px;
+  backdrop-filter: blur(12px);
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+}
+.pres-card:hover { border-color: var(--c-border2); background: var(--c-surface2); }
+.pres-card-accent-l { border-left: 3px solid var(--c-indigo); }
+.pres-card-glow {
+  box-shadow: 0 0 0 1px rgba(99,102,241,0.2), 0 8px 32px rgba(99,102,241,0.12);
+}
+
+/* ─── STAT PILL ─── */
+.pres-stat {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+  text-align: center;
+}
+.pres-stat-val {
+  font-size: clamp(26px, 3.5vw, 44px);
+  font-weight: 900; line-height: 1;
+  background: linear-gradient(135deg, #fff, var(--c-gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.pres-stat-unit { font-size: 10px; color: var(--c-text-dim); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+
+/* ─── P-VALUE BADGE ─── */
+.pres-sig {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: #6ee7b7;
+  border-radius: 30px; padding: 2px 9px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.3px;
+}
+.pres-sig-warn {
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: #fcd34d;
+}
+
+/* ─── BULLET LIST ─── */
+.pres-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.pres-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 15px; color: var(--c-text-muted); line-height: 1.5;
+}
+.pres-list li::before {
+  content: ''; flex-shrink: 0;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--c-indigo);
+  margin-top: 7px;
+}
+.pres-list.gold li::before { background: var(--c-gold); }
+.pres-list.emerald li::before { background: var(--c-emerald); }
+.pres-list.rose li::before { background: var(--c-rose); }
+
+/* ─── GRIDS ─── */
+.pres-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pres-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.pres-grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+
+/* ─── PROGRESS BAR MINI ─── */
+.pres-bar-track { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.pres-bar-fill { height: 100%; border-radius: 3px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+
+/* ─── ICON BOX ─── */
+.pres-icon-box {
+  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+
+/* ─── COMPARISON ROW ─── */
+.pres-compare-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px; border-radius: var(--radius-sm);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  transition: border-color 0.2s, background 0.2s;
+}
+.pres-compare-row:hover { border-color: var(--c-border2); background: var(--c-surface2); }
+.pres-before-val { font-size: 14px; font-weight: 600; color: #93c5fd; }
+.pres-after-val  { font-size: 14px; font-weight: 700; color: #fca5a5; }
+.pres-arrow { color: var(--c-text-dim); font-size: 12px; }
+.pres-diff-badge {
+  margin-left: auto; font-size: 12px; font-weight: 700;
+  color: var(--c-emerald);
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.2);
+  border-radius: 20px; padding: 2px 8px;
+}
+
+/* ─── FOOTER ─── */
+.pres-footer {
+  position: relative; z-index: 20; flex-shrink: 0;
+  height: 54px; padding: 0 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(4,7,26,0.9); backdrop-filter: blur(20px);
+  border-top: 1px solid var(--c-border);
+}
+.pres-footer-left  { display: flex; align-items: center; gap: 10px; }
+.pres-footer-right { display: flex; align-items: center; gap: 10px; }
+
+/* NAV BUTTONS */
+.pres-nav-row { display: flex; align-items: center; gap: 8px; }
+.pres-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: none; cursor: pointer; border-radius: 8px;
+  font-size: 13px; font-weight: 600; transition: all 0.2s;
+  font-family: var(--font);
+}
+.pres-btn-nav {
+  width: 38px; height: 38px;
+  background: var(--c-surface2); color: var(--c-text);
+  border: 1px solid var(--c-border);
+}
+.pres-btn-nav:hover:not(:disabled) {
+  background: rgba(99,102,241,0.2);
+  border-color: var(--c-indigo);
+  color: #a5b4fc;
+  transform: scale(1.05);
+}
+.pres-btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.pres-btn-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: transparent; color: var(--c-text-muted);
+  border: 1px solid var(--c-border);
+}
+.pres-btn-icon:hover { background: var(--c-surface2); color: var(--c-text); border-color: var(--c-border2); }
+
+.pres-btn-primary {
+  height: 34px; padding: 0 14px;
+  background: linear-gradient(135deg, var(--c-indigo), var(--c-violet));
+  color: white; border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(99,102,241,0.35);
+  border: none;
+}
+.pres-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(99,102,241,0.45); }
+
+.pres-btn-lang {
+  height: 34px; padding: 0 12px;
+  background: var(--c-surface); color: var(--c-text-muted);
+  border: 1px solid var(--c-border); border-radius: 8px;
+}
+.pres-btn-lang:hover { color: var(--c-text); border-color: var(--c-border2); background: var(--c-surface2); }
+
+.pres-slide-counter {
+  font-size: 11px; font-weight: 600;
+  color: var(--c-text-dim);
+  min-width: 50px; text-align: center;
+}
+.pres-slide-title-footer {
+  font-size: 11px; color: var(--c-text-dim);
+  max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ─── THUMBNAIL STRIP ─── */
+.pres-thumb-strip {
+  position: relative; z-index: 20;
+  display: flex; gap: 5px;
+  overflow-x: auto; padding: 6px 16px;
+  background: rgba(4,7,26,0.95);
+  border-top: 1px solid var(--c-border);
+  scrollbar-width: thin; scrollbar-color: var(--c-indigo) transparent;
+}
+.pres-thumb {
+  flex-shrink: 0; width: 80px; height: 46px;
+  border-radius: 6px; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  font-size: 8px; color: var(--c-text-dim);
+  text-align: center; padding: 4px;
+  transition: all 0.2s; line-height: 1.3;
+}
+.pres-thumb:hover { border-color: var(--c-border2); color: var(--c-text-muted); }
+.pres-thumb.active { border-color: var(--c-indigo); color: #a5b4fc; background: rgba(99,102,241,0.1); }
+
+/* ─── SPEAKER NOTES ─── */
+.pres-notes {
+  position: relative; z-index: 20;
+  background: rgba(7,10,30,0.97);
+  border-top: 2px solid var(--c-gold);
+  padding: 12px 24px;
+  max-height: 120px; overflow-y: auto;
+}
+.pres-notes-label { font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: var(--c-gold); font-weight: 700; margin-bottom: 5px; }
+.pres-notes p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+/* ─── FULLSCREEN BUTTON (prominent) ─── */
+.pres-fs-btn {
+  position: fixed; bottom: 70px; right: 20px; z-index: 100;
+  width: 46px; height: 46px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--c-indigo), var(--c-violet));
+  border: none; color: white; font-size: 18px; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(99,102,241,0.5);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  opacity: 0.85;
+}
+.pres-fs-btn:hover { opacity: 1; transform: scale(1.08); }
+
+/* ─── COVER SLIDE ─── */
+.pres-cover {
+  min-height: 100%; width: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 40px 48px;
+  position: relative;
+}
+.pres-cover-logos { display: flex; align-items: center; gap: 32px; margin-bottom: 32px; }
+.pres-cover-logo  { width: 88px; height: 88px; object-fit: contain; filter: drop-shadow(0 4px 24px rgba(251,191,36,0.25)); }
+.pres-cover-sep   { width: 1px; height: 64px; background: linear-gradient(to bottom, transparent, var(--c-gold), transparent); }
+.pres-cover-uni   { font-size: 11px; font-weight: 700; color: var(--c-gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; }
+.pres-cover-fac   { font-size: 12px; color: var(--c-text-muted); letter-spacing: 0.5px; margin-bottom: 36px; }
+.pres-cover-title {
+  font-size: clamp(20px,2.8vw,34px); font-weight: 800; color: var(--c-text);
+  line-height: 1.25; max-width: 760px; letter-spacing: -0.3px; margin-bottom: 10px;
+}
+.pres-cover-group { font-size: 11px; color: var(--c-text-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 36px; }
+.pres-cover-team  { display: grid; grid-template-columns: repeat(4,1fr); gap: 5px 14px; max-width: 680px; margin-bottom: 28px; }
+.pres-cover-member {
+  font-size: 10px; color: var(--c-text-muted);
+  padding: 4px 8px; border-radius: 6px;
+  background: var(--c-surface); border: 1px solid var(--c-border); text-align: center;
+}
+.pres-cover-sups { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.pres-sup-chip {
+  background: rgba(251,191,36,0.08);
+  border: 1px solid rgba(251,191,36,0.2);
+  color: var(--c-gold-light); border-radius: 20px;
+  padding: 5px 12px; font-size: 10px;
+}
+.pres-cover-sep-line {
+  width: 160px; height: 1px; margin: 20px auto;
+  background: linear-gradient(90deg, transparent, var(--c-gold), transparent);
+}
+
+/* ─── CONFERENCE BANNER SHIMMER ─── */
+@keyframes confShimmer {
+  0%   { background-position: -300% center; }
+  100% { background-position: 300% center; }
+}
+.pres-conf-title {
+  background: linear-gradient(135deg, #a5b4fc 0%, #e879f9 40%, #67e8f9 70%, #a5b4fc 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: confShimmer 5s linear infinite;
+}
+
+/* ─── HIDE SCROLLBAR IN WEBKIT ─── */
+.pres-slide-inner::-webkit-scrollbar { display: none; }
+
+/* ─── TOC ─── */
+.pres-toc-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 9px 14px; border-radius: var(--radius-sm);
+  background: var(--c-surface); border: 1px solid var(--c-border);
+  cursor: pointer; transition: all 0.2s;
+}
+.pres-toc-item:hover { background: var(--c-surface2); border-color: var(--c-border2); }
+.pres-toc-num {
+  width: 26px; height: 26px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  background: rgba(99,102,241,0.15); color: #a5b4fc;
+}
+
+/* ─── TIMELINE ─── */
+.pres-timeline { display: flex; flex-direction: column; gap: 0; }
+.pres-timeline-item { display: flex; gap: 16px; align-items: flex-start; padding-bottom: 14px; position: relative; }
+.pres-timeline-item:not(:last-child)::before {
+  content: ''; position: absolute;
+  left: 18px; top: 32px; bottom: 0;
+  width: 1px; background: var(--c-border);
+}
+.pres-timeline-dot {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: #a5b4fc; line-height: 1;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes scaleIn { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
+@keyframes heartbeat { 0%,100%{transform:scale(1);} 20%{transform:scale(1.2);} 40%{transform:scale(1);} 60%{transform:scale(1.1);} }
+@keyframes pulse-glow { 0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,0.5);} 50%{box-shadow:0 0 0 8px rgba(244,63,94,0);} }
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.anim-fade-up   { animation: fadeUp  0.5s ease forwards; }
+.anim-fade      { animation: fadeIn  0.45s ease forwards; }
+.anim-scale     { animation: scaleIn 0.45s ease forwards; }
+.anim-heartbeat { animation: heartbeat 1.6s ease-in-out infinite; }
+
+.delay-1 { animation-delay: 0.08s; opacity:0; }
+.delay-2 { animation-delay: 0.16s; opacity:0; }
+.delay-3 { animation-delay: 0.24s; opacity:0; }
+.delay-4 { animation-delay: 0.32s; opacity:0; }
+.delay-5 { animation-delay: 0.40s; opacity:0; }
+.delay-6 { animation-delay: 0.48s; opacity:0; }
+.delay-7 { animation-delay: 0.56s; opacity:0; }
+.delay-8 { animation-delay: 0.64s; opacity:0; }
+
+/* ─── CHART CUSTOM TOOLTIP ─── */
+.pres-tooltip {
+  background: rgba(7,16,46,0.95);
+  border: 1px solid var(--c-border2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--c-text);
+}
+
+/* ─── GRADIENT TEXT UTILITY ─── */
+.grad-indigo {
+  background: linear-gradient(135deg, var(--c-indigo), var(--c-cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.grad-gold {
+  background: linear-gradient(135deg, var(--c-gold), var(--c-gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.grad-rose {
+  background: linear-gradient(135deg, var(--c-rose), #fb923c);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ─── RTL ─── */
+[dir=rtl] .pres-divider { background: linear-gradient(270deg, var(--c-indigo), var(--c-violet)); }
+[dir=rtl] .pres-progress-fill { border-radius: 2px 0 0 2px; }
+[dir=rtl] .pres-list li { flex-direction: row-reverse; }
+[dir=rtl] .pres-timeline-item::before { left: auto; right: 18px; }
+
+/* ─── SCROLLBAR ─── */
+.pres-scroll-y { overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(99,102,241,0.3) transparent; }
+.pres-scroll-y::-webkit-scrollbar { width: 4px; }
+.pres-scroll-y::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.3); border-radius: 2px; }
