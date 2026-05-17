@@ -72,7 +72,8 @@ export default function Cover2Slide({ lang }: { lang: Lang }) {
         {/* Members grid — uniform cards */}
         <motion.div
           variants={container} initial="hidden" animate="show"
-          style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "8px", flex: 1, alignContent: "center" }}
+          className="pres-grid-4"
+          style={{ flex: 1, alignContent: "center" }}
         >
           {TEAM_MEMBERS.map((name, i) => (
             <motion.div

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -6,6 +6,14 @@ export const metadata: Metadata = {
   title: "Energy Drinks & Health | Suez University Faculty of Medicine",
   description: "Interactive research presentation: Effect of Energy Drinks on Vital Signs and Cognitive Performance – Graduation Project, Suez University 2026",
   keywords: "energy drinks, vital signs, cognitive performance, Suez University, medical research, caffeine",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#04071a",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

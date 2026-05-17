@@ -657,3 +657,181 @@
   background-size: 200% 200%;
   animation: gradientShift 4s ease infinite;
 }
+
+/* ================================================================
+   RESPONSIVE — Tablet & Mobile
+================================================================ */
+
+/* ── Tablet (≤ 768px) ── */
+@media (max-width: 768px) {
+
+  /* Header: hide center title, shrink logos */
+  .pres-header {
+    height: 52px;
+    padding: 8px 14px;
+  }
+  .pres-header-center { display: none; }
+  .pres-logo { width: 30px; height: 30px; }
+  .pres-uni-name { font-size: 11px; }
+  .pres-fac-name { font-size: 9px; }
+  .pres-group-badge { font-size: 9px; padding: 2px 8px; }
+
+  /* Footer: reduce padding and font sizes */
+  .pres-footer {
+    height: 50px;
+    padding: 0 10px;
+  }
+  .pres-slide-title-footer { max-width: 120px; font-size: 11px; }
+  .pres-slide-counter { font-size: 11px; min-width: 40px; }
+  .pres-btn-nav { width: 34px; height: 34px; }
+  .pres-btn-icon { width: 30px; height: 30px; }
+  .pres-btn-primary { height: 30px; padding: 0 10px; font-size: 11px; }
+
+  /* Slide inner: reduce padding */
+  .pres-slide-inner {
+    padding: 12px 18px 8px;
+  }
+
+  /* Typography */
+  .pres-h1 { font-size: clamp(20px, 5vw, 30px); }
+  .pres-h2 { font-size: clamp(17px, 4vw, 26px); }
+  .pres-h3 { font-size: 15px; }
+  .pres-label { font-size: 10px; letter-spacing: 1.5px; }
+  .pres-body-text { font-size: 14px; }
+  .pres-list li { font-size: 13px; }
+
+  /* Grids: collapse to 2 columns */
+  .pres-grid-3 { grid-template-columns: 1fr 1fr; }
+  .pres-grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  /* Cards */
+  .pres-card { padding: 14px 16px; }
+  .pres-stat { padding: 12px 14px; }
+  .pres-stat-val { font-size: clamp(22px, 5vw, 32px); }
+
+  /* Cover slide */
+  .pres-cover { padding: 24px 24px; }
+  .pres-cover-logos { gap: 18px; margin-bottom: 18px; }
+  .pres-cover-logo { width: 60px; height: 60px; }
+  .pres-cover-team { grid-template-columns: repeat(2, 1fr); }
+
+  /* TOC strip */
+  .pres-thumb { width: 70px; height: 40px; font-size: 7.5px; }
+}
+
+/* ── Mobile (≤ 480px) ── */
+@media (max-width: 480px) {
+
+  /* Header: ultra-compact — only university logo + counter */
+  .pres-header {
+    height: 46px;
+    padding: 6px 10px;
+    gap: 8px;
+  }
+  .pres-header-right { gap: 6px; }
+  .pres-logo { width: 26px; height: 26px; }
+  .pres-uni-name { font-size: 10px; letter-spacing: 0; }
+  .pres-fac-name { display: none; }
+  .pres-group-badge { display: none; }
+
+  /* Footer: ultra-compact bottom strip */
+  .pres-footer {
+    height: 48px;
+    padding: 0 8px;
+  }
+  .pres-footer-left { gap: 6px; }
+  .pres-footer-right { gap: 6px; }
+
+  /* Hide theme + lang toggle text, keep icons only */
+  .pres-btn-theme-label { display: none; }
+  .pres-slide-title-footer { display: none; }
+  .pres-btn-primary { padding: 0 8px; font-size: 10px; }
+
+  /* Slide inner: very tight */
+  .pres-slide-inner {
+    padding: 10px 12px 6px;
+  }
+
+  /* Typography — mobile-first */
+  .pres-h1 { font-size: clamp(17px, 6vw, 24px); }
+  .pres-h2 { font-size: clamp(15px, 5vw, 21px); }
+  .pres-h3 { font-size: 13px; }
+  .pres-body-text { font-size: 13px; line-height: 1.55; }
+  .pres-label { font-size: 9px; margin-bottom: 4px; }
+  .pres-list li { font-size: 12px; gap: 7px; }
+  .pres-divider { margin: 5px 0 10px; width: 36px; }
+
+  /* Grids: single column on phones */
+  .pres-grid-2 { grid-template-columns: 1fr; gap: 10px; }
+  .pres-grid-3 { grid-template-columns: 1fr; gap: 8px; }
+  .pres-grid-4 { grid-template-columns: 1fr 1fr; gap: 6px; }
+
+  /* Cards */
+  .pres-card { padding: 11px 12px; border-radius: 10px; }
+  .pres-stat { padding: 10px 11px; }
+  .pres-stat-val { font-size: clamp(20px, 6vw, 28px); }
+  .pres-stat-unit { font-size: 9px; }
+
+  /* Comparison rows */
+  .pres-compare-row { padding: 10px 12px; gap: 8px; }
+  .pres-before-val, .pres-after-val { font-size: 13px; }
+
+  /* Icon boxes */
+  .pres-icon-box { width: 34px; height: 34px; font-size: 16px; }
+
+  /* Timeline */
+  .pres-timeline-dot { width: 30px; height: 30px; font-size: 8px; }
+  .pres-timeline-item { gap: 10px; padding-bottom: 10px; }
+  .pres-timeline-item:not(:last-child)::before { left: 15px; }
+
+  /* Cover slide */
+  .pres-cover { padding: 14px 14px; }
+  .pres-cover-logos { gap: 12px; margin-bottom: 12px; }
+  .pres-cover-logo { width: 48px; height: 48px; }
+  .pres-cover-sep { height: 40px; }
+  .pres-cover-title { font-size: clamp(14px, 4.5vw, 20px); }
+  .pres-cover-team { grid-template-columns: repeat(2, 1fr); gap: 4px 8px; }
+  .pres-cover-member { font-size: 9px; padding: 3px 6px; }
+  .pres-sup-chip { font-size: 9px; padding: 3px 8px; }
+
+  /* TOC thumbnails */
+  .pres-thumb-strip { padding: 4px 8px; gap: 4px; }
+  .pres-thumb { width: 62px; height: 36px; }
+
+  /* Speaker notes */
+  .pres-notes { padding: 8px 14px; max-height: 90px; }
+  .pres-notes p { font-size: 12px; }
+
+  /* Progress bar — slightly thicker for touch */
+  .pres-progress { height: 3px; }
+
+  /* Nav buttons — larger touch target */
+  .pres-btn-nav { width: 38px; height: 38px; font-size: 16px; }
+}
+
+/* ── Touch swipe hint (mobile only) ── */
+@media (max-width: 768px) {
+  .pres-swipe-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--c-text-dim);
+    letter-spacing: 0.5px;
+    animation: fadeIn 0.5s ease forwards, fadeOut 0.4s ease 3.5s forwards;
+  }
+  @keyframes fadeOut { to { opacity: 0; pointer-events: none; } }
+}
+@media (min-width: 769px) {
+  .pres-swipe-hint { display: none; }
+}
+
+/* ── Landscape phone fix ── */
+@media (max-width: 768px) and (orientation: landscape) {
+  .pres-header { height: 40px; }
+  .pres-footer { height: 42px; }
+  .pres-slide-inner { padding: 8px 16px 6px; }
+  .pres-h1 { font-size: clamp(15px, 4vw, 22px); }
+  .pres-h2 { font-size: clamp(13px, 3.5vw, 19px); }
+  .pres-body-text { font-size: 12px; line-height: 1.45; }
+}

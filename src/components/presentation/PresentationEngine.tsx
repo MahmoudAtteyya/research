@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePresentation } from "@/lib/presentation/usePresentation";
 import { SLIDES, Lang } from "@/lib/presentation/slides-data";
@@ -70,6 +70,8 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
   const [dir, setDir] = useState(1);
   const [prevIdx, setPrevIdx] = useState(0);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [isMobile, setIsMobile] = useState(false);
+  const touchStartX = useRef<number | null>(null);
   const ar = lang === "ar";
 
   // Track direction for slide animation
@@ -83,15 +85,47 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
+  // Detect mobile
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   const toggleTheme = useCallback(() => {
     setTheme(t => t === "dark" ? "light" : "dark");
   }, []);
+
+  // Touch swipe handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 50) {
+      // RTL-aware: swipe left = next in LTR, prev in RTL
+      if (ar) {
+        dx < 0 ? pres.prevSlide() : pres.nextSlide();
+      } else {
+        dx < 0 ? pres.nextSlide() : pres.prevSlide();
+      }
+    }
+    touchStartX.current = null;
+  }, [ar, pres]);
 
   const SlideComponent = SLIDE_MAP[pres.slide.id] ?? Cover1Slide;
   const notes = ar ? pres.slide.speakerNotesAr : pres.slide.speakerNotesEn;
 
   return (
-    <div className="pres-root" dir={ar ? "rtl" : "ltr"}>
+    <div
+      className="pres-root"
+      dir={ar ? "rtl" : "ltr"}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Animated mesh background */}
       <div className="pres-bg-mesh" />
 
@@ -174,19 +208,23 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
         <div className="pres-footer-left">
           <span className="pres-slide-counter">{pres.currentSlide + 1} / {pres.totalSlides}</span>
 
-          <button
-            className="pres-btn pres-btn-icon"
-            onClick={() => setShowThumbs(v => !v)}
-            title={ar ? "عرض الصور المصغّرة" : "Slide thumbnails"}
-            style={{ background: showThumbs ? "rgba(99,102,241,0.2)" : undefined }}
-          >⊞</button>
+          {!isMobile && (
+            <button
+              className="pres-btn pres-btn-icon"
+              onClick={() => setShowThumbs(v => !v)}
+              title={ar ? "عرض الصور المصغّرة" : "Slide thumbnails"}
+              style={{ background: showThumbs ? "rgba(99,102,241,0.2)" : undefined }}
+            >⊞</button>
+          )}
 
-          <button
-            className="pres-btn pres-btn-icon"
-            onClick={() => pres.setShowNotes(v => !v)}
-            title={ar ? "ملاحظات المقدم (N)" : "Speaker notes (N)"}
-            style={{ color: pres.showNotes ? "#fbbf24" : undefined }}
-          >📝</button>
+          {!isMobile && (
+            <button
+              className="pres-btn pres-btn-icon"
+              onClick={() => pres.setShowNotes(v => !v)}
+              title={ar ? "ملاحظات المقدم (N)" : "Speaker notes (N)"}
+              style={{ color: pres.showNotes ? "#fbbf24" : undefined }}
+            >📝</button>
+          )}
         </div>
 
         {/* Center navigation */}
@@ -202,28 +240,27 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
 
         {/* Right controls */}
         <div className="pres-footer-right">
-          {/* Theme toggle — premium pill */}
+          {/* Theme toggle */}
           <button
             onClick={toggleTheme}
             title={ar ? "تبديل المظهر" : "Toggle theme"}
             style={{
-              display: "flex", alignItems: "center", gap: "6px",
+              display: "flex", alignItems: "center", gap: isMobile ? "0" : "6px",
               background: theme === "dark"
                 ? "linear-gradient(135deg, rgba(30,27,75,0.9), rgba(49,46,129,0.7))"
                 : "linear-gradient(135deg, rgba(224,231,255,0.9), rgba(199,210,254,0.7))",
               border: theme === "dark" ? "1px solid rgba(99,102,241,0.4)" : "1px solid rgba(99,102,241,0.3)",
-              borderRadius: "20px", padding: "5px 10px",
+              borderRadius: "20px", padding: isMobile ? "5px 8px" : "5px 10px",
               cursor: "pointer", transition: "all 0.3s ease",
               fontSize: "11px", fontWeight: 700,
               color: theme === "dark" ? "#a5b4fc" : "#4f46e5",
-              letterSpacing: "0.5px",
             }}
           >
             <span style={{ fontSize: "13px" }}>{theme === "dark" ? "☀️" : "🌙"}</span>
-            <span>{theme === "dark" ? "LIGHT" : "DARK"}</span>
+            {!isMobile && <span className="pres-btn-theme-label">{theme === "dark" ? "LIGHT" : "DARK"}</span>}
           </button>
 
-          {/* Language toggle — AR / EN */}
+          {/* Language toggle */}
           <button
             onClick={onLangChange}
             title={ar ? "Switch language" : "تبديل اللغة"}
@@ -231,7 +268,7 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
               display: "flex", alignItems: "center", gap: "2px",
               background: "transparent",
               border: "1px solid var(--c-border)",
-              borderRadius: "20px", padding: "5px 10px",
+              borderRadius: "20px", padding: isMobile ? "5px 8px" : "5px 10px",
               cursor: "pointer", transition: "all 0.25s ease",
               fontSize: "11px", fontWeight: 800, letterSpacing: "1px",
               color: "var(--c-text-muted)",
@@ -242,26 +279,28 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
             <span style={{ color: ar ? "var(--c-text-dim)" : "var(--c-indigo)" }}>EN</span>
           </button>
 
-          {/* Fullscreen — prominent */}
-          <button
-            className="pres-btn pres-btn-primary"
-            onClick={pres.toggleFullscreen}
-            title={ar ? "ملء الشاشة (F)" : "Fullscreen (F)"}
-            style={{ gap: "6px", fontSize: "12px" }}
-          >
-            {pres.isFullscreen ? "⊠ Exit" : "⛶ Fullscreen"}
-          </button>
+          {/* Fullscreen — hide on mobile (not well-supported) */}
+          {!isMobile && (
+            <button
+              className="pres-btn pres-btn-primary"
+              onClick={pres.toggleFullscreen}
+              title={ar ? "ملء الشاشة (F)" : "Fullscreen (F)"}
+              style={{ gap: "6px", fontSize: "12px" }}
+            >
+              {pres.isFullscreen ? "⊠ Exit" : "⛶ Fullscreen"}
+            </button>
+          )}
         </div>
       </footer>
 
       {/* Keyboard hint overlay — shows once */}
-      <KeyboardHint ar={ar} />
+      <KeyboardHint ar={ar} isMobile={isMobile} />
     </div>
   );
 }
 
-/** One-time keyboard hint that fades after 3s */
-function KeyboardHint({ ar }: { ar: boolean }) {
+/** One-time hint that fades after 3.5s — keyboard on desktop, swipe on mobile */
+function KeyboardHint({ ar, isMobile }: { ar: boolean; isMobile: boolean }) {
   const [visible, setVisible] = useState(true);
   useEffect(() => {
     const t = setTimeout(() => setVisible(false), 3500);
@@ -274,20 +313,30 @@ function KeyboardHint({ ar }: { ar: boolean }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       style={{
-        position: "fixed", bottom: 70, left: "50%", transform: "translateX(-50%)",
+        position: "fixed", bottom: 68, left: "50%", transform: "translateX(-50%)",
         background: "rgba(7,16,46,0.9)", border: "1px solid rgba(99,102,241,0.3)",
         borderRadius: "10px", padding: "8px 16px", fontSize: "11px",
         color: "rgba(255,255,255,0.6)", zIndex: 200, backdropFilter: "blur(12px)",
-        display: "flex", gap: "12px", whiteSpace: "nowrap",
+        display: "flex", gap: "12px", whiteSpace: "nowrap", alignItems: "center",
       }}
     >
-      <span>← → {ar ? "للتنقل" : "Navigate"}</span>
-      <span>·</span>
-      <span>F {ar ? "ملء الشاشة" : "Fullscreen"}</span>
-      <span>·</span>
-      <span>N {ar ? "ملاحظات" : "Notes"}</span>
-      <span>·</span>
-      <span>Space {ar ? "التالي" : "Next"}</span>
+      {isMobile ? (
+        <>
+          <span>👆 {ar ? "اسحب للتنقل" : "Swipe to navigate"}</span>
+          <span>·</span>
+          <span>↑↓ {ar ? "اضغط الأزرار" : "Use buttons"}</span>
+        </>
+      ) : (
+        <>
+          <span>← → {ar ? "للتنقل" : "Navigate"}</span>
+          <span>·</span>
+          <span>F {ar ? "ملء الشاشة" : "Fullscreen"}</span>
+          <span>·</span>
+          <span>N {ar ? "ملاحظات" : "Notes"}</span>
+          <span>·</span>
+          <span>Space {ar ? "التالي" : "Next"}</span>
+        </>
+      )}
     </motion.div>
   );
 }
