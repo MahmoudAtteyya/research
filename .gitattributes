@@ -1,14 +1,30 @@
-# Normalize line endings to LF on all platforms
+# Auto-detect text files and normalize line endings to LF
 * text=auto eol=lf
 
-# Explicitly set binary files to not be modified
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.ico binary
-*.svg binary
-*.woff binary
+# Explicitly declare text files to always use LF
+*.ts    text eol=lf
+*.tsx   text eol=lf
+*.js    text eol=lf
+*.jsx   text eol=lf
+*.json  text eol=lf
+*.css   text eol=lf
+*.md    text eol=lf
+*.html  text eol=lf
+*.mjs   text eol=lf
+*.cjs   text eol=lf
+*.env   text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+
+# Declare binary files (never touch line endings)
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.svg   binary
+*.woff  binary
 *.woff2 binary
-*.ttf binary
-*.eot binary
+*.ttf   binary
+*.eot   binary
+*.webp  binary
