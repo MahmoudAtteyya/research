@@ -134,14 +134,20 @@
   flex: 1;
   position: relative;
   overflow: hidden;
+  container-type: size;
+  container-name: slidearea;
 }
 
-/* Base scaler wrapper (acts as a simple flex wrapper on desktop) */
+/* Base scaler wrapper (perfect 16:9 scaling) */
 .pres-mobile-scaler {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  position: absolute;
+  width: 1024px;
+  height: 576px;
+  left: 50%;
+  top: 50%;
+  transform-origin: center;
+  /* Scale to perfectly fit the available space, maintaining 16:9 */
+  transform: translate(-50%, -50%) scale(min(calc(100cqw / 1024), calc(100cqh / 576)));
 }
 
 .pres-slide-inner {
@@ -885,36 +891,17 @@
 
 /* ================================================================
    MOBILE — Desktop-like experience
-   On portrait phones: scale the full presentation to fit within
-   the viewport using transform:scale so it looks exactly like the PC.
+   We now use container queries (cqw, cqh) at the top of the file 
+   to automatically scale the .pres-mobile-scaler.
+   Below are just minor adjustments for header/footer sizes.
 ================================================================ */
 
-/* ── Portrait mobile: scale-to-fit ── */
+/* ── Portrait mobile ── */
 @media (max-width: 768px) and (orientation: portrait) {
   .pres-root { overflow: hidden; }
 
-  .pres-slide-area {
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Force the inner slide to have PC dimensions and scale it down visually */
-  .pres-mobile-scaler {
-    position: absolute;
-    width: 1024px;
-    height: 576px;
-    left: 50%;
-    top: 50%;
-    /* calc(100vw / 1024) -> shrinks 1024 down to screen width */
-    transform: translate(-50%, -50%) scale(calc(100vw / 1024));
-    transform-origin: center;
-  }
-
   /* Header & Footer: keep native mobile sizes */
-  .pres-header {
-    height: 50px;
-    padding: 8px 14px;
-  }
+  .pres-header { height: 50px; padding: 8px 14px; }
   .pres-header-center { display: none; }
   .pres-logo { width: 30px; height: 30px; }
   .pres-uni-name { font-size: 11px; }
@@ -930,28 +917,21 @@
 
 /* ── Landscape mobile / fullscreen ── */
 @media (max-width: 1024px) and (orientation: landscape) {
-  /* On landscape, we want the slide to naturally fill without forcing scale 
-     if the screen is very wide. Or we can just let flex do its job. */
-  .pres-mobile-scaler {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+  .pres-root { overflow: hidden; }
 
-  .pres-header {
-    height: 56px;
-    padding: 8px 24px;
-  }
-  .pres-header-center { display: block; }
-  .pres-logo { width: 34px; height: 34px; }
-  .pres-uni-name { font-size: 12px; }
-  .pres-fac-name { display: block; font-size: 10px; }
-  .pres-group-badge { display: flex; font-size: 10px; }
+  .pres-header { height: 48px; padding: 4px 16px; }
+  .pres-header-center { display: block; font-size: 11px; }
+  .pres-logo { width: 28px; height: 28px; }
+  .pres-uni-name { font-size: 10px; }
+  .pres-fac-name { display: none; }
+  .pres-group-badge { display: flex; font-size: 9px; padding: 2px 6px; }
 
-  .pres-footer { height: 50px; padding: 0 16px; }
-  .pres-slide-title-footer { max-width: 160px; }
-  .pres-slide-inner { padding: 14px 32px 8px; }
+  .pres-footer { height: 46px; padding: 0 12px; }
+  .pres-slide-title-footer { max-width: 160px; font-size: 10px; }
+  .pres-btn-nav { width: 32px; height: 32px; }
+  .pres-btn-icon { width: 32px; height: 32px; }
+  .pres-btn-primary { height: 28px; padding: 0 10px; font-size: 10px; }
+  .pres-btn-theme-label { display: none; }
 }
 
 /* ── Very small phones (≤ 480px portrait) ── */
