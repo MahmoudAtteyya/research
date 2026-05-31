@@ -79,7 +79,6 @@ interface Props { lang: Lang; onLangChange: () => void; }
 
 export default function PresentationEngine({ lang, onLangChange }: Props) {
   const pres = usePresentation();
-  const exportContainerRef = useRef<HTMLDivElement>(null);
 
   const [showThumbs,    setShowThumbs]    = useState(false);
   const [dir,           setDir]           = useState(1);
@@ -88,9 +87,6 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
   const [theme,         setTheme]         = useState<"dark" | "projector">("dark");
   const [isMobile,      setIsMobile]      = useState(false);
   const [chromeState,   setChromeState]   = useState<ChromeState>(0);
-  const [isPrintMode,   setIsPrintMode]   = useState(false);
-  const [isExporting,   setIsExporting]   = useState(false);
-  const [exportProgress, setExportProgress] = useState(0);
 
   const touchStartX = useRef<number | null>(null);
   const ar = lang === "ar";
@@ -126,48 +122,6 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
     setChromeState(s => ((s + 1) % 4) as ChromeState);
   }, []);
 
-  // ── PRINT (PDF) ──
-  const handlePrint = useCallback(() => {
-    setIsPrintMode(true);
-    setTimeout(() => {
-      window.print();
-      setIsPrintMode(false);
-    }, 1200);
-  }, []);
-
-  // ── PPTX EXPORT ──
-  const handleExportPptx = useCallback(async () => {
-    if (isExporting) return;
-    setIsExporting(true);
-    setExportProgress(0);
-
-    try {
-      // Dynamically import heavy libs
-      const [{ exportToPptx }] = await Promise.all([
-        import("@/lib/presentation/exportToPptx"),
-      ]);
-
-      // We need to render ALL slides into a hidden container first
-      // so html2canvas can capture them
-      setIsPrintMode(true);
-      // Wait one frame for React to render all slides
-      await new Promise<void>(r => setTimeout(r, 1500));
-
-      await exportToPptx(
-        SLIDES,
-        theme,
-        lang,
-        (id) => document.getElementById(`slide-export-${id}`),
-      );
-    } catch (err) {
-      console.error("PPTX export failed:", err);
-    } finally {
-      setIsPrintMode(false);
-      setIsExporting(false);
-      setExportProgress(0);
-    }
-  }, [isExporting, theme, lang]);
-
   // ── Fullscreen with landscape lock on mobile ──
   const handleFullscreen = useCallback(async () => {
     if (!document.fullscreenElement) {
@@ -194,13 +148,11 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
   // ── Keyboard shortcuts ──
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "p" || e.key === "P") { e.preventDefault(); handlePrint(); }
       if (e.key === "h" || e.key === "H") { e.preventDefault(); cycleChromeState(); }
-      if (e.key === "e" || e.key === "E") { e.preventDefault(); handleExportPptx(); }
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [handlePrint, cycleChromeState, handleExportPptx]);
+  }, [cycleChromeState]);
 
   // ── Touch swipe ──
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -219,52 +171,6 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
 
   const SlideComponent = SLIDE_MAP[pres.slide.id] ?? Cover1Slide;
   const notes = ar ? pres.slide.speakerNotesAr : pres.slide.speakerNotesEn;
-
-  // ── PRINT / EXPORT MODE ── renders all slides for capture
-  if (isPrintMode) {
-    return (
-      <div className="pres-root print-mode-root" dir={ar ? "rtl" : "ltr"}>
-        {SLIDES.map((s) => {
-          const Comp = SLIDE_MAP[s.id] ?? Cover1Slide;
-          return (
-            <div
-              key={s.id}
-              id={`slide-export-${s.id}`}
-              style={{
-                width: "100vw", height: "100vh",
-                pageBreakAfter: "always", breakAfter: "page",
-                overflow: "hidden",
-                display: "flex", flexDirection: "column",
-                background: theme === "dark" ? "#04071a" : "#ffffff",
-                position: "relative",
-              }}
-            >
-              {/* Mini header inside each slide */}
-              <header className="pres-header" style={{ position: "relative", top: 0 }}>
-                <div className="pres-header-logo-group">
-                  <img src="/university.svg" alt="Suez University" className="pres-logo" />
-                  <div>
-                    <div className="pres-uni-name">{ar ? "جامعة السويس" : "Suez University"}</div>
-                    <div className="pres-fac-name">{ar ? "كلية الطب" : "Faculty of Medicine"}</div>
-                  </div>
-                </div>
-                <div className="pres-header-center">
-                  {ar ? "تأثير مشروبات الطاقة على العلامات الحيوية والأداء المعرفي" : "Acute Effects of Energy Drinks on Vital Signs & Cognitive Performance"}
-                </div>
-                <div className="pres-header-right">
-                  <div className="pres-group-badge">{ar ? "المجموعة 6 — 2026" : "Group 6 — 2026"}</div>
-                  <img src="/faculty.svg" alt="Faculty" className="pres-logo" style={{ borderRadius: "50%", objectFit: "cover", background: "white" }} />
-                </div>
-              </header>
-              <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column" }}>
-                <Comp lang={lang} />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
 
   // ── Chrome toggle meta ──
   const chromeIcons: Record<ChromeState, string> = { 0: "▣", 1: "⬒", 2: "□", 3: "⬓" };
@@ -338,7 +244,9 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
             transition={{ duration: 0.38, ease: [0.4, 0, 0.2, 1] }}
             style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column" }}
           >
-            <SlideComponent lang={lang} />
+            <div className="pres-mobile-scaler">
+              <SlideComponent lang={lang} />
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>
@@ -398,51 +306,6 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
                   title={ar ? "ملاحظات (N)" : "Notes (N)"}
                   style={{ color: pres.showNotes ? "#fbbf24" : undefined }}
                 >📝</button>
-              )}
-
-              {/* PDF Print */}
-              {!isMobile && (
-                <button
-                  className="pres-btn pres-btn-icon"
-                  onClick={handlePrint}
-                  title={ar ? "طباعة / PDF (P)" : "Print / PDF (P)"}
-                  style={{ color: "#ef4444" }}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
-                    <path d="M6 14h12v8H6z" />
-                  </svg>
-                </button>
-              )}
-
-              {/* PPTX Export */}
-              {!isMobile && (
-                <button
-                  className="pres-btn pres-btn-icon"
-                  onClick={handleExportPptx}
-                  disabled={isExporting}
-                  title={ar ? `تصدير PowerPoint (E) — ${theme === "dark" ? "داكن" : "فاتح"}` : `Export PowerPoint (E) — ${theme === "dark" ? "Dark" : "Light"}`}
-                  style={{
-                    color: isExporting ? "#fbbf24" : "#a78bfa",
-                    opacity: isExporting ? 0.7 : 1,
-                    position: "relative",
-                  }}
-                >
-                  {isExporting ? (
-                    <motion.span
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      style={{ display: "inline-block", fontSize: "14px" }}
-                    >⟳</motion.span>
-                  ) : (
-                    /* PowerPoint "P" icon */
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="2" y="3" width="20" height="14" rx="2" />
-                      <path d="M8 21h8M12 17v4" />
-                      <path d="M9 7h3a2 2 0 010 4H9V7z" />
-                    </svg>
-                  )}
-                </button>
               )}
             </div>
 
@@ -555,38 +418,6 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
         {chromeIcons[chromeState]}
       </motion.button>
 
-      {/* ── EXPORT PROGRESS OVERLAY ── */}
-      <AnimatePresence>
-        {isExporting && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{
-              position: "fixed", inset: 0, zIndex: 9999998,
-              background: "rgba(4,7,26,0.82)",
-              display: "flex", flexDirection: "column",
-              alignItems: "center", justifyContent: "center",
-              gap: "16px", backdropFilter: "blur(8px)",
-            }}
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-              style={{ fontSize: "48px" }}
-            >
-              📊
-            </motion.div>
-            <div style={{ fontSize: "18px", fontWeight: 700, color: "#fff" }}>
-              {ar ? "جاري تصدير PowerPoint…" : "Exporting PowerPoint…"}
-            </div>
-            <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.55)" }}>
-              {ar ? "قد تستغرق العملية بضع ثوانٍ" : "This may take a few seconds"}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* ── KEYBOARD HINT ── */}
       <KeyboardHint ar={ar} isMobile={isMobile} />
     </div>
@@ -622,8 +453,6 @@ function KeyboardHint({ ar, isMobile }: { ar: boolean; isMobile: boolean }) {
           <span>F {ar ? "شاشة كاملة" : "Fullscreen"}</span>
           <span style={{ opacity: 0.4 }}>·</span>
           <span>H {ar ? "إخفاء الشريط" : "Chrome"}</span>
-          <span style={{ opacity: 0.4 }}>·</span>
-          <span>E {ar ? "تصدير PPTX" : "Export PPTX"}</span>
         </>
       )}
     </motion.div>
