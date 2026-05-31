@@ -19,7 +19,9 @@ import {
   Lock,
   Unlock,
   KeyRound,
-  AlertCircle
+  AlertCircle,
+  MoveHorizontal,
+  Hand
 } from "lucide-react";
 
 export default function AdminPage() {
@@ -42,6 +44,10 @@ export default function AdminPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const prevVolume = useRef<number>(0.5);
   const isResettingVolume = useRef<boolean>(false);
+
+  // Touch Swipe Gestures
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   // Check sessionStorage on mount
   useEffect(() => {
@@ -152,6 +158,40 @@ export default function AdminPage() {
     }
   };
 
+  // Setup Media Session API (Bluetooth headset & lock screen media keys)
+  useEffect(() => {
+    if (typeof window !== "undefined" && "mediaSession" in navigator && audioEnabled && isActive) {
+      try {
+        navigator.mediaSession.metadata = new window.MediaMetadata({
+          title: "Suez Med Clicker",
+          artist: "Faculty of Medicine",
+          album: "Graduation Project 2026",
+          artwork: [
+            { src: "/faculty.svg", sizes: "128x128", type: "image/svg+xml" }
+          ]
+        });
+
+        // Map media keys
+        navigator.mediaSession.setActionHandler("previoustrack", () => {
+          sendCommand("PREV");
+        });
+        navigator.mediaSession.setActionHandler("nexttrack", () => {
+          sendCommand("NEXT");
+        });
+        navigator.mediaSession.setActionHandler("play", () => {
+          // Play triggers silent loop, keeping session active
+          audioRef.current?.play().catch(console.error);
+        });
+        navigator.mediaSession.setActionHandler("pause", () => {
+          // Pause silent loop
+          audioRef.current?.pause();
+        });
+      } catch (e) {
+        console.error("Error setting MediaSession handlers:", e);
+      }
+    }
+  }, [audioEnabled, adminId, isActive]);
+
   // Initialize audio volume-hijack loop
   const startVolumeHijack = () => {
     if (!audioRef.current) return;
@@ -179,7 +219,7 @@ export default function AdminPage() {
     }
   };
 
-  // Listen to volumechange events
+  // Listen to volumechange events (Android fallback)
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -213,6 +253,43 @@ export default function AdminPage() {
     };
   }, [adminId, isActive, vibrateFeedback]);
 
+  // Touch Swipe Handlers for blind navigation
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!isActive) return;
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!isActive || touchStartX.current === null || touchStartY.current === null) return;
+
+    const diffX = e.changedTouches[0].clientX - touchStartX.current;
+    const diffY = e.changedTouches[0].clientY - touchStartY.current;
+
+    // Minimum swipe threshold (50px)
+    if (Math.abs(diffX) > 50 || Math.abs(diffY) > 50) {
+      // Determine dominant direction
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        // Horizontal Swipe
+        if (diffX < 0) {
+          sendCommand("NEXT"); // Swipe Left -> Next Slide
+        } else {
+          sendCommand("PREV"); // Swipe Right -> Previous Slide
+        }
+      } else {
+        // Vertical Swipe
+        if (diffY < 0) {
+          sendCommand("NEXT"); // Swipe Up -> Next Slide
+        } else {
+          sendCommand("PREV"); // Swipe Down -> Previous Slide
+        }
+      }
+    }
+
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
   // Main UI connection action
   const handleConnect = async () => {
     await registerSession();
@@ -220,7 +297,11 @@ export default function AdminPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#04071a] text-slate-100 flex flex-col items-center justify-between p-4 relative overflow-hidden font-sans select-none">
+    <main 
+      className="min-h-screen bg-[#04071a] text-slate-100 flex flex-col items-center justify-between p-4 relative overflow-hidden font-sans select-none"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Animated Mesh Background */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute w-[400px] h-[400px] rounded-full bg-radial from-indigo-500/10 to-transparent -top-40 -left-20 animate-pulse duration-[8000ms]" />
@@ -257,7 +338,7 @@ export default function AdminPage() {
       </header>
 
       {/* Main Container */}
-      <div className="flex-1 w-full flex flex-col justify-center items-center z-10 py-6 max-w-md">
+      <div className="flex-1 w-full flex flex-col justify-center items-center z-10 py-4 max-w-md">
         <AnimatePresence mode="wait">
           {!isAuthenticated ? (
             /* Premium Login Screen */
@@ -373,35 +454,43 @@ export default function AdminPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full flex-1 flex flex-col justify-between gap-4 h-full"
+              className="w-full flex-1 flex flex-col justify-between gap-3 h-full"
             >
               {/* Main Gesture/Tap Navigation Clicker */}
-              <div className="flex-1 flex flex-col gap-4">
-                {/* NEXT SLIDE - Giant button because it's 95% of presentation clicks */}
+              <div className="flex-1 flex flex-col gap-3">
+                {/* NEXT SLIDE - Giant button */}
                 <button
                   onClick={() => sendCommand("NEXT")}
-                  className={`flex-1 min-h-[180px] bg-gradient-to-br from-indigo-600/90 to-purple-600/90 border border-indigo-400/30 rounded-2xl flex flex-col items-center justify-center relative active:scale-98 transition-all cursor-pointer shadow-lg shadow-indigo-600/10 ${
+                  className={`flex-1 min-h-[170px] bg-gradient-to-br from-indigo-600/90 to-purple-600/90 border border-indigo-400/30 rounded-2xl flex flex-col items-center justify-center relative active:scale-98 transition-all cursor-pointer shadow-lg shadow-indigo-600/10 ${
                     lastCommandSent === "NEXT" ? "ring-4 ring-emerald-500/50" : ""
                   }`}
                 >
-                  <div className="absolute top-4 left-4 text-xs font-semibold text-indigo-200 tracking-wider">
+                  <div className="absolute top-3 left-3 text-[10px] font-semibold text-indigo-200 tracking-wider">
                     PRIMARY ACTION
                   </div>
-                  <ChevronRight className="w-16 h-16 text-white animate-pulse" />
-                  <span className="text-xl font-bold tracking-wide mt-2">Next Slide</span>
-                  <span className="text-xs text-indigo-200/60 mt-1">Tap anywhere in this area</span>
+                  <ChevronRight className="w-14 h-14 text-white animate-pulse" />
+                  <span className="text-lg font-bold tracking-wide mt-1">Next Slide</span>
+                  <span className="text-[10px] text-indigo-200/50 mt-0.5">Tap here or swipe UP/LEFT</span>
                 </button>
 
                 {/* PREVIOUS SLIDE - Medium button */}
                 <button
                   onClick={() => sendCommand("PREV")}
-                  className={`h-24 bg-slate-900/80 border border-white/5 rounded-2xl flex items-center justify-center gap-2 active:scale-98 transition-all cursor-pointer ${
+                  className={`h-20 bg-slate-900/80 border border-white/5 rounded-2xl flex items-center justify-center gap-2 active:scale-98 transition-all cursor-pointer ${
                     lastCommandSent === "PREV" ? "ring-4 ring-emerald-500/50" : ""
                   }`}
                 >
-                  <ChevronLeft className="w-6 h-6 text-slate-300" />
-                  <span className="text-md font-semibold text-slate-200">Previous Slide</span>
+                  <ChevronLeft className="w-5 h-5 text-slate-300" />
+                  <span className="text-sm font-semibold text-slate-200">Previous Slide</span>
                 </button>
+              </div>
+
+              {/* Gesture Info Alert Card */}
+              <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-2.5 flex items-start gap-2 text-xs text-indigo-300">
+                <Hand className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold">Swipe Navigation:</span> You can swipe <span className="font-semibold text-white">UP / LEFT</span> anywhere to go Next, or <span className="font-semibold text-white">DOWN / RIGHT</span> to go Back.
+                </div>
               </div>
 
               {/* Utility Commands Grid */}
@@ -423,23 +512,17 @@ export default function AdminPage() {
                 </button>
               </div>
 
-              {/* Hardware Volume control status and feedback controls */}
+              {/* Bluetooth / Media Keys info */}
               <div className="w-full bg-slate-950/40 border border-white/5 rounded-xl p-3 flex flex-col gap-2">
                 <div className="flex items-center justify-between text-xs text-slate-400">
                   <span className="flex items-center gap-1.5 font-medium">
-                    {audioEnabled ? (
-                      <>
-                        <Volume2 className="w-4 h-4 text-emerald-400 animate-bounce" />
-                        <span className="text-emerald-400 font-semibold">Volume Keys Linked</span>
-                      </>
-                    ) : (
-                      <>
-                        <VolumeX className="w-4 h-4 text-amber-500" />
-                        <span className="text-amber-500 font-semibold">Volume Keys Disabled</span>
-                      </>
-                    )}
+                    <Volume2 className="w-4 h-4 text-cyan-400 animate-pulse" />
+                    <span className="text-cyan-400 font-semibold">Bluetooth Remotes Active</span>
                   </span>
-                  <span className="text-[10px] text-slate-500">Press phone volume button</span>
+                  <span className="text-[10px] text-slate-500">Headset buttons linked</span>
+                </div>
+                <div className="text-[10px] text-slate-400 leading-tight border-t border-white/5 pt-1.5">
+                  Press the <span className="font-semibold text-slate-200">Next Track / Prev Track</span> buttons on bluetooth headsets or smartwatches to transition slides!
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-white/5">

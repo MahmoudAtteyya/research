@@ -92,6 +92,28 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
   const [remoteEnabled, setRemoteEnabled] = useState(false);
   const [showRemoteConfig, setShowRemoteConfig] = useState(false);
   const [adminUrl, setAdminUrl] = useState("");
+  const [remoteStatus, setRemoteStatus] = useState<"disconnected" | "connecting" | "connected">("disconnected");
+
+  // Remote notification toasts
+  const [notification, setNotification] = useState<{ message: string; duration: number } | null>(null);
+  const notificationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const showNotification = useCallback((message: string, duration = 2500) => {
+    if (notificationTimeoutRef.current) {
+      clearTimeout(notificationTimeoutRef.current);
+    }
+    setNotification({ message, duration });
+    notificationTimeoutRef.current = setTimeout(() => {
+      setNotification(null);
+    }, duration);
+  }, []);
+
+  // Cleanup notification timer on unmount
+  useEffect(() => {
+    return () => {
+      if (notificationTimeoutRef.current) clearTimeout(notificationTimeoutRef.current);
+    };
+  }, []);
   
   // Explicit scaling logic for mobile to avoid CSS container-query bugs
   const slideAreaRef = useRef<HTMLDivElement>(null);
@@ -160,14 +182,22 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
         ) {
           await (window.screen as unknown as { orientation: { lock: (o: string) => Promise<void> } }).orientation.lock("landscape");
         }
-      } catch { /* orientation lock not available on all devices */ }
+        return true;
+      } catch (err) {
+        console.warn("Fullscreen request blocked:", err);
+        throw err;
+      }
     } else {
       try {
         await document.exitFullscreen();
         if ((window.screen as unknown as { orientation?: { unlock?: () => void } }).orientation?.unlock) {
           (window.screen as unknown as { orientation: { unlock: () => void } }).orientation.unlock();
         }
-      } catch { /* ignore */ }
+        return true;
+      } catch (err) {
+        console.warn("Exit fullscreen failed:", err);
+        throw err;
+      }
     }
   }, []);
 
@@ -180,15 +210,26 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
 
   // Server-Sent Events (SSE) remote listener
   useEffect(() => {
-    if (!remoteEnabled) return;
+    if (!remoteEnabled) {
+      setRemoteStatus("disconnected");
+      return;
+    }
 
     let active = true;
     let eventSource: EventSource | null = null;
 
     const connectSSE = () => {
       if (!active) return;
+      setRemoteStatus("connecting");
       console.log("[Remote] Connecting to SSE stream...");
       eventSource = new EventSource("/api/remote/stream");
+
+      eventSource.onopen = () => {
+        if (active) {
+          setRemoteStatus("connected");
+          showNotification(ar ? "اتصال التحكم النشط جاهز" : "Remote connection active");
+        }
+      };
 
       eventSource.onmessage = (event) => {
         try {
@@ -196,12 +237,26 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
           console.log("[Remote] Received command:", data);
           if (data.command === "NEXT") {
             pres.nextSlide();
+            showNotification(ar ? "السلايد التالي" : "Next Slide");
           } else if (data.command === "PREV") {
             pres.prevSlide();
+            showNotification(ar ? "السلايد السابق" : "Previous Slide");
           } else if (data.command === "FULLSCREEN") {
-            handleFullscreen();
+            handleFullscreen()
+              .then(() => {
+                showNotification(ar ? "شاشة كاملة" : "Fullscreen toggled");
+              })
+              .catch(() => {
+                showNotification(
+                  ar 
+                    ? "⚠️ حظر المتصفح تكبير الشاشة تلقائياً. اضغط F على اللاب توب." 
+                    : "⚠️ Fullscreen blocked by browser security. Press 'F' on laptop.",
+                  4500
+                );
+              });
           } else if (data.command === "CHROME") {
             cycleChromeState();
+            showNotification(ar ? "تغيير شريط الأدوات" : "Chrome UI toggled");
           }
         } catch (e) {
           console.error("[Remote] Error parsing SSE message:", e);
@@ -210,6 +265,7 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
 
       eventSource.onerror = (err) => {
         console.error("[Remote] SSE connection error, reconnecting in 3s...", err);
+        if (active) setRemoteStatus("connecting");
         if (eventSource) {
           eventSource.close();
         }
@@ -225,7 +281,7 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
         eventSource.close();
       }
     };
-  }, [remoteEnabled, pres.nextSlide, pres.prevSlide, handleFullscreen, cycleChromeState]);
+  }, [remoteEnabled, pres.nextSlide, pres.prevSlide, handleFullscreen, cycleChromeState, ar, showNotification]);
 
   // ── Keyboard shortcuts ──
   useEffect(() => {
@@ -462,12 +518,31 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
                   transition: "all 0.3s ease",
                   fontSize: "11px", fontWeight: 700,
                   color: remoteEnabled ? "#34d399" : "var(--c-text-muted)",
+                  position: "relative"
                 }}
               >
+                {/* Glowing Status Dot */}
+                {remoteEnabled && (
+                  <span 
+                    className={remoteStatus === "connected" ? "blink" : ""}
+                    style={{
+                      width: "6px", height: "6px", borderRadius: "50%",
+                      background: remoteStatus === "connected" ? "#10b981" : "#f59e0b",
+                      boxShadow: remoteStatus === "connected" 
+                        ? "0 0 8px #10b981" 
+                        : "0 0 8px #f59e0b",
+                      display: "inline-block"
+                    }}
+                  />
+                )}
                 <span style={{ fontSize: "13px" }}>{remoteEnabled ? "📱" : "🔌"}</span>
                 {!isMobile && (
                   <span>
-                    {remoteEnabled ? (ar ? "تحكم نشط" : "REMOTE: ON") : (ar ? "تحكم عن بعد" : "REMOTE")}
+                    {remoteEnabled 
+                      ? (remoteStatus === "connected" 
+                          ? (ar ? "تحكم نشط" : "REMOTE: ON") 
+                          : (ar ? "جاري الاتصال..." : "CONNECTING..."))
+                      : (ar ? "تحكم عن بعد" : "REMOTE")}
                   </span>
                 )}
               </button>
@@ -640,6 +715,38 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
       >
         {chromeIcons[chromeState]}
       </motion.button>
+
+      {/* Remote Notification Toast */}
+      <AnimatePresence>
+        {notification && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: -20, x: "-50%" }}
+            style={{
+              position: "fixed",
+              top: "20px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 9999999,
+              background: "rgba(7, 16, 46, 0.95)",
+              border: "1px solid rgba(99, 102, 241, 0.4)",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(99, 102, 241, 0.2)",
+              borderRadius: "10px",
+              padding: "10px 20px",
+              fontSize: "13px",
+              fontWeight: 600,
+              color: "white",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              pointerEvents: "none"
+            }}
+          >
+            <span>📱</span> {notification.message}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── KEYBOARD HINT ── */}
       <KeyboardHint ar={ar} isMobile={isMobile} />
