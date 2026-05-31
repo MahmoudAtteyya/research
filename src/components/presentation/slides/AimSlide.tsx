@@ -88,8 +88,8 @@ export default function AimSlide({ lang }: { lang: Lang }) {
           </div>
           <p style={{ fontSize: "14px", color: "var(--c-text)", lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
             {ar
-              ? "تقييم التأثيرات الحادة لاستهلاك مشروبات الطاقة على المؤشرات الفسيولوجية والأداء المعرفي لدى البالغين في جامعة السويس."
-              : "Evaluate the acute effects of energy drink consumption on physiological parameters and cognitive performance in healthy adults at Suez University."}
+              ? " تقييم التأثيرات الحادة لاستهلاك مشروبات الطاقة على المؤشرات الفسيولوجية والأداء المعرفي لدى البالغين في جامعة السويس ومستشفى جامعة السويس."
+              : "Evaluate the acute effects of energy drink consumption on physiological parameters and cognitive performance in healthy adults at Suez University and Suez University Hospital."}
           </p>
         </div>
       </motion.div>

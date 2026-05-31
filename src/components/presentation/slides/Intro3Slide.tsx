@@ -4,62 +4,184 @@ import { motion } from "framer-motion";
 import { Lang } from "@/lib/presentation/slides-data";
 
 const COMPONENTS = [
-  { name: "Caffeine",   nameAr: "الكافيين",     effect: "CNS Stimulant", effectAr: "محفّز عصبي مركزي",    dose: "80–150 mg", color: "#e11d48", pct: 90 },
-  { name: "Taurine",    nameAr: "التورين",      effect: "Cardiac & Neural Modulation", effectAr: "تنظيم قلبي وعصبي", dose: "1000 mg",   color: "#6366f1", pct: 70 },
-  { name: "Sugar",      nameAr: "السكر",         effect: "Rapid Energy Substrate", effectAr: "مصدر طاقة سريع",     dose: "25–39 g",   color: "#f59e0b", pct: 80 },
-  { name: "B-Vitamins", nameAr: "فيتامينات ب",  effect: "Metabolic Co-factors", effectAr: "عوامل مساعدة أيضية",  dose: "B3, B6, B12", color: "#10b981", pct: 55 },
-  { name: "Guarana",    nameAr: "جوارانا",       effect: "Additional Caffeine Source", effectAr: "مصدر كافيين إضافي", dose: "Synergistic", color: "#8b5cf6", pct: 45 },
+  {
+    name: "Caffeine", nameAr: "الكافيين",
+    effect: "CNS Stimulant — Adenosine Receptor Antagonist",
+    effectAr: "محفّز عصبي مركزي — مضاد لمستقبلات الأدينوزين",
+    dose: "80–150 mg / can",
+    color: "#e11d48", pct: 90, icon: "☕",
+    tag: "Primary", tagAr: "رئيسي",
+  },
+  {
+    name: "Taurine", nameAr: "التورين",
+    effect: "Cardiac & Neural Modulation",
+    effectAr: "تنظيم قلبي وعصبي",
+    dose: "~1000 mg / can",
+    color: "#6366f1", pct: 70, icon: "🫀",
+    tag: "Synergist", tagAr: "معزِّز",
+  },
+  {
+    name: "Sugar", nameAr: "السكر",
+    effect: "Rapid Energy Substrate — Glycemic spike",
+    effectAr: "مصدر طاقة سريع — ارتفاع نسبة السكر في الدم",
+    dose: "25–39 g / can",
+    color: "#f59e0b", pct: 80, icon: "🍬",
+    tag: "Fuel", tagAr: "وقود",
+  },
+  {
+    name: "B-Vitamins", nameAr: "فيتامينات ب",
+    effect: "Metabolic Co-factors (B3, B6, B12)",
+    effectAr: "عوامل مساعدة أيضية (ب3، ب6، ب12)",
+    dose: "B3 · B6 · B12",
+    color: "#10b981", pct: 55, icon: "💊",
+    tag: "Support", tagAr: "داعم",
+  },
+  {
+    name: "Guarana", nameAr: "جوارانا",
+    effect: "Additional Caffeine Source — Synergistic effect",
+    effectAr: "مصدر كافيين إضافي — تأثير تآزري مع الكافيين",
+    dose: "Synergistic",
+    color: "#8b5cf6", pct: 45, icon: "🌿",
+    tag: "Amplifier", tagAr: "مضخِّم",
+  },
 ];
+
+const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } };
+const itemV = {
+  hidden: { opacity: 0, x: -30 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+};
 
 export default function Intro3Slide({ lang }: { lang: Lang }) {
   const ar = lang === "ar";
+
   return (
-    <div className="pres-slide-inner">
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-        <div className="pres-label">{ar ? "المقدمة" : "Introduction"} · 3 / 3</div>
-        <h2 className="pres-h1">{ar ? "المكوّنات " : "Active "}<em>{ar ? "الفعّالة" : "Ingredients"}</em></h2>
-        <div className="pres-divider" />
+    <div className="pres-slide-inner" style={{ direction: ar ? "rtl" : "ltr" }}>
+
+      {/* ── Header ── */}
+      <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ flexShrink: 0, marginBottom: "14px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
+          <div style={{
+            background: "linear-gradient(135deg, #10b981, #06b6d4)",
+            borderRadius: "10px", padding: "6px 10px",
+            fontSize: "10px", fontWeight: 800, letterSpacing: "2px",
+            color: "#fff", textTransform: "uppercase",
+          }}>
+            {ar ? "المقدمة" : "Introduction"} · 3 / 3
+          </div>
+        </div>
+        <h2 style={{ margin: 0, fontSize: "clamp(20px, 2.8vw, 34px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
+          {ar ? "المكوّنات " : "Active "}
+          <span style={{
+            background: "linear-gradient(135deg, #10b981, #06b6d4)",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+          }}>
+            {ar ? "الفعّالة" : "Ingredients"}
+          </span>
+        </h2>
+        <motion.div
+          initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.3, duration: 0.6 }}
+          style={{ height: "3px", width: "60px", background: "linear-gradient(90deg, #10b981, #06b6d4)", borderRadius: "2px", marginTop: "10px", transformOrigin: ar ? "right" : "left" }}
+        />
       </motion.div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "7px", flex: 1, justifyContent: "center" }}>
+      {/* ── Ingredient Cards ── */}
+      <motion.div
+        variants={container} initial="hidden" animate="show"
+        style={{ display: "flex", flexDirection: "column", gap: "8px", flex: 1, justifyContent: "center" }}
+      >
         {COMPONENTS.map((c, i) => (
           <motion.div
             key={i}
-            className="pres-card"
-            initial={{ opacity: 0, x: ar ? 24 : -24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.09 }}
-            whileHover={{ scale: 1.01 }}
-            style={{ display: "flex", alignItems: "center", gap: "12px", padding: "10px 14px" }}
+            variants={itemV}
+            whileHover={{ scale: 1.015, x: ar ? -5 : 5 }}
+            style={{
+              background: `linear-gradient(135deg, ${c.color}12, ${c.color}04)`,
+              border: `1px solid ${c.color}28`,
+              borderRadius: "14px",
+              padding: "10px 16px",
+              display: "grid",
+              gridTemplateColumns: "44px 1fr auto",
+              alignItems: "center",
+              gap: "14px",
+              position: "relative",
+              overflow: "hidden",
+              boxShadow: `0 2px 12px ${c.color}0a`,
+            }}
           >
+            {/* Left accent */}
+            <div style={{
+              position: "absolute",
+              [ar ? "right" : "left"]: 0,
+              top: "15%", bottom: "15%", width: "3px",
+              background: `linear-gradient(to bottom, transparent, ${c.color}, transparent)`,
+              borderRadius: "0 3px 3px 0",
+            }} />
+
+            {/* Icon */}
             <motion.div
+              animate={{ boxShadow: [`0 0 8px ${c.color}33`, `0 0 18px ${c.color}66`, `0 0 8px ${c.color}33`] }}
+              transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.5 }}
               style={{
-                width: "10px", height: "10px", borderRadius: "50%",
-                background: c.color, flexShrink: 0,
-                boxShadow: `0 0 8px ${c.color}88`,
+                width: "44px", height: "44px", borderRadius: "12px",
+                background: `linear-gradient(135deg, ${c.color}28, ${c.color}0e)`,
+                border: `1px solid ${c.color}40`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "22px", flexShrink: 0,
               }}
-              animate={{ boxShadow: [`0 0 4px ${c.color}44`, `0 0 12px ${c.color}88`, `0 0 4px ${c.color}44`] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-            <div style={{ width: "90px", flexShrink: 0 }}>
-              <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--c-text)" }}>{ar ? c.nameAr : c.name}</div>
-              <div style={{ fontSize: "10px", color: "var(--c-text-dim)" }}>{c.dose}</div>
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: "12px", color: "var(--c-text-muted)", marginBottom: "4px" }}>{ar ? c.effectAr : c.effect}</div>
-              <div className="pres-bar-track">
+            >
+              {c.icon}
+            </motion.div>
+
+            {/* Info */}
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}>
+                <span style={{ fontSize: "14px", fontWeight: 800, color: "var(--c-text)" }}>
+                  {ar ? c.nameAr : c.name}
+                </span>
+                <span style={{
+                  fontSize: "9px", fontWeight: 800, letterSpacing: "0.8px",
+                  background: `${c.color}20`, border: `1px solid ${c.color}40`,
+                  borderRadius: "20px", padding: "1px 7px", color: c.color,
+                }}>
+                  {ar ? c.tagAr : c.tag}
+                </span>
+                <span style={{ fontSize: "10px", color: "var(--c-text-muted)", marginLeft: "auto" }}>
+                  {c.dose}
+                </span>
+              </div>
+              {/* Effect text */}
+              <div style={{ fontSize: "11.5px", color: "var(--c-text-muted)", marginBottom: "5px", lineHeight: 1.3 }}>
+                {ar ? c.effectAr : c.effect}
+              </div>
+              {/* Progress bar */}
+              <div style={{
+                height: "5px", borderRadius: "3px", background: "rgba(255,255,255,0.06)",
+                overflow: "hidden",
+              }}>
                 <motion.div
-                  className="pres-bar-fill"
-                  style={{ background: c.color }}
                   initial={{ width: 0 }}
                   animate={{ width: `${c.pct}%` }}
-                  transition={{ delay: 0.4 + i * 0.08, duration: 0.7 }}
+                  transition={{ delay: 0.5 + i * 0.1, duration: 0.8, ease: "easeOut" }}
+                  style={{
+                    height: "100%", borderRadius: "3px",
+                    background: `linear-gradient(90deg, ${c.color}aa, ${c.color})`,
+                    boxShadow: `0 0 6px ${c.color}66`,
+                  }}
                 />
               </div>
             </div>
+
+            {/* Percentage */}
+            <div style={{
+              fontSize: "18px", fontWeight: 900, color: c.color,
+              opacity: 0.8, flexShrink: 0, minWidth: "40px", textAlign: "center",
+            }}>
+              {c.pct}%
+            </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

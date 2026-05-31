@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Lang, DEMOGRAPHICS_DATA } from "@/lib/presentation/slides-data";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 
 function CountUp({ end, dec = 0, suffix = "" }: { end: number; dec?: number; suffix?: string }) {
   const [v, setV] = React.useState(0);
@@ -23,58 +23,162 @@ export default function ResultsDemoSlide({ lang }: { lang: Lang }) {
     { name: ar ? "إناث" : "Females", value: d.females, color: "#ec4899" },
   ];
 
+  const STATS = [
+    { val: d.totalParticipants, suffix: "", dec: 0, labelEn: "Total Participants", labelAr: "إجمالي المشاركين", color: "#6366f1", icon: "👥", subEn: "Enrolled", subAr: "مسجّل" },
+    { val: d.malePercent, suffix: "%", dec: 0, labelEn: "Male", labelAr: "ذكور", color: "#3b82f6", icon: "♂", subEn: "of sample", subAr: "من العينة" },
+    { val: d.ageMean, suffix: "", dec: 1, labelEn: "Mean Age", labelAr: "متوسط العمر", color: "#06b6d4", icon: "📅", subEn: "years ± 5.8", subAr: "سنة ± 5.8" },
+    { val: d.edConsumerPercent, suffix: "%", dec: 0, labelEn: "Prior ED Consumers", labelAr: "مستهلكو مشروبات الطاقة", color: "#f59e0b", icon: "⚡", subEn: "had used EDs", subAr: "سبق لهم الاستهلاك" },
+  ];
+
   return (
-    <div className="pres-slide-inner">
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-        <div className="pres-label">{ar ? "النتائج" : "Results"} · {ar ? "الديموغرافيا" : "Demographics"}</div>
-        <h2 className="pres-h1" style={{ fontSize: "clamp(22px, 3vw, 36px)" }}>{ar ? "خصائص " : "Study "}<em>{ar ? "المشاركين" : "Participants"}</em></h2>
-        <div className="pres-divider" />
+    <div className="pres-slide-inner" style={{ direction: ar ? "rtl" : "ltr" }}>
+
+      {/* ── Header ── */}
+      <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ flexShrink: 0, marginBottom: "14px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
+          <div style={{
+            background: "linear-gradient(135deg, #6366f1, #ec4899)",
+            borderRadius: "10px", padding: "5px 12px",
+            fontSize: "10px", fontWeight: 800, letterSpacing: "2px",
+            color: "#fff", textTransform: "uppercase",
+          }}>
+            {ar ? "النتائج · الديموغرافيا" : "Results · Demographics"}
+          </div>
+        </div>
+        <h2 style={{ margin: 0, fontSize: "clamp(20px, 2.8vw, 32px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
+          {ar ? "خصائص " : "Study "}
+          <span style={{ background: "linear-gradient(135deg, #6366f1, #ec4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+            {ar ? "المشاركين" : "Participants"}
+          </span>
+        </h2>
+        <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.3, duration: 0.6 }}
+          style={{ height: "3px", width: "60px", background: "linear-gradient(90deg, #6366f1, #ec4899)", borderRadius: "2px", marginTop: "10px", transformOrigin: ar ? "right" : "left" }} />
       </motion.div>
 
-      <div className="pres-grid-2" style={{ flex: 1, gap: "14px", alignContent: "center" }}>
-        {/* Left: Key stats */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-          {[
-            { val: d.totalParticipants, suffix: "", labelEn: "Total Participants", labelAr: "إجمالي المشاركين", color: "var(--c-indigo)" },
-            { val: d.malePercent, suffix: "%", labelEn: "Male Participants", labelAr: "ذكور", color: "#6366f1" },
-            { val: d.ageMean, suffix: " yrs", dec: 1, labelEn: "Mean Age ± 5.8", labelAr: "متوسط العمر ± 5.8", color: "var(--c-cyan)" },
-            { val: d.edConsumerPercent, suffix: "%", labelEn: "Had consumed EDs", labelAr: "سبق لهم استهلاك مشروبات الطاقة", color: "var(--c-amber)" },
-          ].map((item: any, i) => (
-            <motion.div key={i} className="pres-stat" initial={{ opacity: 0, x: ar ? 16 : -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-              style={{ borderLeft: `3px solid ${item.color}`, textAlign: "left", display: "flex", alignItems: "center", gap: "14px", padding: "12px 16px" }}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px", flex: 1, minHeight: 0 }}>
+
+        {/* Left: Stat cards 2x2 */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", alignContent: "start" }}>
+          {STATS.map((s, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.9, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
+              whileHover={{ scale: 1.04, y: -3 }}
+              style={{
+                background: `linear-gradient(145deg, ${s.color}14, ${s.color}06)`,
+                border: `1px solid ${s.color}30`,
+                borderTop: `3px solid ${s.color}`,
+                borderRadius: "14px",
+                padding: "14px 12px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                textAlign: "center",
+                gap: "4px",
+                cursor: "default",
+                position: "relative",
+                overflow: "hidden",
+              }}
             >
-              <div className="pres-stat-val" style={{ fontSize: "28px" }}>
-                <CountUp end={item.val} dec={item.dec || 0} suffix={item.suffix} />
+              {/* Glow */}
+              <div style={{ position: "absolute", top: "-8px", left: "50%", transform: "translateX(-50%)", width: "40px", height: "40px", borderRadius: "50%", background: `radial-gradient(${s.color}30, transparent 70%)`, pointerEvents: "none" }} />
+
+              <div style={{ fontSize: "22px" }}>{s.icon}</div>
+              <motion.div
+                animate={{ opacity: [0.8, 1, 0.8] }}
+                transition={{ duration: 3, repeat: Infinity, delay: i * 0.6 }}
+                style={{
+                  fontSize: "28px", fontWeight: 900, lineHeight: 1,
+                  background: `linear-gradient(135deg, ${s.color}, ${s.color}cc)`,
+                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+                }}
+              >
+                <CountUp end={s.val} dec={s.dec} suffix={s.suffix} />
+              </motion.div>
+              <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
+                {ar ? s.labelAr : s.labelEn}
               </div>
-              <div className="pres-stat-unit" style={{ textAlign: ar ? "right" : "left" }}>{ar ? item.labelAr : item.labelEn}</div>
+              <div style={{ fontSize: "9.5px", color: "var(--c-text-muted)" }}>
+                {ar ? s.subAr : s.subEn}
+              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Right: Pie + Reasons */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          <motion.div className="pres-card" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.35 }}
-            style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 16px" }}>
-            <ResponsiveContainer width={90} height={90}>
-              <PieChart>
-                <Pie data={genderData} cx="50%" cy="50%" innerRadius={25} outerRadius={40} dataKey="value">
-                  {genderData.map((e, i) => <Cell key={i} fill={e.color} />)}
-                </Pie>
-                <Tooltip contentStyle={{ background: "#07102e", border: "1px solid rgba(255,255,255,0.1)", fontSize: "12px" }} />
-              </PieChart>
-            </ResponsiveContainer>
-            <div>
-              {genderData.map((g, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "5px" }}>
-                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: g.color, display: "inline-block" }} />
-                  <span style={{ fontSize: "13px", color: "var(--c-text)" }}>{g.name}: {i === 0 ? d.malePercent : d.femalePercent}%</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+        {/* Right: Gender pie + legend */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.35, duration: 0.5 }}
+          style={{
+            borderRadius: "16px",
+            border: "1px solid rgba(255,255,255,0.08)",
+            background: "rgba(255,255,255,0.02)",
+            padding: "16px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
+          }}
+        >
+          <div style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "2px", color: "#94a3b8", textTransform: "uppercase" }}>
+            {ar ? "توزيع الجنس" : "Gender Distribution"}
+          </div>
 
-        </div>
+          {/* Pie chart */}
+          <div style={{ flex: 1, position: "relative" }}>
+            <div style={{ position: "absolute", inset: 0 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={genderData}
+                    cx="50%" cy="48%"
+                    innerRadius="35%"
+                    outerRadius="65%"
+                    dataKey="value"
+                    stroke="none"
+                    startAngle={90}
+                    endAngle={-270}
+                    paddingAngle={3}
+                    label={({ cx, cy, midAngle, innerRadius, outerRadius, value }: any) => {
+                      const RADIAN = Math.PI / 180;
+                      const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
+                      const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                      const y = cy + radius * Math.sin(-midAngle * RADIAN);
+                      return <text x={x} y={y} fill="white" fontSize="13" fontWeight="800" textAnchor="middle" dominantBaseline="central">{value}%</text>;
+                    }}
+                    labelLine={false}
+                  >
+                    {genderData.map((e, i) => <Cell key={i} fill={e.color} />)}
+                  </Pie>
+                  <Tooltip
+                    contentStyle={{ background: "rgba(15,23,42,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", fontSize: "12px" }}
+                    formatter={(v: any) => [`${v}%`]}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Legend */}
+          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexShrink: 0 }}>
+            {genderData.map((g, i) => (
+              <div key={i} style={{
+                display: "flex", alignItems: "center", gap: "8px",
+                background: `${g.color}12`, border: `1px solid ${g.color}25`,
+                borderRadius: "20px", padding: "5px 12px",
+              }}>
+                <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: g.color, boxShadow: `0 0 8px ${g.color}66` }} />
+                <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--c-text)" }}>{g.name}</span>
+                <span style={{ fontSize: "13px", fontWeight: 900, color: g.color }}>
+                  {i === 0 ? d.malePercent : d.femalePercent}%
+                </span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </div>
   );

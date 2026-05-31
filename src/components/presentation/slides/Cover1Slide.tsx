@@ -3,10 +3,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Lang } from "@/lib/presentation/slides-data";
 
-const CONFERENCE = "The 4th Annual Student Symposium for Research Projects • 9 Jun 2026";
+const Symposium = "The 4th Annual Student Symposium for Research Projects • 9 Jun 2026";
 
 const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.12 } } };
-const item      = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } } };
+const item = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } } };
 
 export default function Cover1Slide({ lang }: { lang: Lang }) {
   const ar = lang === "ar";
@@ -33,7 +33,7 @@ export default function Cover1Slide({ lang }: { lang: Lang }) {
         }}
       />
 
-      {/* Conference Banner */}
+      {/* Symposium Banner */}
       <motion.div
         initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
         style={{
@@ -47,7 +47,7 @@ export default function Cover1Slide({ lang }: { lang: Lang }) {
           🎓 {ar ? "يُقدَّم في" : "Presented at"}
         </div>
         <div style={{ fontSize: "clamp(12px, 1.5vw, 15px)", fontWeight: 800, color: "var(--c-text)" }}>
-          {CONFERENCE}
+          {Symposium}
         </div>
       </motion.div>
 
@@ -198,11 +198,11 @@ export default function Cover1Slide({ lang }: { lang: Lang }) {
             ? "التأثيرات الحادة لاستهلاك مشروبات الطاقة على العلامات الحيوية والأداء المعرفي"
             : "Acute Effects of Energy Drinks Consumption on Vital Signs and Cognitive Performance"}
         </motion.h1>
-        
+
         <motion.p
           variants={item}
           style={{
-            fontSize: "clamp(12px, 1.4vw, 15px)", color: "var(--c-text-muted)", 
+            fontSize: "clamp(12px, 1.4vw, 15px)", color: "var(--c-text-muted)",
             maxWidth: 700, marginBottom: 20, lineHeight: 1.5,
           }}
         >

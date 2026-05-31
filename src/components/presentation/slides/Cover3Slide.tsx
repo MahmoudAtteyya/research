@@ -3,11 +3,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Lang, SUPERVISORS } from "@/lib/presentation/slides-data";
 
-const CONFERENCE = "The Fourth Student Conference for Research Projects, 2026";
+const Symposium = "The Fourth Student Symposium for Research Projects, 2026";
 
 const ROLE_CONFIG: Record<string, { icon: string; color: string; gradient: string }> = {
-  "Direct Research Project Supervisor":   { icon: "🔬", color: "#6366f1", gradient: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.05))" },
-  "Research Year Supervisor":             { icon: "📚", color: "#8b5cf6", gradient: "linear-gradient(135deg, rgba(139,92,246,0.15), rgba(139,92,246,0.05))" },
+  "Direct Research Project Supervisor": { icon: "🔬", color: "#6366f1", gradient: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.05))" },
+  "Research Year Supervisor": { icon: "📚", color: "#8b5cf6", gradient: "linear-gradient(135deg, rgba(139,92,246,0.15), rgba(139,92,246,0.05))" },
   "General Research Projects Supervisor": { icon: "🏛️", color: "#fbbf24", gradient: "linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05))" },
 };
 
@@ -16,7 +16,7 @@ export default function Cover3Slide({ lang }: { lang: Lang }) {
   return (
     <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", overflow: "hidden", position: "relative" }}>
 
-      {/* Conference Banner */}
+      {/* Symposium Banner */}
       <motion.div
         initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
         style={{
@@ -30,7 +30,7 @@ export default function Cover3Slide({ lang }: { lang: Lang }) {
           🎓 {ar ? "يُقدَّم في" : "Presented at"}
         </div>
         <div style={{ fontSize: "clamp(12px, 1.4vw, 15px)", fontWeight: 800, color: "var(--c-text)" }}>
-          {CONFERENCE}
+          {Symposium}
         </div>
       </motion.div>
 

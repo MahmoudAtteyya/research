@@ -1,30 +1,31 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Lang, SUPERVISORS } from "@/lib/presentation/slides-data";
+import { Stethoscope, Award, Heart, GraduationCap, ArrowUpRight } from "lucide-react";
 
 /** Animated sparkle particles */
 function Sparkles() {
-  const particles = Array.from({ length: 20 }, (_, i) => ({
+  const particles = Array.from({ length: 15 }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
     y: Math.random() * 100,
-    size: 3 + Math.random() * 4,
+    size: 2 + Math.random() * 3,
     delay: Math.random() * 4,
-    dur: 2 + Math.random() * 3,
+    dur: 3 + Math.random() * 3,
   }));
   return (
     <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
       {particles.map(p => (
         <motion.div
           key={p.id}
-          animate={{ opacity: [0, 1, 0], scale: [0, 1, 0], rotate: [0, 180, 360] }}
+          animate={{ opacity: [0, 0.7, 0], scale: [0.5, 1.2, 0.5] }}
           transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
           style={{
             position: "absolute", left: `${p.x}%`, top: `${p.y}%`,
             width: p.size, height: p.size, borderRadius: "50%",
-            background: `radial-gradient(circle, rgba(251,191,36,0.8), rgba(99,102,241,0.4))`,
-            boxShadow: "0 0 6px rgba(251,191,36,0.4)",
+            background: "rgba(251, 191, 36, 0.5)",
+            boxShadow: "0 0 8px rgba(251, 191, 36, 0.3)",
           }}
         />
       ))}
@@ -32,154 +33,181 @@ function Sparkles() {
   );
 }
 
-/** Animated expanding rings */
-function PulseRings() {
+/** Animated moving ECG line */
+function ECGLine() {
   return (
-    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none" }}>
-      {[0, 1, 2].map(i => (
-        <motion.div
-          key={i}
-          animate={{ scale: [1, 2.5], opacity: [0.3, 0] }}
-          transition={{ duration: 3, repeat: Infinity, delay: i * 1, ease: "easeOut" }}
-          style={{
-            position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)",
-            width: 120, height: 120, borderRadius: "50%",
-            border: "2px solid rgba(99,102,241,0.3)",
-          }}
+    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[200px] w-full opacity-10 pointer-events-none z-0">
+      <svg width="100%" height="100%" viewBox="0 0 1200 100" preserveAspectRatio="none">
+        <motion.path
+          d="M0,50 L400,50 L415,35 L430,65 L445,10 L460,90 L475,45 L485,55 L500,50 L800,50 L815,25 L830,75 L845,0 L860,100 L875,40 L885,60 L900,50 L1200,50"
+          fill="none"
+          stroke="url(#ecg-grad)"
+          strokeWidth="2.5"
+          initial={{ strokeDasharray: "1200", strokeDashoffset: "1200" }}
+          animate={{ strokeDashoffset: ["1200", "0"] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
         />
-      ))}
+        <defs>
+          <linearGradient id="ecg-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#6366f1" />
+            <stop offset="50%" stopColor="#06b6d4" />
+            <stop offset="100%" stopColor="#8b5cf6" />
+          </linearGradient>
+        </defs>
+      </svg>
     </div>
   );
 }
 
 export default function ThankYouSlide({ lang }: { lang: Lang }) {
   const ar = lang === "ar";
-  const [count, setCount] = useState(0);
+  const [activeIcon, setActiveIcon] = useState(0);
+
   useEffect(() => {
-    const t = setInterval(() => setCount(c => (c + 1) % 4), 2500);
+    const t = setInterval(() => setActiveIcon(c => (c + 1) % 4), 3000);
     return () => clearInterval(t);
   }, []);
 
-  const emojis = ["🙏", "🎓", "💡", "⭐"];
+  const icons = [
+    <GraduationCap key="g" className="w-12 h-12 text-indigo-400" />,
+    <Stethoscope key="s" className="w-12 h-12 text-cyan-400" />,
+    <Award key="a" className="w-12 h-12 text-amber-400" />,
+    <Heart key="h" className="w-12 h-12 text-rose-400" />
+  ];
 
   return (
-    <div className="pres-slide-inner pres-cover" style={{ justifyContent: "center", position: "relative" }}>
-      {/* Animated background effects */}
+    <div 
+      className="pres-slide-inner relative flex flex-col justify-between items-center text-center overflow-hidden py-10 px-8 select-none"
+      style={{ background: "#04071a", minHeight: "100%", width: "100%" }}
+    >
+      {/* Background Graphics */}
       <Sparkles />
-      <PulseRings />
+      <ECGLine />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-radial from-indigo-500/5 to-transparent pointer-events-none z-0" />
 
-      {/* Animated gradient orb */}
+      {/* Top Header Logos */}
       <motion.div
-        animate={{ scale: [1, 1.15, 1], rotate: [0, 180, 360] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-        style={{
-          position: "absolute", width: "500px", height: "500px", borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(99,102,241,0.12) 0%, rgba(139,92,246,0.06) 40%, transparent 70%)",
-          top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none",
-        }}
-      />
-
-      {/* Logos */}
-      <motion.div
-        className="pres-cover-logos"
-        initial={{ opacity: 0, y: -18 }}
+        initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.55 }}
-        style={{ marginBottom: "16px", position: "relative", zIndex: 2 }}
+        transition={{ duration: 0.6 }}
+        className="flex items-center gap-6 z-10"
       >
-        <motion.img
-          src="/university.svg" alt="Suez University" className="pres-cover-logo"
-          style={{ width: 60, height: 60 }}
-          animate={{ y: [0, -5, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        <img 
+          src="/university.svg" 
+          alt="Suez University" 
+          className="w-14 h-14 object-contain filter drop-shadow-[0_4px_12px_rgba(251,191,36,0.15)]" 
         />
-        <div className="pres-cover-sep" style={{ height: 45 }} />
-        <motion.img
-          src="/faculty.svg" alt="Faculty" className="pres-cover-logo"
-          style={{ width: 60, height: 60 }}
-          animate={{ y: [0, -5, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        <div className="h-10 w-[1px] bg-gradient-to-b from-transparent via-slate-600 to-transparent" />
+        <img 
+          src="/faculty.svg" 
+          alt="Faculty" 
+          className="w-14 h-14 object-contain rounded-full bg-white p-0.5 filter drop-shadow-[0_4px_12px_rgba(99,102,241,0.15)]" 
         />
       </motion.div>
 
-      {/* Animated emoji */}
-      <motion.div
-        key={count}
-        initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        exit={{ opacity: 0, scale: 0.5 }}
-        transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        style={{ fontSize: "52px", marginBottom: "8px", position: "relative", zIndex: 2 }}
-      >{emojis[count]}</motion.div>
-
-      {/* Gradient animated title */}
-      <motion.h1
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        style={{
-          fontSize: "clamp(36px,6vw,60px)", fontWeight: 900, letterSpacing: "-1px", marginBottom: "6px",
-          background: "linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4, #f59e0b, #6366f1)",
-          backgroundSize: "300% 300%",
-          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
-          animation: "gradientShift 4s ease infinite",
-          position: "relative", zIndex: 2,
-        }}
-      >
-        {ar ? "شكراً لكم" : "Thank You"}
-      </motion.h1>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.45 }}
-        style={{ fontSize: "16px", color: "var(--c-text-muted)", marginBottom: "20px", position: "relative", zIndex: 2 }}
-      >
-        {ar ? "نحن مستعدون للإجابة على أسئلتكم" : "We are ready for your questions"}
-      </motion.div>
-
-      {/* Animated separator */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-        style={{ width: 160, height: 2, background: "linear-gradient(90deg, transparent, var(--c-indigo), var(--c-violet), transparent)", margin: "0 auto 16px", position: "relative", zIndex: 2 }}
-      />
-
-      {/* Group info */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.55 }}
-        style={{ textAlign: "center", marginBottom: "14px", position: "relative", zIndex: 2 }}
-      >
-        <div style={{ fontSize: "12px", fontWeight: 700, color: "var(--c-gold)", letterSpacing: "3px", textTransform: "uppercase", marginBottom: "3px" }}>
-          {ar ? "المجموعة السادسة — الدفعة الخامسة" : "Group 6 · 5th Year Batch"}
+      {/* Center Section: Core Title & Message */}
+      <div className="flex flex-col items-center gap-2 z-10 max-w-2xl my-auto">
+        {/* Animated Central Medical Icon */}
+        <div className="w-20 h-20 rounded-full bg-slate-900/60 border border-white/5 flex items-center justify-center shadow-xl backdrop-blur-sm relative overflow-hidden mb-2">
+          <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 to-cyan-500/5" />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIcon}
+              initial={{ scale: 0.5, opacity: 0, rotate: -45 }}
+              animate={{ scale: 1, opacity: 1, rotate: 0 }}
+              exit={{ scale: 0.5, opacity: 0, rotate: 45 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            >
+              {icons[activeIcon]}
+            </motion.div>
+          </AnimatePresence>
         </div>
-        <div style={{ fontSize: "12px", color: "var(--c-text-dim)" }}>
-          {ar ? "كلية الطب — جامعة السويس — 2021/2026" : "Faculty of Medicine · Suez University · 2021 / 2026"}
-        </div>
-      </motion.div>
 
-      {/* Supervisors with stagger */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65 }} style={{ position: "relative", zIndex: 2 }}>
-        <div style={{ fontSize: "11px", color: "var(--c-text-dim)", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "8px", textAlign: "center" }}>
-          {ar ? "تحت إشراف" : "Supervised by"}
-        </div>
-        <div className="pres-cover-sups">
+        {/* Big Thank You Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="text-4xl md:text-6xl font-black tracking-tight"
+          style={{
+            background: "linear-gradient(135deg, #ffffff 30%, #a5b4fc 70%, #6366f1 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text"
+          }}
+        >
+          {ar ? "شكراً لكم" : "Thank You"}
+        </motion.h1>
+
+        {/* Dynamic Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.35 }}
+          className="text-sm md:text-lg text-slate-400 font-medium tracking-wide mt-1"
+        >
+          {ar ? "نحن مستعدون للإجابة على أسئلتكم ومناقشاتكم" : "We are ready for your questions and discussions"}
+        </motion.p>
+
+        {/* Separator line */}
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: 140 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="h-[2px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent mt-3"
+        />
+      </div>
+
+      {/* Supervisors Grid Section */}
+      <div className="w-full max-w-4xl z-10 mt-auto">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-3"
+        >
+          {ar ? "تحت إشراف" : "SUPERVISED BY"}
+        </motion.p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
           {SUPERVISORS.map((s, i) => (
             <motion.div
               key={i}
-              className="pres-sup-chip"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75 + i * 0.1 }}
-              whileHover={{ scale: 1.05, y: -2 }}
-              style={{ fontSize: "11px" }}
-            >{s.name}</motion.div>
+              transition={{ duration: 0.5, delay: 0.6 + i * 0.1 }}
+              whileHover={{ y: -3, borderColor: "rgba(251,191,36,0.3)" }}
+              className="bg-slate-900/40 border border-white/5 hover:bg-slate-900/60 rounded-xl p-3 text-center backdrop-blur-md transition-all shadow-md group relative"
+            >
+              {/* Doctor/Supervisor Icon */}
+              <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mx-auto mb-2 group-hover:scale-105 transition-transform">
+                <Stethoscope className="w-4 h-4 text-indigo-400" />
+              </div>
+              
+              <h3 className="text-xs font-bold text-slate-200 tracking-wide line-clamp-1">
+                {s.name}
+              </h3>
+              <p className="text-[9px] text-slate-500 font-medium mt-1 uppercase tracking-tighter line-clamp-2 min-h-[24px]">
+                {ar ? s.roleAr : s.roleEn}
+              </p>
+            </motion.div>
           ))}
         </div>
+      </div>
+
+      {/* Bottom Footer Details */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.1 }}
+        className="w-full border-t border-white/5 pt-4 mt-6 z-10 flex flex-col md:flex-row justify-between items-center gap-2 text-slate-500 text-[10px] md:px-4"
+      >
+        <span className="font-semibold tracking-wider text-amber-500/80">
+          {ar ? "المجموعة السادسة — الدفعة الخامسة" : "GROUP 6 • 5TH YEAR BATCH"}
+        </span>
+        <span className="text-slate-600">
+          {ar ? "كلية الطب — جامعة السويس — 2021/2026" : "FACULTY OF MEDICINE • SUEZ UNIVERSITY • 2021 / 2026"}
+        </span>
       </motion.div>
     </div>
   );

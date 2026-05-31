@@ -46,7 +46,7 @@ export default function ResultsSideEffectsSlide({ lang }: { lang: Lang }) {
         <motion.div className="pres-card" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
           style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "6px" }}>
           <div style={{ fontSize: "11px", color: "var(--c-text-dim)", textTransform: "uppercase", fontWeight: 700 }}>
-            {ar ? "الآثار الجانبية المبلّغ عنها" : "Reported Side Effects (n out of 47)"}
+            {ar ? "الآثار الجانبية المبلّغ عنها" : "Reported Side Effects (n = 33)"}
           </div>
           <div style={{ flex: 1, position: "relative" }}>
             <div style={{ position: "absolute", inset: 0 }}>

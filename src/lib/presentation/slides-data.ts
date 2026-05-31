@@ -21,8 +21,6 @@ export const SLIDES: Slide[] = [
   { id: "intro-2",          titleEn: "Introduction — Market",    titleAr: "المقدمة — السوق العالمي",       speakerNotesEn: "The global market is massive and growing. University students are a key demographic.", speakerNotesAr: "السوق العالمي ضخم ومتنامٍ. طلاب الجامعات فئة مستهدفة رئيسية." },
   { id: "intro-3",          titleEn: "Introduction — Components",titleAr: "المقدمة — المكوّنات",          speakerNotesEn: "Key active components and their mechanisms of action.", speakerNotesAr: "المكونات النشطة الرئيسية وآليات عملها." },
   { id: "aim",              titleEn: "Aim & Objectives",         titleAr: "الهدف والأهداف",                speakerNotesEn: "Primary aim: evaluate acute effects on vital signs and cognitive performance.", speakerNotesAr: "الهدف الأساسي: تقييم التأثيرات الحادة على العلامات الحيوية والأداء المعرفي." },
-  { id: "literature-1",     titleEn: "Literature — Cardiovascular",titleAr: "الأدبيات — القلب والأوعية",  speakerNotesEn: "Previous studies on cardiovascular effects of energy drinks.", speakerNotesAr: "الدراسات السابقة حول التأثيرات القلبية الوعائية." },
-  { id: "literature-2",     titleEn: "Literature — Cognitive",   titleAr: "الأدبيات — المعرفة",           speakerNotesEn: "Evidence on cognitive and neurological effects.", speakerNotesAr: "الأدلة على التأثيرات المعرفية والعصبية." },
   { id: "methods-1",        titleEn: "Study Design & Setting",   titleAr: "تصميم الدراسة والموقع",         speakerNotesEn: "Pre-post experimental design. Setting and sample overview.", speakerNotesAr: "تصميم تجريبي قبلي-بعدي. الموقع والعينة." },
   { id: "methods-2",        titleEn: "Population, Sample & Tools",titleAr: "المجتمع والعينة والأدوات",    speakerNotesEn: "Study population, inclusion/exclusion criteria and measurement tools.", speakerNotesAr: "مجتمع الدراسة ومعايير الإدراج/الاستبعاد وأدوات القياس." },
   { id: "data-tools",       titleEn: "Data Collection Tools",    titleAr: "أدوات جمع البيانات",          speakerNotesEn: "Three instruments: structured questionnaire, physiological vital signs measurement, and standardized cognitive assessment battery.", speakerNotesAr: "ثلاثة أدوات: استبيان منظّم، قياس العلامات الحيوية، وبطارية التقييم المعرفي الموحّدة." },
@@ -36,7 +34,6 @@ export const SLIDES: Slide[] = [
   { id: "results-vital-1",  titleEn: "Vital Signs — BP & HR",   titleAr: "العلامات الحيوية — الضغط والقلب", speakerNotesEn: "Significant increases in blood pressure and heart rate. All p<0.001.", speakerNotesAr: "زيادات ملحوظة في ضغط الدم ومعدل القلب. جميعها p<0.001." },
   { id: "results-vital-2",  titleEn: "Vital Signs — RR & Temp", titleAr: "العلامات الحيوية — التنفس والحرارة", speakerNotesEn: "Respiratory rate and temperature also showed significant changes.", speakerNotesAr: "معدل التنفس ودرجة الحرارة أظهرا أيضاً تغيرات معنوية." },
   { id: "results-cognitive", titleEn: "Cognitive Performance",  titleAr: "الأداء المعرفي",               speakerNotesEn: "Significant improvements in mindfulness, working memory, and processing speed.", speakerNotesAr: "تحسّن ملحوظ في اليقظة الذهنية والذاكرة العاملة وسرعة المعالجة." },
-  { id: "discussion",       titleEn: "Discussion",              titleAr: "المناقشة",                      speakerNotesEn: "Our results align with and extend previous literature.", speakerNotesAr: "نتائجنا تتوافق مع الأدبيات السابقة وتوسّعها." },
   { id: "conclusion",       titleEn: "Conclusion",              titleAr: "الخلاصة",                       speakerNotesEn: "Dual effect: cognitive boost + cardiovascular changes. Moderation needed.", speakerNotesAr: "تأثير مزدوج: تعزيز معرفي + تغيرات قلبية وعائية. الاعتدال ضروري." },
   { id: "recommendations",  titleEn: "Recommendations",         titleAr: "التوصيات",                      speakerNotesEn: "Public awareness, moderation, clinical and policy recommendations.", speakerNotesAr: "التوعية العامة، الاعتدال، التوصيات السريرية والسياساتية." },
   { id: "thankyou",         titleEn: "Thank You",               titleAr: "شكراً لكم",                    speakerNotesEn: "Thank the committee. Open for questions.", speakerNotesAr: "نشكر اللجنة. نحن مستعدون للأسئلة." },
@@ -44,11 +41,11 @@ export const SLIDES: Slide[] = [
 
 // ===== Research Data =====
 export const VITAL_SIGNS_DATA = [
-  { name: "Systolic BP",       nameAr: "ضغط الدم الانقباضي",    unit: "mmHg", pre: 116.83, post: 119.85, diff: -3.021, pValue: "<0.001**", preSD: 8.18,  postSD: 8.18,  color: "#f43f5e" },
-  { name: "Diastolic BP",      nameAr: "ضغط الدم الانبساطي",   unit: "mmHg", pre: 76.21,  post: 77.49,  diff: -1.277, pValue: "<0.001**", preSD: 8.34,  postSD: 8.62,  color: "#ec4899" },
-  { name: "Heart Rate",        nameAr: "معدل ضربات القلب",     unit: "bpm",  pre: 75.62,  post: 78.64,  diff: -3.021, pValue: "<0.001**", preSD: 9.91,  postSD: 10.31, color: "#e11d48" },
-  { name: "Respiratory Rate",  nameAr: "معدل التنفس",          unit: "/min", pre: 16.70,  post: 17.45,  diff: -0.745, pValue: "<0.001**", preSD: 1.99,  postSD: 2.77,  color: "#a855f7" },
-  { name: "Body Temperature",  nameAr: "درجة حرارة الجسم",     unit: "°C",   pre: 37.004, post: 37.215, diff: -0.211, pValue: "<0.001**", preSD: 0.350, postSD: 0.351, color: "#f97316" },
+  { name: "Systolic BP",       nameAr: "ضغط الدم الانقباضي",    unit: "mmHg", pre: 116.83, post: 119.85, diff: -3.021, diffSD: 6.54, pValue: "<0.001**", preSD: 8.18,  postSD: 8.18,  color: "#f43f5e" },
+  { name: "Diastolic BP",      nameAr: "ضغط الدم الانبساطي",   unit: "mmHg", pre: 76.21,  post: 77.49,  diff: 1.277,  diffSD: 5.30, pValue: "<0.001**", preSD: 8.34,  postSD: 8.62,  color: "#ec4899" },
+  { name: "Heart Rate",        nameAr: "معدل ضربات القلب",     unit: "bpm",  pre: 75.62,  post: 78.64,  diff: -3.021, diffSD: 5.73, pValue: "<0.001**", preSD: 9.91,  postSD: 10.31, color: "#e11d48" },
+  { name: "Respiratory Rate",  nameAr: "معدل التنفس",          unit: "/min", pre: 16.70,  post: 17.45,  diff: -0.745, diffSD: 1.48, pValue: "<0.001**", preSD: 1.99,  postSD: 2.77,  color: "#a855f7" },
+  { name: "Body Temperature",  nameAr: "درجة حرارة الجسم",     unit: "°C",   pre: 37.004, post: 37.215, diff: -0.211, diffSD: 0.297, pValue: "<0.001**", preSD: 0.350, postSD: 0.351, color: "#f97316" },
 ];
 
 export const DEMOGRAPHICS_DATA = {
@@ -94,10 +91,11 @@ export const SYMPTOM_ONSET = [
 ];
 
 export const COGNITIVE_DATA = [
-  { domain: "Working Memory",         domainAr: "الذاكرة العاملة",    pre: 9.32, post: 9.43,  improvement: true,  color: "#6366f1" },
-  { domain: "Mindfulness / Alertness",domainAr: "اليقظة الذهنية",   pre: 52.40,post: 53.00, improvement: true,  color: "#22c55e" },
-  { domain: "Processing Speed",       domainAr: "سرعة المعالجة",    pre: 0.55, post: 0.64,  improvement: true,  color: "#a855f7" },
-  { domain: "Attention",             domainAr: "الانتباه والتركيز", pre: 1.00, post: 1.00,  improvement: false, color: "#f59e0b" },
+  { domain: "Mindfulness Score",      domainAr: "اليقظة الذهنية",   pre: 52.40, preSD: 2.651, post: 53.00, postSD: 2.085, diff: "-0.596 ± 1.74", pValue: "<0.001", improvement: true,  color: "#22c55e" },
+  { domain: "Working Memory (Short-Term)",domainAr: "الذاكرة العاملة", pre: 9.32,  preSD: 3.224, post: 9.43,  postSD: 3.500, diff: "-0.106 ± 2.60", pValue: "<0.001", improvement: true,  color: "#6366f1" },
+  { domain: "Processing Speed",       domainAr: "سرعة المعالجة",    pre: 0.55,  preSD: 0.880, post: 0.64,  postSD: 0.919, diff: "-0.85 ± 0.351",  pValue: "<0.001", improvement: true,  color: "#a855f7" },
+  { domain: "Attention",             domainAr: "الانتباه",          pre: 1.00,  preSD: null,  post: 1.00,  postSD: null,  diff: "—",             pValue: "—",      improvement: false, color: "#f59e0b", note: "1.00a" },
+  { domain: "Concentration",         domainAr: "التركيز",          pre: 1.00,  preSD: null,  post: 1.00,  postSD: null,  diff: "—",             pValue: "—",      improvement: false, color: "#ef4444", note: "1.00a" },
 ];
 
 export const TEAM_MEMBERS = [

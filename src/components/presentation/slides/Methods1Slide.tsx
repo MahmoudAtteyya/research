@@ -201,8 +201,8 @@ export default function Methods1Slide({ lang }: { lang: Lang }) {
               }}
             >
               {ar
-                ? "تألّف مجتمع الدراسة من متطوعين بالغين أصحاء من جامعة السويس. واختِيروا ليمثّلوا البالغين الذين يستهلكون مشروبات الطاقة بصفة منتظمة أو قد يُقبلون على استهلاكها."
-                : "The study population consisted of healthy adult volunteers from Suez University. Participants were selected to represent adults who are regular consumers or potential consumers of energy drinks."}
+                ? "تألّف مجتمع الدراسة من متطوعين بالغين أصحاء من جامعة السويس ومستشفى جامعة السويس. واختِيروا ليمثّلوا البالغين الذين يستهلكون مشروبات الطاقة بصفة منتظمة أو قد يُقبلون على استهلاكها."
+                : "The study population consisted of healthy adult volunteers from Suez University and Suez University and Suez University Hospital. Participants were selected to represent adults who are regular consumers or potential consumers of energy drinks."}
             </p>
           </div>
         </motion.div>

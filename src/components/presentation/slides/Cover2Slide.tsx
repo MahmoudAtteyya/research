@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Lang, TEAM_MEMBERS } from "@/lib/presentation/slides-data";
 
-const CONFERENCE = "The Fourth Student Conference for Research Projects, 2026";
+const Symposium = "The Fourth Student Symposium for Research Projects, 2026";
 
 // Assign colors cycling through accent palette
 const COLORS = [
@@ -41,7 +41,7 @@ export default function Cover2Slide({ lang }: { lang: Lang }) {
   return (
     <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
-      {/* ── Conference banner ── */}
+      {/* ── Symposium banner ── */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -59,7 +59,7 @@ export default function Cover2Slide({ lang }: { lang: Lang }) {
           🎓 {ar ? "يُقدَّم في" : "Presented at"}
         </div>
         <div style={{ fontSize: "clamp(11px, 1.3vw, 14px)", fontWeight: 800, color: "var(--c-text)" }}>
-          {CONFERENCE}
+          {Symposium}
         </div>
       </motion.div>
 
@@ -131,15 +131,16 @@ export default function Cover2Slide({ lang }: { lang: Lang }) {
           </motion.div>
         </motion.div>
 
-        {/* ── Members grid — 4 columns ── */}
+        {/* ── Members grid — Auto-fit Flex ── */}
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "10px",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: "12px 18px",
             flex: 1,
             alignContent: "center",
           }}
@@ -152,64 +153,43 @@ export default function Cover2Slide({ lang }: { lang: Lang }) {
               <motion.div
                 key={i}
                 variants={cardVariant}
-                whileHover={{ scale: 1.03, y: -2 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 style={{
-                  background: `linear-gradient(145deg, ${color}08, transparent)`,
-                  border: `1px solid ${color}25`,
-                  borderRadius: "14px",
-                  padding: "10px 14px",
+                  background: `linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))`,
+                  border: `1px solid rgba(255,255,255,0.08)`,
+                  borderBottom: `2px solid ${color}80`,
+                  borderRadius: "40px",
+                  padding: "6px 16px 6px 6px",
                   display: "flex",
                   alignItems: "center",
-                  gap: "12px",
+                  gap: "10px",
                   cursor: "default",
-                  boxShadow: `0 4px 16px ${color}05`,
-                  transition: "all 0.25s ease",
-                  position: "relative",
-                  overflow: "hidden",
+                  boxShadow: `0 4px 12px rgba(0,0,0,0.1)`,
+                  transition: "all 0.2s ease",
                   direction: ar ? "rtl" : "ltr",
+                  whiteSpace: "nowrap",
                 }}
               >
-                {/* Side accent line */}
-                <div style={{
-                  position: "absolute", top: "15%", bottom: "15%", left: ar ? "auto" : 0, right: ar ? 0 : "auto", width: "3px",
-                  background: `linear-gradient(to bottom, transparent, ${color}80, transparent)`,
-                  borderRadius: "2px",
-                }} />
-
                 {/* Avatar circle */}
-                <motion.div
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 3.5, repeat: Infinity, delay: i * 0.15 }}
+                <div
                   style={{
-                    width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
-                    background: `linear-gradient(135deg, ${color}33, ${color}11)`,
-                    border: `1.5px solid ${color}66`,
+                    width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
+                    background: `linear-gradient(135deg, ${color}, ${color}88)`,
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: "11px", fontWeight: 800, color: color,
+                    fontSize: "10px", fontWeight: 800, color: "#fff",
                     letterSpacing: "-0.5px",
-                    boxShadow: `inset 0 2px 4px ${color}22`,
+                    boxShadow: `0 2px 6px ${color}66`,
                   }}
                 >
                   {initials}
-                </motion.div>
+                </div>
 
                 {/* Name */}
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{
-                    fontSize: "12.5px", fontWeight: 600, color: "var(--c-text)",
-                    whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-                    lineHeight: 1.3,
-                  }}>
-                    {name}
-                  </div>
-                  {/* Subtle underline dot */}
-                  <div style={{
-                    width: "4px", height: "4px",
-                    background: color,
-                    borderRadius: "50%",
-                    marginTop: "3px",
-                    opacity: 0.6,
-                  }} />
+                <div style={{
+                  fontSize: "13px", fontWeight: 700, color: "var(--c-text)",
+                  letterSpacing: "0.2px"
+                }}>
+                  {name}
                 </div>
               </motion.div>
             );

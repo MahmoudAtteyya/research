@@ -15,8 +15,7 @@ const TOOLS = [
     items: [
       { en: "Demographic data (age, sex, occupation, smoking)", ar: "بيانات ديموغرافية (عمر، جنس، مهنة، تدخين)" },
       { en: "Medical history & current medications", ar: "التاريخ الطبي والأدوية الحالية" },
-      { en: "Energy drink & caffeine consumption patterns", ar: "أنماط استهلاك مشروبات الطاقة والكافيين" },
-      { en: "Self-reported effects on vital signs & cognition", ar: "التأثيرات المُبلَّغ ذاتياً على العلامات الحيوية والإدراك" },
+      { en: "Energy drink & caffeine consumption patterns", ar: "أنماط استهلاك مشروبات الطاقة والكافيين" }
     ],
   },
   {

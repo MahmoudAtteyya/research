@@ -88,6 +88,11 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
   const [isMobile,      setIsMobile]      = useState(false);
   const [chromeState,   setChromeState]   = useState<ChromeState>(0);
   
+  // Remote control state variables
+  const [remoteEnabled, setRemoteEnabled] = useState(false);
+  const [showRemoteConfig, setShowRemoteConfig] = useState(false);
+  const [adminUrl, setAdminUrl] = useState("");
+  
   // Explicit scaling logic for mobile to avoid CSS container-query bugs
   const slideAreaRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -165,6 +170,62 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
       } catch { /* ignore */ }
     }
   }, []);
+
+  // Determine admin URL on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setAdminUrl(`${window.location.protocol}//${window.location.host}/admin`);
+    }
+  }, []);
+
+  // Server-Sent Events (SSE) remote listener
+  useEffect(() => {
+    if (!remoteEnabled) return;
+
+    let active = true;
+    let eventSource: EventSource | null = null;
+
+    const connectSSE = () => {
+      if (!active) return;
+      console.log("[Remote] Connecting to SSE stream...");
+      eventSource = new EventSource("/api/remote/stream");
+
+      eventSource.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          console.log("[Remote] Received command:", data);
+          if (data.command === "NEXT") {
+            pres.nextSlide();
+          } else if (data.command === "PREV") {
+            pres.prevSlide();
+          } else if (data.command === "FULLSCREEN") {
+            handleFullscreen();
+          } else if (data.command === "CHROME") {
+            cycleChromeState();
+          }
+        } catch (e) {
+          console.error("[Remote] Error parsing SSE message:", e);
+        }
+      };
+
+      eventSource.onerror = (err) => {
+        console.error("[Remote] SSE connection error, reconnecting in 3s...", err);
+        if (eventSource) {
+          eventSource.close();
+        }
+        setTimeout(connectSSE, 3000);
+      };
+    };
+
+    connectSSE();
+
+    return () => {
+      active = false;
+      if (eventSource) {
+        eventSource.close();
+      }
+    };
+  }, [remoteEnabled, pres.nextSlide, pres.prevSlide, handleFullscreen, cycleChromeState]);
 
   // ── Keyboard shortcuts ──
   useEffect(() => {
@@ -374,6 +435,43 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
                 )}
               </button>
 
+              {/* Remote Control Toggle */}
+              <button
+                onClick={() => {
+                  if (!remoteEnabled) {
+                    setRemoteEnabled(true);
+                    setShowRemoteConfig(true);
+                  } else {
+                    setShowRemoteConfig(c => !c);
+                  }
+                }}
+                title={remoteEnabled 
+                  ? (ar ? "إعدادات التحكم عن بعد" : "Remote Control settings") 
+                  : (ar ? "تفعيل التحكم عن بعد" : "Enable Remote Control")}
+                style={{
+                  display: "flex", alignItems: "center", gap: isMobile ? "0" : "6px",
+                  background: remoteEnabled
+                    ? "linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.25))"
+                    : "transparent",
+                  border: remoteEnabled 
+                    ? "1px solid rgba(16, 185, 129, 0.4)" 
+                    : "1px solid var(--c-border)",
+                  borderRadius: "20px",
+                  padding: isMobile ? "5px 8px" : "5px 12px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  fontSize: "11px", fontWeight: 700,
+                  color: remoteEnabled ? "#34d399" : "var(--c-text-muted)",
+                }}
+              >
+                <span style={{ fontSize: "13px" }}>{remoteEnabled ? "📱" : "🔌"}</span>
+                {!isMobile && (
+                  <span>
+                    {remoteEnabled ? (ar ? "تحكم نشط" : "REMOTE: ON") : (ar ? "تحكم عن بعد" : "REMOTE")}
+                  </span>
+                )}
+              </button>
+
               {/* Language toggle */}
               <button
                 onClick={onLangChange}
@@ -406,6 +504,107 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
               </button>
             </div>
           </motion.footer>
+        )}
+      </AnimatePresence>
+
+      {/* Remote Config Modal */}
+      <AnimatePresence>
+        {remoteEnabled && showRemoteConfig && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            style={{
+              position: "fixed",
+              bottom: "74px",
+              right: ar ? "auto" : "20px",
+              left: ar ? "20px" : "auto",
+              zIndex: 99999,
+              width: "280px",
+              background: "rgba(7, 10, 30, 0.92)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(99, 102, 241, 0.35)",
+              borderRadius: "16px",
+              padding: "20px",
+              color: "white",
+              boxShadow: "0 10px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.15)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "12px",
+            }}
+          >
+            {/* Header */}
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: "11px", fontWeight: 700, color: "#a5b4fc", letterSpacing: "0.5px" }}>
+                {ar ? "إعدادات التحكم عن بعد" : "REMOTE CONTROL"}
+              </span>
+              <button 
+                onClick={() => setShowRemoteConfig(false)}
+                style={{
+                  background: "transparent", border: "none", color: "rgba(255,255,255,0.4)",
+                  cursor: "pointer", fontSize: "14px", fontWeight: "bold"
+                }}
+              >✕</button>
+            </div>
+            
+            {/* QR Code */}
+            {adminUrl && (
+              <div style={{
+                background: "white", padding: "8px", borderRadius: "12px",
+                boxShadow: "0 4px 15px rgba(0,0,0,0.2)"
+              }}>
+                <img 
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&color=04071a&data=${encodeURIComponent(adminUrl)}`}
+                  alt="Remote QR Code"
+                  style={{ width: "130px", height: "130px", display: "block" }}
+                />
+              </div>
+            )}
+
+            {/* URL text */}
+            <div style={{ textAlign: "center", width: "100%" }}>
+              <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.5)", marginBottom: "4px" }}>
+                {ar ? "امسح الرمز أو افتح الرابط التالي على موبايلك:" : "Scan QR or open this link on mobile:"}
+              </div>
+              <input
+                type="text"
+                readOnly
+                value={adminUrl}
+                onClick={(e) => (e.target as HTMLInputElement).select()}
+                style={{
+                  width: "100%", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: "8px", padding: "6px 8px", fontSize: "10px", color: "#60a5fa",
+                  textAlign: "center", outline: "none", cursor: "pointer"
+                }}
+              />
+            </div>
+
+            {/* SSE status badge */}
+            <div style={{
+              display: "flex", alignItems: "center", gap: "6px", fontSize: "10px",
+              color: "#34d399", background: "rgba(52, 211, 153, 0.1)",
+              padding: "4px 10px", borderRadius: "20px", width: "100%", justifyContent: "center"
+            }}>
+              <span className="blink" style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#34d399" }}></span>
+              {ar ? "نشط وينتظر الأوامر..." : "Active & listening..."}
+            </div>
+
+            {/* Deactivate Button */}
+            <button
+              onClick={() => {
+                setRemoteEnabled(false);
+                setShowRemoteConfig(false);
+              }}
+              style={{
+                width: "100%", background: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.25)",
+                borderRadius: "8px", padding: "6px 8px", fontSize: "11px", color: "#f87171",
+                cursor: "pointer", fontWeight: 600, transition: "all 0.2s"
+              }}
+            >
+              {ar ? "إيقاف التشغيل" : "Deactivate Remote"}
+            </button>
+          </motion.div>
         )}
       </AnimatePresence>
 

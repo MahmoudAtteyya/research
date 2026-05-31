@@ -2,105 +2,315 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Lang, COGNITIVE_DATA } from "@/lib/presentation/slides-data";
-import { RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer, Legend, Tooltip } from "recharts";
 
 export default function ResultsCognSlide({ lang }: { lang: Lang }) {
   const ar = lang === "ar";
 
-  const radarData = COGNITIVE_DATA.map(cd => ({
-    domain: ar ? cd.domainAr.split("/")[0].trim() : cd.domain.split("/")[0].trim(),
-    [ar ? "قبل" : "Pre"]: cd.pre,
-    [ar ? "بعد" : "Post"]: cd.post,
-  }));
+  const significantItems = COGNITIVE_DATA.filter(cd => cd.improvement);
+  const notSignificantItems = COGNITIVE_DATA.filter(cd => !cd.improvement);
 
   return (
     <div className="pres-slide-inner">
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} style={{ flexShrink: 0 }}>
         <div className="pres-label">{ar ? "النتائج" : "Results"} · {ar ? "الأداء المعرفي" : "Cognitive Performance"}</div>
-        <h2 className="pres-h1" style={{ fontSize: "clamp(18px, 2.5vw, 28px)", marginBottom: "4px" }}>🧠 <em>{ar ? "الأداء المعرفي" : "Cognitive Outcomes"}</em></h2>
-        <div className="pres-divider" style={{ marginBottom: "12px" }} />
+        <h2 className="pres-h1" style={{ fontSize: "clamp(18px, 2.5vw, 28px)", marginBottom: "4px" }}>
+          🧠 <em>{ar ? "الأداء المعرفي" : "Cognitive Outcomes"}</em>
+        </h2>
+        <div className="pres-divider" style={{ marginBottom: "10px" }} />
       </motion.div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "12px", flex: 1, minHeight: 0 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1.4fr 0.6fr", gap: "14px", flex: 1, minHeight: 0 }}>
 
-        {/* Left: Domain cards */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "6px", minHeight: 0 }}>
-          {COGNITIVE_DATA.map((cd, i) => (
-            <motion.div
-              key={i}
-              className="pres-card"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.1 }}
-              style={{ padding: "8px 12px", borderLeft: `3px solid ${cd.color}`, flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}
-            >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "4px" }}>
-                <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--c-text)" }}>
-                  {ar ? cd.domainAr : cd.domain}
-                </span>
-                <span className={cd.improvement ? "pres-sig" : "pres-sig pres-sig-warn"} style={{ padding: "2px 6px", fontSize: "9px" }}>
-                  {cd.improvement ? (ar ? "✅ معنوي p<0.001" : "✅ Sig.") : (ar ? "⚠️ غير معنوي" : "⚠️ Not Sig.")}
-                </span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: "9px", color: "var(--c-text-dim)" }}>{ar ? "قبل" : "Pre"}</div>
-                  <div style={{ fontSize: "16px", fontWeight: 700, color: "#06b6d4" }}>{cd.pre}</div>
+        {/* ═══ Left: Full Professional Table ═══ */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{ display: "flex", flexDirection: "column", minHeight: 0 }}
+        >
+          <div style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            borderRadius: "16px",
+            overflow: "hidden",
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.04)",
+          }}>
+            {/* Table Caption */}
+            <div style={{
+              background: "linear-gradient(135deg, rgba(99,102,241,0.28) 0%, rgba(168,85,247,0.18) 100%)",
+              padding: "10px 18px",
+              borderBottom: "1px solid rgba(99,102,241,0.2)",
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+            }}>
+              <span style={{ fontSize: "18px" }}>🧠</span>
+              <div>
+                <div style={{ fontSize: "13px", fontWeight: 800, color: "var(--c-text)", letterSpacing: "0.3px" }}>
+                  {ar ? "جدول 2. مقارنة الأداء المعرفي قبل وبعد تناول مشروبات الطاقة (ن=47)" : "Table 2. Cognitive Performance — Pre vs Post Energy Drink (n=47)"}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div className="pres-bar-track">
-                    <motion.div
-                      className="pres-bar-fill"
-                      style={{ background: cd.color, boxShadow: `0 0 6px ${cd.color}55` }}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${(cd.post / (cd.domain === "Mindfulness / Alertness" ? 60 : cd.domain === "Working Memory" ? 12 : 1)) * 100}%` }}
-                      transition={{ delay: 0.4 + i * 0.08, duration: 0.9, ease: "easeOut" }}
-                    />
-                  </div>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: "9px", color: "var(--c-text-dim)" }}>{ar ? "بعد" : "Post"}</div>
-                  <div style={{ fontSize: "16px", fontWeight: 700, color: "#10b981" }}>{cd.post}</div>
+                <div style={{ fontSize: "9px", color: "rgba(165,180,252,0.85)", fontWeight: 600, marginTop: "1px" }}>
+                  {ar ? "اختبار T المزدوج — SPSS v26" : "Paired T-Test — SPSS v26"}
                 </div>
               </div>
-            </motion.div>
-          ))}
-
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }}
-            className="anim-border-glow"
-            style={{ flexShrink: 0, padding: "8px 10px", background: "rgba(99,102,241,0.07)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: "8px" }}>
-            <p style={{ fontSize: "11px", color: "#a5b4fc", fontWeight: 600, margin: 0 }}>
-              💡 {ar
-                ? "الذاكرة العاملة واليقظة وسرعة المعالجة تحسّنت معنوياً"
-                : "Working memory, mindfulness & processing speed improved significantly"}
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Right: Radar chart */}
-        <motion.div className="pres-card" initial={{ opacity: 0, scale: 0.93 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.28 }}
-          style={{ padding: "12px", display: "flex", flexDirection: "column" }}>
-          <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
-            <span style={{ fontSize: "14px" }}>🧠</span>
-            <div style={{ fontSize: "12px", fontWeight: 700, color: "#06b6d4" }}>
-              {ar ? "مخطط الرادار — قبل / بعد" : "Radar Chart — Pre / Post"}
             </div>
-          </div>
-          <div style={{ flex: 1, position: "relative" }}>
-            <div style={{ position: "absolute", inset: 0 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="62%">
-                  <PolarGrid stroke="rgba(255,255,255,0.08)" />
-                  <PolarAngleAxis dataKey="domain" tick={{ fill: "var(--c-text-muted)", fontSize: 10, fontWeight: 600 }} />
-                  <Radar name={ar ? "قبل" : "Pre"} dataKey={ar ? "قبل" : "Pre"} stroke="#06b6d4" fill="#06b6d4" fillOpacity={0.2} strokeWidth={2} />
-                  <Radar name={ar ? "بعد" : "Post"} dataKey={ar ? "بعد" : "Post"} stroke="#10b981" fill="#10b981" fillOpacity={0.35} strokeWidth={2.5} />
-                  <Legend wrapperStyle={{ fontSize: "11px", paddingTop: "0px" }} />
-                  <Tooltip contentStyle={{ background: "var(--c-bg2)", border: "1px solid var(--c-border)", borderRadius: "8px", fontSize: "11px" }} />
-                </RadarChart>
-              </ResponsiveContainer>
+
+            {/* Column Headers */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "1.6fr 1.1fr 1.1fr 1.1fr 0.9fr",
+              background: "rgba(99,102,241,0.08)",
+              borderBottom: "2px solid rgba(99,102,241,0.2)",
+            }}>
+              {[
+                ar ? "المجال المعرفي" : "COGNITIVE DOMAIN",
+                ar ? "قبل (MEAN±SD)" : "PRE (MEAN±SD)",
+                ar ? "بعد (MEAN±SD)" : "POST (MEAN±SD)",
+                ar ? "متوسط الفرق" : "MEAN DIFF.",
+                "p-value",
+              ].map((h, hi) => (
+                <div key={hi} style={{
+                  padding: "9px 8px",
+                  fontSize: "8px",
+                  fontWeight: 800,
+                  color: "#a5b4fc",
+                  textAlign: hi === 0 ? "left" : "center",
+                  letterSpacing: "0.7px",
+                  textTransform: "uppercase",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: hi === 0 ? "flex-start" : "center",
+                  paddingLeft: hi === 0 ? "16px" : "8px",
+                  borderRight: hi < 4 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                }}>
+                  {h}
+                </div>
+              ))}
+            </div>
+
+            {/* Data Rows */}
+            <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+              {COGNITIVE_DATA.map((cd, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.12 + i * 0.1 }}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1.6fr 1.1fr 1.1fr 1.1fr 0.9fr",
+                    borderBottom: i < COGNITIVE_DATA.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                    flex: 1,
+                    alignItems: "center",
+                    background: cd.improvement
+                      ? "rgba(99,102,241,0.04)"
+                      : "rgba(245,158,11,0.03)",
+                    position: "relative",
+                  }}
+                >
+                  {/* Left accent bar */}
+                  <div style={{
+                    position: "absolute",
+                    left: 0, top: "20%", bottom: "20%", width: "3px",
+                    background: cd.color,
+                    borderRadius: "0 3px 3px 0",
+                  }} />
+
+                  {/* Domain name */}
+                  <div style={{ padding: "10px 16px 10px 20px", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <div style={{
+                      width: "8px", height: "8px", borderRadius: "50%",
+                      background: cd.color,
+                      flexShrink: 0,
+                      boxShadow: `0 0 8px ${cd.color}99`,
+                    }} />
+                    <div style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.3 }}>
+                      {ar ? cd.domainAr : cd.domain}
+                    </div>
+                  </div>
+
+                  {/* Pre */}
+                  <div style={{ padding: "6px 8px", textAlign: "center", borderLeft: "1px solid rgba(255,255,255,0.05)" }}>
+                    {cd.preSD !== null ? (
+                      <>
+                        <div style={{ fontSize: "13px", fontWeight: 700, color: "#64748b", lineHeight: 1 }}>{cd.pre}</div>
+                        <div style={{ fontSize: "9px", color: "#475569", marginTop: "2px" }}>±{cd.preSD}</div>
+                      </>
+                    ) : (
+                      <div style={{ fontSize: "13px", fontWeight: 700, color: "#64748b" }}>{cd.pre}</div>
+                    )}
+                  </div>
+
+                  {/* Post */}
+                  <div style={{ padding: "6px 8px", textAlign: "center", borderLeft: "1px solid rgba(255,255,255,0.05)" }}>
+                    {cd.postSD !== null ? (
+                      <>
+                        <div style={{ fontSize: "13px", fontWeight: 700, color: cd.improvement ? "#10b981" : "#94a3b8", lineHeight: 1 }}>{cd.post}</div>
+                        <div style={{ fontSize: "9px", color: cd.improvement ? "#6ee7b7" : "#64748b", marginTop: "2px" }}>±{cd.postSD}</div>
+                      </>
+                    ) : (
+                      <div style={{ fontSize: "13px", fontWeight: 700, color: "#94a3b8" }}>{cd.post}</div>
+                    )}
+                  </div>
+
+                  {/* Mean Diff */}
+                  <div style={{ padding: "6px 8px", textAlign: "center", borderLeft: "1px solid rgba(255,255,255,0.05)" }}>
+                    {cd.diff !== "—" ? (
+                      <div style={{
+                        display: "inline-block",
+                        background: cd.improvement ? "rgba(16,185,129,0.12)" : "rgba(245,158,11,0.12)",
+                        border: `1px solid ${cd.improvement ? "rgba(16,185,129,0.3)" : "rgba(245,158,11,0.3)"}`,
+                        borderRadius: "6px",
+                        padding: "3px 7px",
+                        fontSize: "10px",
+                        fontWeight: 700,
+                        color: cd.improvement ? "#10b981" : "#f59e0b",
+                      }}>
+                        {cd.diff}
+                      </div>
+                    ) : (
+                      <span style={{ color: "#475569", fontSize: "13px", fontWeight: 500 }}>—</span>
+                    )}
+                  </div>
+
+                  {/* P-value */}
+                  <div style={{ padding: "6px 8px", textAlign: "center", borderLeft: "1px solid rgba(255,255,255,0.05)" }}>
+                    {cd.pValue !== "—" ? (
+                      <div style={{
+                        display: "inline-block",
+                        background: "rgba(99,102,241,0.15)",
+                        border: "1px solid rgba(99,102,241,0.35)",
+                        borderRadius: "6px",
+                        padding: "3px 7px",
+                        fontSize: "10px",
+                        fontWeight: 800,
+                        color: "#818cf8",
+                      }}>
+                        {cd.pValue}
+                      </div>
+                    ) : (
+                      <span style={{ color: "#475569", fontSize: "11px" }}>—</span>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Footer note */}
+            <div style={{
+              padding: "5px 16px",
+              background: "rgba(255,255,255,0.02)",
+              borderTop: "1px solid rgba(255,255,255,0.06)",
+              fontSize: "9px",
+              color: "#64748b",
+              fontStyle: "italic",
+            }}>
+              {ar
+                ? "أ. لا يمكن حساب اختبار T لأن الانحراف المعياري للفرق = صفر."
+                : "a. The t-test cannot be computed because the standard error of the difference is 0."}
             </div>
           </div>
         </motion.div>
+
+        {/* ═══ Right: Key Findings Panel ═══ */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          style={{ display: "flex", flexDirection: "column", gap: "10px", minHeight: 0 }}
+        >
+          {/* Significant findings */}
+          <div style={{
+            flex: 1,
+            borderRadius: "16px",
+            border: "1px solid rgba(99,102,241,0.25)",
+            background: "linear-gradient(160deg, rgba(99,102,241,0.1), rgba(99,102,241,0.04))",
+            padding: "14px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+          }}>
+            <div style={{ fontSize: "10px", fontWeight: 800, color: "#818cf8", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "4px" }}>
+              ✅ {ar ? "تحسّن معنوي" : "Significant Improvement"}
+            </div>
+            {significantItems.map((cd, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 + i * 0.12 }}
+                style={{
+                  background: `linear-gradient(135deg, ${cd.color}18, ${cd.color}08)`,
+                  border: `1px solid ${cd.color}30`,
+                  borderRadius: "10px",
+                  padding: "8px 12px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <div style={{
+                  width: "30px", height: "30px", borderRadius: "50%",
+                  background: `linear-gradient(135deg, ${cd.color}, ${cd.color}88)`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "14px", flexShrink: 0,
+                  boxShadow: `0 4px 12px ${cd.color}44`,
+                }}>
+                  {i === 0 ? "🧘" : i === 1 ? "🗃️" : "⚡"}
+                </div>
+                <div>
+                  <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
+                    {ar ? cd.domainAr : cd.domain}
+                  </div>
+                  <div style={{ fontSize: "9.5px", color: cd.color, fontWeight: 600, marginTop: "2px" }}>
+                    p {cd.pValue}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Not significant */}
+          <div style={{
+            borderRadius: "14px",
+            border: "1px solid rgba(245,158,11,0.2)",
+            background: "rgba(245,158,11,0.05)",
+            padding: "12px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "6px",
+          }}>
+            <div style={{ fontSize: "10px", fontWeight: 800, color: "#f59e0b", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "2px" }}>
+              ⚠️ {ar ? "بدون تغيير معنوي" : "No Sig. Change"}
+            </div>
+            {notSignificantItems.map((cd, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 + i * 0.1 }}
+                style={{
+                  background: "rgba(245,158,11,0.06)",
+                  border: "1px solid rgba(245,158,11,0.15)",
+                  borderRadius: "8px",
+                  padding: "5px 10px",
+                  fontSize: "10.5px",
+                  fontWeight: 600,
+                  color: "#94a3b8",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                <span style={{ fontSize: "12px" }}>◈</span>
+                {ar ? cd.domainAr : cd.domain}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
       </div>
     </div>
   );
