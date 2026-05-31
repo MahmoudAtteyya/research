@@ -87,6 +87,11 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
   const [theme,         setTheme]         = useState<"dark" | "projector">("dark");
   const [isMobile,      setIsMobile]      = useState(false);
   const [chromeState,   setChromeState]   = useState<ChromeState>(0);
+  
+  // Explicit scaling logic for mobile to avoid CSS container-query bugs
+  const slideAreaRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  const [isMobileMode, setIsMobileMode] = useState(false);
 
   const touchStartX = useRef<number | null>(null);
   const ar = lang === "ar";
@@ -105,9 +110,25 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
-  // ── Mobile detect ──
+  // ── Mobile detect & Precise Scaling ──
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 768);
+    const check = () => {
+      const w = window.innerWidth;
+      setIsMobile(w <= 768);
+      
+      const isMob = w <= 1024;
+      setIsMobileMode(isMob);
+
+      if (isMob && slideAreaRef.current) {
+        // Calculate exact scale to fit 1024x576 into the available area
+        const { width, height } = slideAreaRef.current.getBoundingClientRect();
+        const scaleW = width / 1024;
+        const scaleH = height / 576;
+        setScale(Math.min(scaleW, scaleH));
+      } else {
+        setScale(1);
+      }
+    };
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
@@ -232,7 +253,7 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
       </div>
 
       {/* ── SLIDE AREA ── */}
-      <div className="pres-slide-area">
+      <div className="pres-slide-area" ref={slideAreaRef}>
         <AnimatePresence mode="wait" custom={dir}>
           <motion.div
             key={pres.slide.id}
@@ -244,7 +265,10 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
             transition={{ duration: 0.38, ease: [0.4, 0, 0.2, 1] }}
             style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column" }}
           >
-            <div className="pres-mobile-scaler">
+            <div 
+              className={isMobileMode ? "pres-mobile-scaler-active" : "pres-mobile-scaler-inactive"}
+              style={isMobileMode ? { transform: `translate(-50%, -50%) scale(${scale})` } : undefined}
+            >
               <SlideComponent lang={lang} />
             </div>
           </motion.div>

@@ -134,20 +134,23 @@
   flex: 1;
   position: relative;
   overflow: hidden;
-  container-type: size;
-  container-name: slidearea;
 }
 
-/* Base scaler wrapper (perfect 16:9 scaling) */
-.pres-mobile-scaler {
+.pres-mobile-scaler-active {
   position: absolute;
   width: 1024px;
   height: 576px;
   left: 50%;
   top: 50%;
   transform-origin: center;
-  /* Scale to perfectly fit the available space, maintaining 16:9 */
-  transform: translate(-50%, -50%) scale(min(calc(100cqw / 1024), calc(100cqh / 576)));
+  /* Transform is applied inline by React */
+}
+
+.pres-mobile-scaler-inactive {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .pres-slide-inner {
@@ -891,9 +894,9 @@
 
 /* ================================================================
    MOBILE — Desktop-like experience
-   We now use container queries (cqw, cqh) at the top of the file 
-   to automatically scale the .pres-mobile-scaler.
-   Below are just minor adjustments for header/footer sizes.
+   We use React to calculate the exact scale ratio and apply it inline
+   to `.pres-mobile-scaler-active`. 
+   Below are minor adjustments for header/footer sizes.
 ================================================================ */
 
 /* ── Portrait mobile ── */

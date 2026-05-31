@@ -8,7 +8,7 @@ export default function ResultsIntroSlide({ lang }: { lang: Lang }) {
 
   return (
     <div className="pres-slide-inner" style={{ alignItems: "center", justifyContent: "center", textAlign: "center" }}>
-      
+
       {/* Background large icon */}
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
@@ -46,7 +46,7 @@ export default function ResultsIntroSlide({ lang }: { lang: Lang }) {
             marginBottom: "24px"
           }}
         >
-          {ar ? "القسم الثالث" : "Part Three"}
+          {ar ? " النتائج" : "Results"}
         </motion.div>
 
         <h1 style={{
