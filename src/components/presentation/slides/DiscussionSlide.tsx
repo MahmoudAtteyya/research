@@ -55,9 +55,11 @@ export default function DiscussionSlide({ lang }: { lang: Lang }) {
             whileHover={{ scale: 1.02 }}
             style={{ padding: "10px 14px", background: "rgba(245,158,11,0.07)", border: "1px solid rgba(245,158,11,0.2)", borderRadius: "8px" }}>
             <div style={{ fontSize: "11px", fontWeight: 700, color: "#fcd34d", letterSpacing: "1px", marginBottom: "4px" }}>⚠️ {ar ? "القيود" : "Limitations"}</div>
-            <p style={{ fontSize: "13px", color: "var(--c-text-muted)" }}>
-              {ar ? "حجم عينة محدود — غياب مجموعة ضابطة — متابعة قصيرة المدى" : "Limited sample size · No control group · Short-term follow-up"}
-            </p>
+            <div style={{ fontSize: "12px", color: "var(--c-text-muted)", display: "flex", flexDirection: "column", gap: "4px", lineHeight: 1.4 }}>
+              <div>• {ar ? "حجم العينة الصغير نسبياً قد يحد من إمكانية تعميم النتائج." : "The relatively small sample size may limit the generalizability of the findings."}</div>
+              <div>• {ar ? "قامت الدراسة بتقييم التأثيرات الفورية لاستهلاك مشروبات الطاقة فقط." : "The study assessed only the immediate effects of energy drink consumption."}</div>
+              <div>• {ar ? "لم يتم تقييم النشاط الكهربائي للقلب؛ لذا تعذر تقييم التأثيرات الكهروفسيولوجية المرتبطة بالخفقان." : "Cardiac electrical activity was not evaluated; therefore, potential electrophysiological effects associated with palpitations could not be assessed."}</div>
+            </div>
           </motion.div>
         </div>
       </div>

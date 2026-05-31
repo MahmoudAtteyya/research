@@ -3,84 +3,293 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Lang } from "@/lib/presentation/slides-data";
 
-const INCLUSION = [
-  { en: "Healthy adults aged 18–45 years", ar: "بالغون أصحاء عمر 18–45 سنة" },
-  { en: "Both males and females", ar: "ذكور وإناث" },
-  { en: "Willing to provide informed consent", ar: "موافقة طوعية مستنيرة" },
-  { en: "No medications affecting CV / CNS", ar: "بدون أدوية تؤثر على القلب أو الجهاز العصبي" },
+/* ─── Criteria data (from source document) ─────────────────────── */
+const INCLUSION: { en: string; ar: string }[] = [
+  {
+    en: "Healthy adults aged 18–45 years",
+    ar: "بالغون أصحاء تتراوح أعمارهم بين 18 و45 سنة",
+  },
+  {
+    en: "Both males and females",
+    ar: "ذكور وإناث",
+  },
+  {
+    en: "Willing to participate and provide informed consent",
+    ar: "الرغبة في المشاركة وتقديم الموافقة المستنيرة",
+  },
+  {
+    en: "Not currently on any medications affecting cardiovascular or cognitive functions",
+    ar: "عدم تناول أدوية تؤثر على وظائف القلب أو الإدراك",
+  },
+  {
+    en: "No history of chronic diseases (e.g., cardiovascular, neurological, metabolic disorders)",
+    ar: "لا يوجد تاريخ لأمراض مزمنة (قلبية وعائية، عصبية، استقلابية)",
+  },
 ];
 
-const EXCLUSION = [
-  { en: "Known cardiovascular disease", ar: "أمراض قلبية وعائية معروفة" },
-  { en: "Neurological or psychiatric disorders", ar: "اضطرابات عصبية أو نفسية" },
-  { en: "Pregnant / breastfeeding females", ar: "حوامل أو مرضعات" },
-  { en: "Known hypersensitivity to caffeine", ar: "حساسية معروفة للكافيين" },
+const EXCLUSION: { en: string; ar: string }[] = [
+  {
+    en: "Known cardiovascular diseases (e.g., hypertension, arrhythmias)",
+    ar: "أمراض قلبية وعائية معروفة (ارتفاع الضغط، اضطراب النظم)",
+  },
+  {
+    en: "History of neurological or psychiatric disorders",
+    ar: "تاريخ من الاضطرابات العصبية أو النفسية",
+  },
+  {
+    en: "Regular use of caffeine or stimulant medications in high doses",
+    ar: "الاستخدام المنتظم للكافيين أو المنبهات بجرعات عالية",
+  },
+  {
+    en: "Pregnant or breastfeeding females",
+    ar: "الإناث الحوامل أو المرضعات",
+  },
+  {
+    en: "Known hypersensitivity to caffeine or energy drink components",
+    ar: "فرط حساسية معروف للكافيين أو مكوّنات مشروبات الطاقة",
+  },
 ];
 
-const TOOLS = [
-  { en: "Mercury sphygmomanometer", ar: "جهاز ضغط الزئبق", icon: "🩺" },
-  { en: "Manual HR & RR measurement", ar: "قياس القلب والتنفس يدوياً", icon: "⏱️" },
-  { en: "Mercury thermometer", ar: "ميزان حرارة زئبقي", icon: "🌡️" },
-  { en: "Mindfulness Scale", ar: "مقياس اليقظة الذهنية", icon: "🧠" },
-  { en: "Digit Span / Memory Tests", ar: "اختبارات الأرقام والذاكرة", icon: "🔢" },
-];
+/* ─── Reusable criteria list ────────────────────────────────────── */
+function CriteriaList({
+  items,
+  color,
+  markerBg,
+  ar,
+  delay,
+}: {
+  items: { en: string; ar: string }[];
+  color: string;
+  markerBg: string;
+  ar: boolean;
+  delay: number;
+}) {
+  return (
+    <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "9px" }}>
+      {items.map((item, i) => (
+        <motion.li
+          key={i}
+          initial={{ opacity: 0, x: ar ? 14 : -14 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: delay + i * 0.07 }}
+          style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}
+        >
+          {/* Numbered marker */}
+          <span
+            style={{
+              minWidth: "22px",
+              height: "22px",
+              borderRadius: "50%",
+              background: markerBg,
+              border: `1.5px solid ${color}88`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "10px",
+              color: color,
+              fontWeight: 800,
+              flexShrink: 0,
+              marginTop: "1px",
+            }}
+          >
+            {i + 1}
+          </span>
+          <span style={{ fontSize: "12.5px", color: "var(--c-text)", lineHeight: 1.6, fontWeight: 430 }}>
+            {ar ? item.ar : item.en}
+          </span>
+        </motion.li>
+      ))}
+    </ul>
+  );
+}
 
+/* ─── Main component ────────────────────────────────────────────── */
 export default function Methods2Slide({ lang }: { lang: Lang }) {
   const ar = lang === "ar";
+
   return (
     <div className="pres-slide-inner">
+      {/* ── Header ── */}
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-        <div className="pres-label">{ar ? "الطرق" : "Methods"} · 2 / 2</div>
-        <h2 className="pres-h1" style={{ fontSize: "clamp(22px, 3vw, 34px)" }}>{ar ? "المعايير " : "Criteria & "}<em>{ar ? "والأدوات" : "Tools"}</em></h2>
+        <div className="pres-label">{ar ? "الطرق" : "Methods"} · 2 / 3</div>
+        <h2 className="pres-h1" style={{ fontSize: "clamp(20px, 2.8vw, 32px)" }}>
+          {ar ? "معايير " : "Eligibility "}
+          <em>{ar ? "الاختيار" : "Criteria"}</em>
+        </h2>
         <div className="pres-divider" />
       </motion.div>
 
-      <div className="pres-grid-3" style={{ flex: 1, alignContent: "center", gap: "12px" }}>
-        {/* Inclusion */}
-        <motion.div className="pres-card" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          whileHover={{ scale: 1.02 }} style={{ borderTop: "3px solid var(--c-emerald)", padding: "10px 14px" }}>
-          <div style={{ fontSize: "12px", fontWeight: 700, color: "#6ee7b7", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "8px" }}>
-            ✅ {ar ? "معايير الإدراج" : "Inclusion"}
+      {/* ── Two columns ── */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "18px",
+          flex: 1,
+          alignContent: "center",
+          direction: ar ? "rtl" : "ltr",
+        }}
+      >
+        {/* ── INCLUSION ── */}
+        <motion.div
+          initial={{ opacity: 0, x: ar ? 30 : -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1, type: "spring", stiffness: 110 }}
+          whileHover={{ scale: 1.015 }}
+          style={{
+            background: "linear-gradient(160deg, rgba(16,185,129,0.10) 0%, rgba(16,185,129,0.04) 100%)",
+            border: "1px solid rgba(16,185,129,0.28)",
+            borderTop: "3px solid #10b981",
+            borderRadius: "16px",
+            padding: "18px 16px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "14px",
+            boxShadow: "0 6px 28px rgba(16,185,129,0.12)",
+          }}
+        >
+          {/* Card header */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <motion.span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "38px",
+                height: "38px",
+                borderRadius: "11px",
+                background: "rgba(16,185,129,0.18)",
+                fontSize: "20px",
+                flexShrink: 0,
+              }}
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              ✅
+            </motion.span>
+            <div>
+              <div
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 800,
+                  color: "#6ee7b7",
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                }}
+              >
+                {ar ? "معايير الإدراج" : "Inclusion Criteria"}
+              </div>
+              <div style={{ fontSize: "10px", color: "rgba(110,231,183,0.45)", marginTop: "2px" }}>
+                {ar ? "شروط المشاركة" : "Who qualifies"}
+              </div>
+            </div>
           </div>
-          <ul className="pres-list emerald" style={{ gap: "6px" }}>
-            {INCLUSION.map((item, i) => (
-              <motion.li key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 + i * 0.07 }} style={{ fontSize: "12px" }}>
-                {ar ? item.ar : item.en}
-              </motion.li>
-            ))}
-          </ul>
+
+          <div
+            style={{
+              height: "1px",
+              background: "linear-gradient(90deg, #10b98166, transparent)",
+            }}
+          />
+
+          <CriteriaList
+            items={INCLUSION}
+            color="#10b981"
+            markerBg="rgba(16,185,129,0.18)"
+            ar={ar}
+            delay={0.22}
+          />
         </motion.div>
 
-        {/* Exclusion */}
-        <motion.div className="pres-card" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          whileHover={{ scale: 1.02 }} style={{ borderTop: "3px solid var(--c-rose)", padding: "10px 14px" }}>
-          <div style={{ fontSize: "12px", fontWeight: 700, color: "#fca5a5", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "8px" }}>
-            ❌ {ar ? "معايير الاستبعاد" : "Exclusion"}
+        {/* ── EXCLUSION ── */}
+        <motion.div
+          initial={{ opacity: 0, x: ar ? -30 : 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.18, type: "spring", stiffness: 110 }}
+          whileHover={{ scale: 1.015 }}
+          style={{
+            background: "linear-gradient(160deg, rgba(244,63,94,0.10) 0%, rgba(244,63,94,0.04) 100%)",
+            border: "1px solid rgba(244,63,94,0.28)",
+            borderTop: "3px solid #f43f5e",
+            borderRadius: "16px",
+            padding: "18px 16px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "14px",
+            boxShadow: "0 6px 28px rgba(244,63,94,0.12)",
+          }}
+        >
+          {/* Card header */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <motion.span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "38px",
+                height: "38px",
+                borderRadius: "11px",
+                background: "rgba(244,63,94,0.18)",
+                fontSize: "20px",
+                flexShrink: 0,
+              }}
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+            >
+              🚫
+            </motion.span>
+            <div>
+              <div
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 800,
+                  color: "#fca5a5",
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                }}
+              >
+                {ar ? "معايير الاستبعاد" : "Exclusion Criteria"}
+              </div>
+              <div style={{ fontSize: "10px", color: "rgba(252,165,165,0.45)", marginTop: "2px" }}>
+                {ar ? "موانع المشاركة" : "Who is excluded"}
+              </div>
+            </div>
           </div>
-          <ul className="pres-list rose" style={{ gap: "6px" }}>
-            {EXCLUSION.map((item, i) => (
-              <motion.li key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 + i * 0.07 }} style={{ fontSize: "12px" }}>
-                {ar ? item.ar : item.en}
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
 
-        {/* Tools */}
-        <motion.div className="pres-card" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-          whileHover={{ scale: 1.02 }} style={{ borderTop: "3px solid var(--c-indigo)", padding: "10px 14px" }}>
-          <div style={{ fontSize: "12px", fontWeight: 700, color: "#a5b4fc", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "8px" }}>
-            🛠️ {ar ? "أدوات القياس" : "Tools"}
-          </div>
-          {TOOLS.map((t, i) => (
-            <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.45 + i * 0.07 }}
-              style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "6px" }}>
-              <span style={{ fontSize: "14px" }}>{t.icon}</span>
-              <span style={{ fontSize: "12px", color: "var(--c-text-muted)" }}>{ar ? t.ar : t.en}</span>
-            </motion.div>
-          ))}
+          <div
+            style={{
+              height: "1px",
+              background: "linear-gradient(90deg, #f43f5e66, transparent)",
+            }}
+          />
+
+          <CriteriaList
+            items={EXCLUSION}
+            color="#f43f5e"
+            markerBg="rgba(244,63,94,0.18)"
+            ar={ar}
+            delay={0.32}
+          />
         </motion.div>
       </div>
+
+      {/* ── Bottom note ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.9 }}
+        style={{
+          textAlign: "center",
+          fontSize: "10.5px",
+          color: "var(--c-text-muted)",
+          marginTop: "8px",
+          letterSpacing: "0.3px",
+        }}
+      >
+        {ar
+          ? "طُبِّقت معايير الإدراج والاستبعاد على جميع المرشحين قبل الانتساب رسمياً للدراسة"
+          : "All eligibility criteria were applied to every candidate prior to formal enrolment in the study"}
+      </motion.div>
     </div>
   );
 }

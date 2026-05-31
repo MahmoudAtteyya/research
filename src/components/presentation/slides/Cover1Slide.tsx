@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Lang } from "@/lib/presentation/slides-data";
 
-const CONFERENCE = "The Fourth Student Conference for Research Projects, 2026";
+const CONFERENCE = "The 4th Annual Student Symposium for Research Projects • 9 Jun 2026";
 
 const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.12 } } };
 const item      = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } } };
@@ -99,6 +99,44 @@ export default function Cover1Slide({ lang }: { lang: Lang }) {
             />
           </div>
 
+          {/* Symposium Logo */}
+          <motion.div
+            style={{ position: "relative" }}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+          >
+            <motion.div
+              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              transition={{ duration: 3, repeat: Infinity, delay: 0.7 }}
+              style={{
+                position: "absolute", inset: -8, borderRadius: "50%",
+                background: "radial-gradient(circle, rgba(236,72,153,0.2), transparent 70%)",
+              }}
+            />
+            <img
+              src="/symposium-logo.png" alt="Symposium"
+              style={{ width: 82, height: 82, objectFit: "contain", filter: "drop-shadow(0 6px 24px rgba(236,72,153,0.32))", position: "relative" }}
+            />
+          </motion.div>
+
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+            <motion.div
+              animate={{ opacity: [0.4, 1, 0.4], scaleY: [0.85, 1, 0.85] }}
+              transition={{ duration: 2.5, repeat: Infinity }}
+              style={{ width: 1.5, height: 55, background: "linear-gradient(to bottom, transparent, var(--c-gold), transparent)" }}
+            />
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              style={{ fontSize: "10px", color: "var(--c-indigo)", opacity: 0.6 }}
+            >✦</motion.div>
+            <motion.div
+              animate={{ opacity: [0.4, 1, 0.4], scaleY: [0.85, 1, 0.85] }}
+              transition={{ duration: 2.5, repeat: Infinity, delay: 0.4 }}
+              style={{ width: 1.5, height: 55, background: "linear-gradient(to bottom, transparent, var(--c-gold), transparent)" }}
+            />
+          </div>
+
           <motion.div
             style={{ position: "relative" }}
             animate={{ y: [0, -6, 0] }}
@@ -153,13 +191,25 @@ export default function Cover1Slide({ lang }: { lang: Lang }) {
           variants={item}
           style={{
             fontSize: "clamp(18px, 2.4vw, 29px)", fontWeight: 800, color: "var(--c-text)",
-            lineHeight: 1.3, maxWidth: 820, letterSpacing: "-0.2px", marginBottom: 20,
+            lineHeight: 1.3, maxWidth: 820, letterSpacing: "-0.2px", marginBottom: 12,
           }}
         >
           {ar
-            ? "تأثير استهلاك مشروبات الطاقة على العلامات الحيوية والأداء المعرفي لدى البالغين"
-            : "Effect of Energy Drinks Consumption on Vital Signs and Cognitive Performance Among Adults"}
+            ? "التأثيرات الحادة لاستهلاك مشروبات الطاقة على العلامات الحيوية والأداء المعرفي"
+            : "Acute Effects of Energy Drinks Consumption on Vital Signs and Cognitive Performance"}
         </motion.h1>
+        
+        <motion.p
+          variants={item}
+          style={{
+            fontSize: "clamp(12px, 1.4vw, 15px)", color: "var(--c-text-muted)", 
+            maxWidth: 700, marginBottom: 20, lineHeight: 1.5,
+          }}
+        >
+          {ar
+            ? "دراسة تجريبية قبلية-بعدية بين البالغين في جامعة السويس والمرضى المترددين على مستشفى جامعة السويس"
+            : "A Pre-Post exprimental Study among adults at Suez University and patients attending Suez University hospital"}
+        </motion.p>
 
         {/* Badges */}
         <motion.div variants={item} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>

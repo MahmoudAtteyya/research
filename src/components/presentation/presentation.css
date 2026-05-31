@@ -529,99 +529,148 @@
 .pres-scroll-y::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.3); border-radius: 2px; }
 
 /* ================================================================
-   LIGHT MODE THEME
+   PROJECTOR MODE — The single light theme.
+   Optimized for bright lecture-hall projectors AND regular screens.
+   Pure white bg · near-black text · thick visible borders · no blur tricks.
 ================================================================ */
+[data-theme="projector"] {
+  --c-bg:         #ffffff;
+  --c-bg2:        #f2f4ff;
+  --c-surface:    #ffffff;
+  --c-surface2:   #eef0fc;
+  --c-border:     #b0b6d8;
+  --c-border2:    #7880c0;
+  --c-text:       #060918;
+  --c-text-muted: #1a2040;
+  --c-text-dim:   #404878;
+  --c-gold:       #7a4f00;
+  --c-gold-light: #5a3700;
+  --c-indigo:     #3730a3;
+  --c-violet:     #5b21b6;
+  --c-cyan:       #0c4a6e;
+  --c-rose:       #9f1239;
+  --c-emerald:    #064e3b;
+  --c-amber:      #78350f;
+}
 
-/* Eye-comfortable: warm slate-blue bg, strong dark text, vivid accents */
-[data-theme="light"] {
-  --c-bg:         #e9ecf4;
-  --c-bg2:        #dde1ee;
-  --c-surface:    rgba(255,255,255,0.82);
-  --c-surface2:   rgba(255,255,255,0.96);
-  --c-border:     rgba(67,56,202,0.16);
-  --c-border2:    rgba(67,56,202,0.32);
-  --c-text:       #1a1a2e;
-  --c-text-muted: #2d3056;
-  --c-text-dim:   #5c607a;
-  --c-gold:       #8b5e00;
-  --c-gold-light: #6b4600;
-  --c-indigo:     #4338ca;
-  --c-violet:     #6d28d9;
-  --c-cyan:       #0369a1;
-  --c-rose:       #be123c;
-  --c-emerald:    #065f46;
-  --c-amber:      #854d0e;
-  --shadow-card:  0 2px 14px rgba(67,56,202,0.1);
-  --shadow-glow:  0 0 28px rgba(67,56,202,0.08);
+/* ─── Projector: layout & chrome ─── */
+[data-theme="projector"] .pres-root { background: #ffffff; color: #060918; }
+[data-theme="projector"] .pres-bg-mesh { display: none; }
+[data-theme="projector"] .pres-slide-area { background: #f2f4ff; }
+
+[data-theme="projector"] .pres-header {
+  background: #ffffff;
+  border-bottom: 2px solid #b0b6d8;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  backdrop-filter: none;
 }
-[data-theme="light"] .pres-root { background: #e9ecf4; }
-[data-theme="light"] .pres-bg-mesh { display: none; }
-[data-theme="light"] .pres-slide-area { background: #e9ecf4; }
-[data-theme="light"] .pres-header {
-  background: rgba(233,236,244,0.97);
-  border-bottom: 1px solid rgba(67,56,202,0.14);
-  box-shadow: 0 1px 10px rgba(67,56,202,0.07);
+[data-theme="projector"] .pres-footer {
+  background: #ffffff;
+  border-top: 2px solid #b0b6d8;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+  backdrop-filter: none;
 }
-[data-theme="light"] .pres-footer {
-  background: rgba(233,236,244,0.97);
-  border-top: 1px solid rgba(67,56,202,0.12);
-  box-shadow: 0 -1px 10px rgba(67,56,202,0.05);
+[data-theme="projector"] .pres-progress { background: #d4d8f4; }
+[data-theme="projector"] .pres-progress-fill {
+  background: linear-gradient(90deg, #3730a3, #5b21b6, #0c4a6e);
+  box-shadow: 0 0 8px rgba(55,48,163,0.45);
 }
-[data-theme="light"] .pres-card {
-  background: rgba(255,255,255,0.75);
-  border-color: rgba(67,56,202,0.14);
-  box-shadow: 0 1px 8px rgba(67,56,202,0.07);
+
+/* ─── Projector: cards — solid white, thick border ─── */
+[data-theme="projector"] .pres-card {
+  background: #ffffff;
+  border: 2px solid #b0b6d8;
+  box-shadow: 0 2px 14px rgba(55,48,163,0.07);
+  backdrop-filter: none;
 }
-[data-theme="light"] .pres-card:hover {
-  background: rgba(255,255,255,0.92);
-  border-color: rgba(67,56,202,0.28);
-  box-shadow: 0 4px 18px rgba(67,56,202,0.12);
+[data-theme="projector"] .pres-card:hover {
+  border-color: #7880c0;
+  box-shadow: 0 4px 22px rgba(55,48,163,0.13);
 }
-[data-theme="light"] .pres-stat {
-  background: rgba(255,255,255,0.75);
-  border-color: rgba(67,56,202,0.14);
-  box-shadow: 0 1px 8px rgba(67,56,202,0.06);
+
+/* ─── Projector: stats ─── */
+[data-theme="projector"] .pres-stat {
+  background: #ffffff;
+  border: 2px solid #b0b6d8;
 }
-[data-theme="light"] .pres-stat-val {
-  background: linear-gradient(135deg, #4338ca, #0369a1);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+[data-theme="projector"] .pres-stat-val {
+  background: linear-gradient(135deg, #3730a3, #0c4a6e);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  font-size: clamp(28px, 4vw, 50px);
 }
-[data-theme="light"] .pres-btn-nav {
-  background: rgba(255,255,255,0.75); color: #1a1a2e;
-  border-color: rgba(67,56,202,0.18);
+[data-theme="projector"] .pres-stat-unit { font-size: 12px; font-weight: 700; color: #404878; }
+
+/* ─── Projector: typography — larger + bolder for legibility ─── */
+[data-theme="projector"] .pres-h1 { font-size: clamp(28px, 3.8vw, 48px); font-weight: 900; color: #060918; }
+[data-theme="projector"] .pres-h1 em { background: linear-gradient(135deg, #3730a3, #0c4a6e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+[data-theme="projector"] .pres-h2 { font-size: clamp(22px, 3.2vw, 38px); font-weight: 800; color: #060918; }
+[data-theme="projector"] .pres-h3 { font-size: 18px; font-weight: 700; color: #060918; }
+[data-theme="projector"] .pres-label { color: #3730a3; font-size: 13px; letter-spacing: 3px; font-weight: 800; }
+[data-theme="projector"] .pres-divider { background: linear-gradient(90deg, #3730a3, #5b21b6); height: 4px; width: 56px; }
+[data-theme="projector"] .pres-body-text { font-size: 17px; line-height: 1.75; color: #1a2040; font-weight: 500; }
+[data-theme="projector"] .pres-list li { font-size: 15px; color: #1a2040; font-weight: 500; }
+[data-theme="projector"] .pres-list li::before { background: #3730a3; width: 7px; height: 7px; }
+
+/* ─── Projector: badges — strong contrast ─── */
+[data-theme="projector"] .pres-sig {
+  background: #d1fae5; color: #064e3b;
+  border: 2px solid #059669; font-size: 11px; font-weight: 800;
 }
-[data-theme="light"] .pres-btn-icon { color: #3d4166; border-color: rgba(67,56,202,0.14); }
-[data-theme="light"] .pres-progress { background: rgba(67,56,202,0.1); }
-[data-theme="light"] .pres-sig {
-  background: rgba(5,150,105,0.12); color: #064e3b;
-  border-color: rgba(5,150,105,0.28); font-weight: 700;
+[data-theme="projector"] .pres-sig-warn {
+  background: #fef3c7; color: #78350f;
+  border: 2px solid #d97706; font-size: 11px; font-weight: 800;
 }
-[data-theme="light"] .pres-sig-warn {
-  background: rgba(133,77,14,0.1); color: #6b4600;
-  border-color: rgba(133,77,14,0.24); font-weight: 700;
+[data-theme="projector"] .pres-diff-badge {
+  background: #d1fae5; color: #064e3b;
+  border: 2px solid #059669; font-weight: 800; font-size: 12px;
 }
-[data-theme="light"] .pres-diff-badge {
-  color: #064e3b; background: rgba(5,150,105,0.1);
-  border-color: rgba(5,150,105,0.24); font-weight: 700;
+[data-theme="projector"] .pres-before-val { color: #1d4ed8; font-weight: 800; font-size: 16px; }
+[data-theme="projector"] .pres-after-val  { color: #9f1239; font-weight: 800; font-size: 16px; }
+
+/* ─── Projector: navigation ─── */
+[data-theme="projector"] .pres-btn-nav {
+  background: #ffffff; color: #060918;
+  border: 2px solid #b0b6d8; font-weight: 700;
 }
-[data-theme="light"] .pres-before-val { color: #1d4ed8; }
-[data-theme="light"] .pres-after-val  { color: #be123c; }
-[data-theme="light"] .pres-bar-track  { background: rgba(67,56,202,0.1); }
-[data-theme="light"] .pres-thumb-strip { background: rgba(233,236,244,0.97); border-top-color: rgba(67,56,202,0.1); }
-[data-theme="light"] .pres-thumb { background: rgba(255,255,255,0.65); border-color: rgba(67,56,202,0.12); color: #5c607a; }
-[data-theme="light"] .pres-notes { background: rgba(255,255,255,0.96); }
-[data-theme="light"] .pres-notes p { color: #2d3056; }
-[data-theme="light"] .pres-compare-row { background: rgba(255,255,255,0.7); border-color: rgba(67,56,202,0.12); }
-[data-theme="light"] .pres-toc-item { background: rgba(255,255,255,0.75); border-color: rgba(67,56,202,0.12); }
-[data-theme="light"] .pres-cover-member { background: rgba(255,255,255,0.75); border-color: rgba(67,56,202,0.15); }
-[data-theme="light"] .pres-sup-chip { background: rgba(107,70,0,0.08); border-color: rgba(107,70,0,0.2); color: #6b4600; }
-[data-theme="light"] .pres-group-badge { background: rgba(67,56,202,0.1); border-color: rgba(67,56,202,0.24); color: #4338ca; font-weight: 700; }
-[data-theme="light"] .pres-tooltip { background: rgba(255,255,255,0.97); border-color: rgba(67,56,202,0.15); color: #1a1a2e; }
-[data-theme="light"] .grad-indigo { background: linear-gradient(135deg, #4338ca, #0369a1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-[data-theme="light"] .grad-gold   { background: linear-gradient(135deg, #92400e, #78350f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-[data-theme="light"] .grad-rose   { background: linear-gradient(135deg, #be123c, #c2410c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-[data-theme="light"] .pres-h1 em  { background: linear-gradient(135deg, #4338ca, #0369a1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-[data-theme="light"] .pres-conf-title { color: #1a1a2e; }
+[data-theme="projector"] .pres-btn-nav:hover:not(:disabled) {
+  background: #eef0fc; border-color: #3730a3; color: #3730a3;
+}
+[data-theme="projector"] .pres-btn-primary {
+  background: linear-gradient(135deg, #3730a3, #5b21b6); font-weight: 700;
+}
+[data-theme="projector"] .pres-btn-icon {
+  background: #ffffff; color: #404878; border: 2px solid #b0b6d8;
+}
+[data-theme="projector"] .pres-slide-counter { color: #404878; font-weight: 800; font-size: 13px; }
+[data-theme="projector"] .pres-slide-title-footer { color: #1a2040; font-weight: 700; font-size: 12px; }
+
+/* ─── Projector: bar tracks ─── */
+[data-theme="projector"] .pres-bar-track { background: #d4d8f4; height: 8px; border-radius: 4px; }
+[data-theme="projector"] .pres-compare-row { background: #ffffff; border: 2px solid #b0b6d8; }
+
+/* ─── Projector: thumbnails ─── */
+[data-theme="projector"] .pres-thumb-strip { background: #f2f4ff; border-top: 2px solid #b0b6d8; }
+[data-theme="projector"] .pres-thumb { background: #ffffff; border: 2px solid #b0b6d8; color: #404878; font-weight: 600; }
+[data-theme="projector"] .pres-thumb.active { border-color: #3730a3; color: #3730a3; background: #eef0fc; }
+
+/* ─── Projector: notes ─── */
+[data-theme="projector"] .pres-notes { background: #fffbeb; border-top: 3px solid #d97706; }
+[data-theme="projector"] .pres-notes p { color: #1a2040; font-size: 14px; font-weight: 600; }
+[data-theme="projector"] .pres-notes-label { color: #78350f; font-weight: 800; }
+
+/* ─── Projector: branding & misc ─── */
+[data-theme="projector"] .pres-uni-name { color: #7a4f00; }
+[data-theme="projector"] .pres-fac-name { color: #404878; }
+[data-theme="projector"] .pres-group-badge { background: #eef0fc; border: 2px solid #7880c0; color: #3730a3; font-weight: 800; }
+[data-theme="projector"] .pres-toc-item { background: #ffffff; border: 2px solid #b0b6d8; }
+[data-theme="projector"] .pres-cover-member { background: #ffffff; border: 2px solid #b0b6d8; color: #1a2040; font-size: 11px; font-weight: 600; }
+[data-theme="projector"] .pres-sup-chip { background: #fef9ee; border: 2px solid #d97706; color: #78350f; font-weight: 700; }
+[data-theme="projector"] .pres-conf-title { background: linear-gradient(135deg, #3730a3, #5b21b6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: none; }
+[data-theme="projector"] .grad-indigo { background: linear-gradient(135deg, #3730a3, #0c4a6e); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+[data-theme="projector"] .grad-gold   { background: linear-gradient(135deg, #92400e, #7a4f00); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+[data-theme="projector"] .pres-tooltip { background: #ffffff; border: 2px solid #b0b6d8; color: #060918; font-weight: 700; }
+[data-theme="projector"] .anim-border-glow { animation: none; border-color: #7880c0; }
+[data-theme="projector"] .pres-card-glow { box-shadow: 0 0 0 2px rgba(55,48,163,0.28), 0 6px 24px rgba(55,48,163,0.09); }
 
 /* ─── THEME TOGGLE BUTTON ─── */
 .pres-btn-theme {
@@ -826,12 +875,121 @@
   .pres-swipe-hint { display: none; }
 }
 
-/* ── Landscape phone fix ── */
-@media (max-width: 768px) and (orientation: landscape) {
-  .pres-header { height: 40px; }
-  .pres-footer { height: 42px; }
-  .pres-slide-inner { padding: 8px 16px 6px; }
-  .pres-h1 { font-size: clamp(15px, 4vw, 22px); }
-  .pres-h2 { font-size: clamp(13px, 3.5vw, 19px); }
-  .pres-body-text { font-size: 12px; line-height: 1.45; }
+/* ================================================================
+   MOBILE — Desktop-like experience
+   On portrait phones: scale the full presentation to fit within
+   the viewport using transform:scale so it looks like a miniature
+   desktop slide (no collapsed layouts).
+   On landscape (fullscreen): use desktop-level sizes — no overrides.
+================================================================ */
+
+/* ── Portrait mobile: scale-to-fit ── */
+@media (max-width: 768px) and (orientation: portrait) {
+  /*
+    We keep the root at 100vw × 100svh but scale the *inner content*
+    to look like a 16:9 landscape slide.
+    The root clips overflow so nothing leaks outside.
+  */
+  .pres-root {
+    overflow: hidden;
+  }
+
+  /* Scale slide content area like a mini-desktop */
+  .pres-slide-inner {
+    padding: 12px 20px 8px;
+    transform-origin: top left;
+  }
+
+  /* Restore desktop-level typography inside slide area */
+  .pres-h1 { font-size: clamp(18px, 4.5vw, 30px); }
+  .pres-h2 { font-size: clamp(15px, 3.8vw, 24px); }
+  .pres-h3 { font-size: clamp(13px, 3vw, 18px); }
+  .pres-body-text { font-size: clamp(12px, 2.8vw, 16px); line-height: 1.6; }
+  .pres-list li  { font-size: clamp(11px, 2.5vw, 14px); }
+  .pres-label    { font-size: clamp(9px, 2vw, 12px); }
+
+  /* Grids: 2 columns on portrait (≤768) */
+  .pres-grid-3 { grid-template-columns: 1fr 1fr; }
+  .pres-grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  /* Header: keep compact but readable */
+  .pres-header {
+    height: 50px;
+    padding: 8px 14px;
+  }
+  .pres-header-center { display: none; }
+  .pres-logo { width: 30px; height: 30px; }
+  .pres-uni-name { font-size: 11px; }
+  .pres-fac-name { display: none; }
+
+  /* Footer: slim */
+  .pres-footer { height: 50px; padding: 0 10px; }
+  .pres-slide-title-footer { max-width: 110px; font-size: 10px; }
+  .pres-btn-nav  { width: 34px; height: 34px; }
+  .pres-btn-icon { width: 30px; height: 30px; }
+  .pres-btn-primary { height: 30px; padding: 0 10px; font-size: 11px; }
+  .pres-btn-theme-label { display: none; }
 }
+
+/* ── Landscape mobile / fullscreen: desktop layout, no shrinking ── */
+@media (max-width: 1024px) and (orientation: landscape) {
+  /* Restore proper desktop sizing for landscape (fullscreen beamer view) */
+  .pres-header {
+    height: 56px;
+    padding: 8px 24px;
+  }
+  .pres-header-center { display: block; }
+  .pres-logo { width: 34px; height: 34px; }
+  .pres-uni-name { font-size: 12px; }
+  .pres-fac-name { display: block; font-size: 10px; }
+  .pres-group-badge { display: flex; font-size: 10px; }
+
+  .pres-footer { height: 50px; padding: 0 16px; }
+  .pres-slide-title-footer { max-width: 160px; }
+  .pres-slide-inner { padding: 14px 32px 8px; }
+
+  /* Desktop-level text for landscape */
+  .pres-h1 { font-size: clamp(20px, 3.5vw, 38px); }
+  .pres-h2 { font-size: clamp(17px, 3vw, 30px); }
+  .pres-h3 { font-size: clamp(14px, 2.2vw, 18px); }
+  .pres-body-text { font-size: clamp(13px, 1.8vw, 16px); line-height: 1.65; }
+  .pres-list li  { font-size: clamp(12px, 1.6vw, 15px); }
+  .pres-label    { font-size: 11px; }
+
+  /* Restore full grids */
+  .pres-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .pres-grid-4 { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+}
+
+/* ── Very small phones (≤ 480px portrait) ── */
+@media (max-width: 480px) and (orientation: portrait) {
+  .pres-header { height: 46px; padding: 6px 10px; }
+  .pres-group-badge { display: none; }
+  .pres-footer { height: 46px; padding: 0 8px; }
+  .pres-slide-title-footer { display: none; }
+  .pres-btn-primary { padding: 0 8px; font-size: 10px; height: 28px; }
+
+  .pres-h1 { font-size: clamp(15px, 5vw, 22px); }
+  .pres-h2 { font-size: clamp(13px, 4.5vw, 19px); }
+  .pres-cover { padding: 14px; }
+  .pres-cover-logos { gap: 12px; margin-bottom: 12px; }
+  .pres-cover-logo  { width: 48px; height: 48px; }
+  .pres-cover-team  { grid-template-columns: repeat(2, 1fr); gap: 4px 8px; }
+  .pres-cover-member { font-size: 9px; padding: 3px 6px; }
+  .pres-sup-chip    { font-size: 9px; padding: 3px 8px; }
+  .pres-progress    { height: 3px; }
+}
+
+/* ── Swipe hint (portrait only) ── */
+@media (orientation: portrait) and (max-width: 768px) {
+  .pres-swipe-hint {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 10px; color: var(--c-text-dim); letter-spacing: 0.5px;
+    animation: fadeIn 0.5s ease forwards, fadeOut 0.4s ease 3.5s forwards;
+  }
+  @keyframes fadeOut { to { opacity: 0; pointer-events: none; } }
+}
+@media (orientation: landscape), (min-width: 769px) {
+  .pres-swipe-hint { display: none; }
+}
+

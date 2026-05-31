@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { Lang, DEMOGRAPHICS_DATA, ED_CONSUMPTION_REASONS } from "@/lib/presentation/slides-data";
+import { Lang, DEMOGRAPHICS_DATA } from "@/lib/presentation/slides-data";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
 function CountUp({ end, dec = 0, suffix = "" }: { end: number; dec?: number; suffix?: string }) {
@@ -74,23 +74,6 @@ export default function ResultsDemoSlide({ lang }: { lang: Lang }) {
             </div>
           </motion.div>
 
-          <motion.div className="pres-card" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-            style={{ padding: "12px 16px" }}>
-            <div style={{ fontSize: "12px", fontWeight: 700, color: "var(--c-text-dim)", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "8px" }}>
-              {ar ? "أسباب الاستهلاك" : "Reasons for Consumption"}
-            </div>
-            {ED_CONSUMPTION_REASONS.map((r, i) => (
-              <div key={i} style={{ marginBottom: "6px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "3px" }}>
-                  <span style={{ fontSize: "13px", color: "var(--c-text-muted)" }}>{ar ? r.reasonAr : r.reason}</span>
-                  <span style={{ fontSize: "13px", fontWeight: 700, color: r.color }}>{r.percent}%</span>
-                </div>
-                <div className="pres-bar-track">
-                  <motion.div className="pres-bar-fill" style={{ background: r.color }} initial={{ width: 0 }} animate={{ width: `${r.percent}%` }} transition={{ delay: 0.65 + i * 0.08, duration: 0.7 }} />
-                </div>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </div>
     </div>
