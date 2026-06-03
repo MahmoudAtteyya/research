@@ -177,6 +177,8 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
     if (!document.fullscreenElement) {
       try {
         await document.documentElement.requestFullscreen();
+        // Immediately hide header & footer when going fullscreen
+        setChromeState(2);
         // Lock orientation to landscape on mobile devices (ignore errors if unsupported)
         try {
           if (
@@ -196,6 +198,8 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
     } else {
       try {
         await document.exitFullscreen();
+        // Restore header & footer when exiting fullscreen
+        setChromeState(0);
         if ((window.screen as unknown as { orientation?: { unlock?: () => void } }).orientation?.unlock) {
           (window.screen as unknown as { orientation: { unlock: () => void } }).orientation.unlock();
         }
@@ -289,29 +293,88 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
     };
   }, [remoteEnabled, pres.nextSlide, pres.prevSlide, handleFullscreen, cycleChromeState, ar, showNotification]);
 
-  // ── Keyboard shortcuts & Fullscreen Events ──
+  // ── Single unified keyboard handler ──
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
+      // Don't fire when typing in inputs
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-      if (e.key === "h" || e.key === "H") { e.preventDefault(); cycleChromeState(); }
-      if (e.key === "f" || e.key === "F") { e.preventDefault(); handleFullscreen(); }
-    };
-    window.addEventListener("keydown", handleKey);
-    
-    const onFsChange = () => {
-      if (document.fullscreenElement) {
-        setChromeState(2); // Auto-hide when entering fullscreen
-      } else {
-        setChromeState(0); // Auto-show when exiting fullscreen
+
+      switch (e.key) {
+        // Navigation
+        case "ArrowRight":
+        case "ArrowDown":
+        case " ":
+          e.preventDefault();
+          pres.nextSlide();
+          break;
+        case "ArrowLeft":
+        case "ArrowUp":
+          e.preventDefault();
+          pres.prevSlide();
+          break;
+        case "Home":
+          e.preventDefault();
+          pres.goToSlide(0);
+          break;
+        case "End":
+          e.preventDefault();
+          pres.goToSlide(pres.totalSlides - 1);
+          break;
+
+        // Toggle fullscreen
+        case "f":
+        case "F":
+          e.preventDefault();
+          handleFullscreen();
+          break;
+
+        // Toggle dark / projector theme
+        case "t":
+        case "T":
+          e.preventDefault();
+          toggleTheme();
+          break;
+
+        // Cycle chrome (header / footer visibility)
+        case "h":
+        case "H":
+          e.preventDefault();
+          cycleChromeState();
+          break;
+
+        // Speaker notes
+        case "n":
+        case "N":
+          e.preventDefault();
+          pres.setShowNotes(v => !v);
+          break;
+
+        // Exit fullscreen on Escape
+        case "Escape":
+          if (document.fullscreenElement) {
+            document.exitFullscreen().catch(() => {});
+            pres.setIsFullscreen(false);
+          }
+          break;
       }
     };
-    document.addEventListener("fullscreenchange", onFsChange);
 
+    const onFsChange = () => {
+      if (document.fullscreenElement) {
+        setChromeState(2);
+      } else {
+        setChromeState(0);
+      }
+    };
+
+    window.addEventListener("keydown", handleKey);
+    document.addEventListener("fullscreenchange", onFsChange);
     return () => {
       window.removeEventListener("keydown", handleKey);
       document.removeEventListener("fullscreenchange", onFsChange);
     };
-  }, [cycleChromeState, handleFullscreen]);
+  }, [pres, cycleChromeState, handleFullscreen, toggleTheme]);
+
 
   // ── Touch swipe ──
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -704,38 +767,7 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
         )}
       </AnimatePresence>
 
-      {/* ── UNIFIED CHROME TOGGLE (H key) ── */}
-      <motion.button
-        onClick={cycleChromeState}
-        title={`${chromeTitles[chromeState]} (H)`}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.92 }}
-        animate={{
-          bottom: footerVisible ? "68px" : "16px",
-          background: chromeState === 0
-            ? "rgba(255,255,255,0.07)"
-            : "rgba(99,102,241,0.65)",
-        }}
-        transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
-        style={{
-          position: "fixed",
-          right: "16px",
-          zIndex: 999999,
-          border: "1px solid rgba(255,255,255,0.18)",
-          borderRadius: "50%",
-          width: "38px", height: "38px",
-          display: "flex", justifyContent: "center", alignItems: "center",
-          cursor: "pointer",
-          color: "rgba(255,255,255,0.85)",
-          backdropFilter: "blur(10px)",
-          boxShadow: chromeState !== 0
-            ? "0 4px 20px rgba(99,102,241,0.4)"
-            : "0 2px 12px rgba(0,0,0,0.25)",
-          fontSize: "15px", fontWeight: 700, lineHeight: 1,
-        }}
-      >
-        {chromeIcons[chromeState]}
-      </motion.button>
+
 
       {/* Remote Notification Toast */}
       <AnimatePresence>
@@ -803,7 +835,9 @@ function KeyboardHint({ ar, isMobile }: { ar: boolean; isMobile: boolean }) {
           <span style={{ opacity: 0.4 }}>·</span>
           <span>F {ar ? "شاشة كاملة" : "Fullscreen"}</span>
           <span style={{ opacity: 0.4 }}>·</span>
-          <span>H {ar ? "إخفاء الشريط" : "Chrome"}</span>
+          <span>T {ar ? "تبديل الوضع" : "Toggle Theme"}</span>
+          <span style={{ opacity: 0.4 }}>·</span>
+          <span>H {ar ? "إخفاء الشريط" : "Hide UI"}</span>
         </>
       )}
     </motion.div>

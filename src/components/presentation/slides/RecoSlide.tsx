@@ -137,14 +137,14 @@ export default function RecoSlide({ lang }: { lang: Lang }) {
                   {ar ? r.titleAr : r.titleEn}
                 </span>
                 <span style={{
-                  fontSize: "8.5px", fontWeight: 800, letterSpacing: "0.7px", textTransform: "uppercase",
+                  fontSize: "clamp(10px, 1.3vw, 15px)", fontWeight: 800, letterSpacing: "0.7px", textTransform: "uppercase",
                   background: `${r.color}18`, border: `1px solid ${r.color}35`,
                   borderRadius: "20px", padding: "1px 7px", color: r.color,
                 }}>
                   {ar ? r.tagAr : r.tagEn}
                 </span>
               </div>
-              <div style={{ fontSize: "11.5px", color: "var(--c-text-muted)", lineHeight: 1.45, fontWeight: 450 }}>
+              <div style={{ fontSize: "clamp(13px, 1.7vw, 20px)", color: "var(--c-text-muted)", lineHeight: 1.5, fontWeight: 450 }}>
                 {ar ? r.textAr : r.textEn}
               </div>
             </div>

@@ -72,10 +72,10 @@ export default function Methods1Slide({ lang }: { lang: Lang }) {
                 border: `1px solid ${card.color}35`,
                 borderTop: `3px solid ${card.color}`,
                 borderRadius: "18px",
-                padding: "22px 20px",
+                padding: "40px 32px",
                 display: "flex",
                 alignItems: "center",
-                gap: "16px",
+                gap: "24px",
                 boxShadow: `0 8px 32px ${card.glow}, inset 0 1px 0 rgba(255,255,255,0.06)`,
                 cursor: "default",
                 position: "relative",
@@ -112,18 +112,18 @@ export default function Methods1Slide({ lang }: { lang: Lang }) {
               {/* Text */}
               <div style={{ flex: 1 }}>
                 <div style={{
-                  fontSize: "9.5px",
+                  fontSize: "clamp(14px, 2vw, 24px)",
                   fontWeight: 800,
                   color: card.color,
                   letterSpacing: "2px",
                   textTransform: "uppercase",
-                  marginBottom: "6px",
+                  marginBottom: "8px",
                   opacity: 0.9,
                 }}>
                   {ar ? card.labelAr : card.labelEn}
                 </div>
                 <div style={{
-                  fontSize: "15.5px",
+                  fontSize: "clamp(22px, 3vw, 42px)",
                   fontWeight: 800,
                   color: "var(--c-text)",
                   lineHeight: 1.35,
@@ -144,9 +144,9 @@ export default function Methods1Slide({ lang }: { lang: Lang }) {
             background: "linear-gradient(135deg, rgba(99,102,241,0.10) 0%, rgba(6,182,212,0.06) 60%, rgba(16,185,129,0.04) 100%)",
             border: "1px solid rgba(99,102,241,0.28)",
             borderRadius: "18px",
-            padding: "22px 26px",
+            padding: "32px 40px",
             display: "flex",
-            gap: "18px",
+            gap: "28px",
             alignItems: "center",
             boxShadow: "0 10px 40px rgba(99,102,241,0.1)",
             position: "relative",

@@ -29,77 +29,26 @@ export function usePresentation() {
     if (currentSlide > 0) goToSlide(currentSlide - 1);
   }, [currentSlide, goToSlide]);
 
-  const toggleFullscreen = useCallback(() => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen().catch(() => {});
-      setIsFullscreen(false);
-    }
-  }, []);
-
+  // Track fullscreen state changes (from browser button / Escape)
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      switch (e.key) {
-        case "ArrowRight":
-        case "ArrowDown":
-        case " ":
-          e.preventDefault();
-          nextSlide();
-          break;
-        case "ArrowLeft":
-        case "ArrowUp":
-          e.preventDefault();
-          prevSlide();
-          break;
-        case "f":
-        case "F":
-          toggleFullscreen();
-          break;
-        case "n":
-        case "N":
-          setShowNotes((v) => !v);
-          break;
-        case "Escape":
-          if (document.fullscreenElement) {
-            document.exitFullscreen();
-            setIsFullscreen(false);
-          }
-          break;
-        case "Home":
-          goToSlide(0);
-          break;
-        case "End":
-          goToSlide(totalSlides - 1);
-          break;
-      }
-    };
-
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
     };
-
-    window.addEventListener("keydown", handleKey);
     document.addEventListener("fullscreenchange", handleFullscreenChange);
-
-    return () => {
-      window.removeEventListener("keydown", handleKey);
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
-    };
-  }, [nextSlide, prevSlide, toggleFullscreen, goToSlide, totalSlides]);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
 
   return {
     currentSlide,
     totalSlides,
     isFullscreen,
+    setIsFullscreen,
     showNotes,
     isTransitioning,
     slide: SLIDES[currentSlide],
     goToSlide,
     nextSlide,
     prevSlide,
-    toggleFullscreen,
     setShowNotes,
     canNext: currentSlide < totalSlides - 1,
     canPrev: currentSlide > 0,

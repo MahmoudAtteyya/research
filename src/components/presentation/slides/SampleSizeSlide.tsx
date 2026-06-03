@@ -4,13 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Lang } from "@/lib/presentation/slides-data";
 import Image from "next/image";
 
-const CRITERIA = [
-  { labelEn: "Confidence Level", labelAr: "مستوى الثقة", valueEn: "95%", value: "95%", color: "#6366f1" },
-  { labelEn: "Statistical Power", labelAr: "القوة الإحصائية", valueEn: "80%", value: "80%", color: "#06b6d4" },
-  { labelEn: "Mean Group 1 (HR)", labelAr: "متوسط المجموعة 1 (القلب)", valueEn: "81.3", value: "81.3", color: "#10b981" },
-  { labelEn: "Mean Group 2 (HR)", labelAr: "متوسط المجموعة 2 (القلب)", valueEn: "84.8", value: "84.8", color: "#f59e0b" },
-  { labelEn: "Standard Deviation", labelAr: "الانحراف المعياري", valueEn: "8.2&8.5", value: "8.2&8.5", color: "#a855f7" },
-];
 
 export default function SampleSizeSlide({ lang }: { lang: Lang }) {
   const ar = lang === "ar";
@@ -34,68 +27,30 @@ export default function SampleSizeSlide({ lang }: { lang: Lang }) {
           <div className="pres-divider" />
         </motion.div>
 
-        {/* ── Body: 3-column layout ── */}
-        <div style={{ display: "flex", flex: 1, gap: "16px", minHeight: 0, alignItems: "stretch" }}>
+        {/* ── Body: Premium 2-column layout ── */}
+        <div style={{ display: "flex", flex: 1, gap: "40px", minHeight: 0, alignItems: "stretch", padding: "10px 0" }}>
 
-          {/* Column 1: Criteria list */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1, type: "spring", stiffness: 110 }}
-            style={{ flex: "0 0 220px", display: "flex", flexDirection: "column", gap: "8px", justifyContent: "center" }}
-          >
-            <div style={{ fontSize: "9.5px", fontWeight: 800, color: "var(--c-text-muted)", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "4px" }}>
-              {ar ? "معايير الحساب" : "Calculation Criteria"}
-            </div>
-            {CRITERIA.map((c, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.15 + i * 0.08 }}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  background: `linear-gradient(135deg, ${c.color}12, ${c.color}06)`,
-                  border: `1px solid ${c.color}30`,
-                  borderLeft: `3px solid ${c.color}`,
-                  borderRadius: "10px",
-                  padding: "9px 12px",
-                  gap: "10px",
-                }}
-              >
-                <span style={{ fontSize: "clamp(12px, 1.7vw, 21px)", color: "var(--c-text-muted)", fontWeight: 500, lineHeight: 1.3 }}>
-                  {ar ? c.labelAr : c.labelEn}
-                </span>
-                <span style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 800, color: c.color, flexShrink: 0 }}>
-                  {c.value}
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Column 2: Image */}
+          {/* Column 1: Image (Takes up more space now) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-            style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column" }}
+            transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
+            style={{ flex: "1.2", position: "relative", display: "flex", flexDirection: "column" }}
           >
             <div style={{
               position: "relative",
               flex: 1,
-              borderRadius: "16px",
+              borderRadius: "24px",
               overflow: "hidden",
-              border: "1px solid rgba(255,255,255,0.08)",
-              background: "rgba(255,255,255,0.02)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
+              border: "1px solid rgba(255,255,255,0.05)",
+              background: "rgba(255,255,255,0.01)",
+              boxShadow: "0 12px 48px rgba(0,0,0,0.15), inset 0 1px 1px rgba(255,255,255,0.05)",
             }}>
               <Image
                 src="/images/sample_size.png"
                 alt="Sample Size Calculation Form"
                 fill
-                style={{ objectFit: "contain", padding: "8px", cursor: "pointer" }}
+                style={{ objectFit: "contain", padding: "12px", cursor: "pointer", filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.12))" }}
                 unoptimized
                 onClick={() => setIsModalOpen(true)}
               />
@@ -104,110 +59,118 @@ export default function SampleSizeSlide({ lang }: { lang: Lang }) {
                 onClick={() => setIsModalOpen(true)}
                 style={{
                   position: "absolute",
-                  bottom: "10px",
-                  right: "10px",
-                  background: "var(--c-indigo)",
+                  bottom: "20px",
+                  right: "20px",
+                  background: "linear-gradient(135deg, var(--c-indigo), var(--c-violet))",
                   color: "white",
                   border: "none",
-                  borderRadius: "8px",
-                  padding: "8px 12px",
-                  fontSize: "clamp(12px, 1.4vw, 15px)",
-                  fontWeight: 600,
+                  borderRadius: "12px",
+                  padding: "12px 20px",
+                  fontSize: "clamp(14px, 2vw, 22px)",
+                  fontWeight: 700,
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
-                  gap: "6px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
+                  gap: "8px",
+                  boxShadow: "0 8px 24px rgba(99,102,241,0.4)",
+                  transition: "all 0.2s ease",
                 }}
+                onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
                 </svg>
-                {ar ? "تكبير" : "Enlarge"}
+                {ar ? "تكبير الصورة" : "Enlarge"}
               </button>
             </div>
           </motion.div>
 
-          {/* Column 3: Enrollment summary */}
+          {/* Column 2: Important Info Stats (Takes up remaining space) */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: ar ? -30 : 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, type: "spring", stiffness: 110 }}
-            style={{ flex: "0 0 200px", display: "flex", flexDirection: "column", gap: "12px", justifyContent: "center" }}
+            transition={{ delay: 0.25, type: "spring", stiffness: 110 }}
+            style={{ flex: "0.8", display: "flex", flexDirection: "column", gap: "16px", justifyContent: "center" }}
           >
-            {/* Enrollment card */}
-            <div style={{
-              background: "linear-gradient(145deg, rgba(99,102,241,0.15), rgba(99,102,241,0.06))",
-              border: "1px solid rgba(99,102,241,0.35)",
-              borderTop: "3px solid #6366f1",
-              borderRadius: "16px",
-              padding: "20px 16px",
-              textAlign: "center",
-            }}>
+            {/* Huge Enrollment card */}
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -4 }}
+              style={{
+                flex: 1,
+                background: "linear-gradient(145deg, rgba(99,102,241,0.12), rgba(99,102,241,0.02))",
+                border: "1px solid rgba(99,102,241,0.2)",
+                borderTop: "6px solid #6366f1",
+                borderRadius: "24px",
+                padding: "20px 24px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                boxShadow: "0 16px 40px rgba(99,102,241,0.1)",
+                position: "relative",
+                overflow: "hidden"
+              }}
+            >
+              <div style={{
+                position: "absolute", top: "-40px", right: "-40px", width: "150px", height: "150px",
+                background: "radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%)", borderRadius: "50%"
+              }} />
+              
               <motion.div
-                animate={{ scale: [1, 1.06, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                style={{ fontSize: "clamp(36px, 5.1vw, 65px)", marginBottom: "8px" }}
+                animate={{ scale: [1, 1.08, 1], rotate: [0, 5, -5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                style={{ fontSize: "clamp(40px, 6vw, 70px)", marginBottom: "8px", filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.2))" }}
               >
                 👥
               </motion.div>
               <div style={{
-                fontSize: "clamp(38px, 5.3vw, 68px)",
+                fontSize: "clamp(60px, 8vw, 100px)",
                 fontWeight: 900,
                 background: "linear-gradient(135deg, #6366f1, #a855f7)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
                 lineHeight: 1,
-                marginBottom: "6px",
+                marginBottom: "8px",
+                filter: "drop-shadow(0 4px 12px rgba(99,102,241,0.3))"
               }}>
                 47
               </div>
-              <div style={{ fontSize: "clamp(12px, 1.7vw, 21px)", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.4, marginBottom: "4px" }}>
-                {ar ? "بالغاً صحيحاً تم تسجيله في الدراسة" : "healthy adults was enrolled in the study"}
+              <div style={{ fontSize: "clamp(16px, 2.2vw, 28px)", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.4 }}>
+                {ar ? "بالغاً صحيحاً تم تسجيله" : "Healthy adults enrolled"}
               </div>
-            </div>
+              <div style={{ fontSize: "clamp(12px, 1.8vw, 20px)", fontWeight: 500, color: "var(--c-text-muted)", marginTop: "4px" }}>
+                {ar ? "في الدراسة البحثية" : "in the research study"}
+              </div>
+            </motion.div>
 
-            {/* Sampling technique card */}
-            <div style={{
-              background: "linear-gradient(145deg, rgba(245,158,11,0.12), rgba(245,158,11,0.04))",
-              border: "1px solid rgba(245,158,11,0.30)",
-              borderTop: "3px solid #f59e0b",
-              borderRadius: "14px",
-              padding: "16px",
-            }}>
-              <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 800, color: "#f59e0b", letterSpacing: "1.8px", textTransform: "uppercase", marginBottom: "8px" }}>
-                {ar ? "أسلوب أخذ العينات" : "Sampling Technique"}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <span style={{ fontSize: "clamp(18px, 2.8vw, 36px)" }}>🎯</span>
-                <span style={{ fontSize: "clamp(14px, 2.0vw, 26px)", fontWeight: 800, color: "var(--c-text)" }}>
-                  {ar ? "أخذ عينات ملائمة" : "Convenience Sampling"}
-                </span>
-              </div>
-            </div>
-
-            {/* Software tag */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
+            {/* Premium Sampling technique card */}
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -4 }}
               style={{
-                background: "rgba(16,185,129,0.08)",
-                border: "1px solid rgba(16,185,129,0.25)",
-                borderRadius: "10px",
-                padding: "10px 12px",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
+                background: "linear-gradient(145deg, rgba(245,158,11,0.15), rgba(245,158,11,0.03))",
+                border: "1px solid rgba(245,158,11,0.30)",
+                borderLeft: "6px solid #f59e0b",
+                borderRadius: "20px",
+                padding: "16px 24px",
+                boxShadow: "0 12px 32px rgba(245,158,11,0.08)"
               }}
             >
-              <span style={{ fontSize: "clamp(14px, 2.0vw, 26px)" }}>✅</span>
-              <div>
-                <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: "#10b981", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px" }}>
-                  {ar ? "البرنامج المستخدم" : "Software"}
-                </div>
-                <div style={{ fontSize: "clamp(12px, 1.7vw, 21px)", fontWeight: 700, color: "var(--c-text)" }}>Epi Info</div>
+              <div style={{ fontSize: "clamp(10px, 1.4vw, 16px)", fontWeight: 800, color: "#f59e0b", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "8px" }}>
+                {ar ? "أسلوب أخذ العينات" : "Sampling Technique"}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div style={{ 
+                  width: "44px", height: "44px", borderRadius: "12px", 
+                  background: "linear-gradient(135deg, rgba(245,158,11,0.2), rgba(245,158,11,0.05))",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "clamp(20px, 3vw, 32px)", boxShadow: "inset 0 2px 10px rgba(255,255,255,0.1)"
+                }}>🎯</div>
+                <span style={{ fontSize: "clamp(18px, 2.5vw, 32px)", fontWeight: 800, color: "var(--c-text)", lineHeight: 1.3 }}>
+                  {ar ? "أخذ عينات ملائمة" : "Convenience Sampling"}
+                </span>
               </div>
             </motion.div>
           </motion.div>

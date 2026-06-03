@@ -135,14 +135,14 @@ export default function ConclusionSlide({ lang }: { lang: Lang }) {
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "5px" }}>
                 <span style={{
-                  fontSize: "8.5px", fontWeight: 800, letterSpacing: "0.8px", textTransform: "uppercase",
+                  fontSize: "clamp(10px, 1.3vw, 15px)", fontWeight: 800, letterSpacing: "0.8px", textTransform: "uppercase",
                   background: `${f.color}18`, border: `1px solid ${f.color}35`,
                   borderRadius: "20px", padding: "2px 7px", color: f.color,
                 }}>
                   {ar ? f.tagAr : f.tagEn}
                 </span>
                 <span style={{
-                  fontSize: "8.5px", fontWeight: 800,
+                  fontSize: "clamp(10px, 1.3vw, 15px)", fontWeight: 800,
                   background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
                   borderRadius: "20px", padding: "2px 7px", color: "#94a3b8",
                 }}>

@@ -91,7 +91,7 @@ export default function Cover1Slide({ lang }: { lang: Lang }) {
         <motion.h1 variants={item}
           style={{
             fontSize: "clamp(28px, 4.5vw, 56px)", fontWeight: 900,
-            background: "linear-gradient(180deg, #ffffff 0%, #a5b4fc 100%)",
+            background: "linear-gradient(180deg, var(--c-text) 0%, var(--c-indigo) 100%)",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
             lineHeight: 1.15, maxWidth: "1000px", letterSpacing: "-0.5px", marginBottom: "clamp(16px, 3vh, 24px)",
             filter: "drop-shadow(0 4px 12px rgba(99,102,241,0.2))",

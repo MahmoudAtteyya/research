@@ -64,29 +64,29 @@ export default function AimSlide({ lang }: { lang: Lang }) {
         transition={{ delay: 0.12, type: "spring", stiffness: 110 }}
         className="anim-border-glow"
         style={{
-          marginBottom: "12px",
-          padding: "14px 20px",
+          marginBottom: "16px",
+          padding: "18px 24px",
           background: "linear-gradient(135deg, rgba(99,102,241,0.10) 0%, rgba(6,182,212,0.07) 100%)",
           border: "1px solid rgba(99,102,241,0.3)",
-          borderLeft: "4px solid var(--c-indigo)",
-          borderRadius: "14px",
+          borderLeft: "6px solid var(--c-indigo)",
+          borderRadius: "16px",
           display: "flex",
-          gap: "14px",
+          gap: "18px",
           alignItems: "center",
         }}
       >
         <motion.span
-          style={{ fontSize: "clamp(26px, 4.0vw, 47px)", flexShrink: 0 }}
+          style={{ fontSize: "clamp(32px, 4.5vw, 60px)", flexShrink: 0 }}
           animate={{ scale: [1, 1.12, 1] }}
           transition={{ duration: 2.5, repeat: Infinity }}
         >
           🎯
         </motion.span>
         <div>
-          <div style={{ fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, letterSpacing: "2px", textTransform: "uppercase", color: "var(--c-indigo)", marginBottom: "5px" }}>
+          <div style={{ fontSize: "clamp(12px, 1.8vw, 20px)", fontWeight: 800, letterSpacing: "2px", textTransform: "uppercase", color: "var(--c-indigo)", marginBottom: "6px" }}>
             {ar ? "الهدف الرئيسي" : "Primary Aim"}
           </div>
-          <p style={{ fontSize: "clamp(14px, 2.0vw, 26px)", color: "var(--c-text)", lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
+          <p style={{ fontSize: "clamp(16px, 2.2vw, 28px)", color: "var(--c-text)", lineHeight: 1.5, margin: 0, fontWeight: 500 }}>
             {ar
               ? " تقييم التأثيرات الحادة لاستهلاك مشروبات الطاقة على المؤشرات الفسيولوجية والأداء المعرفي لدى البالغين في جامعة السويس ومستشفى جامعة السويس."
               : "Evaluate the acute effects of energy drink consumption on physiological parameters and cognitive performance in healthy adults at Suez University and Suez University Hospital."}
@@ -95,12 +95,12 @@ export default function AimSlide({ lang }: { lang: Lang }) {
       </motion.div>
 
       {/* ── Secondary objectives label ── */}
-      <div style={{ fontSize: "clamp(10px, 1.4vw, 18px)", letterSpacing: "2.5px", textTransform: "uppercase", color: "var(--c-text-dim)", marginBottom: "8px", fontWeight: 700 }}>
+      <div style={{ fontSize: "clamp(12px, 1.8vw, 20px)", letterSpacing: "2.5px", textTransform: "uppercase", color: "var(--c-text-dim)", marginBottom: "12px", fontWeight: 700 }}>
         {ar ? "الأهداف الفرعية" : "Secondary Objectives"}
       </div>
 
       {/* ── Objective cards ── */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", flex: 1, alignContent: "center" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", flex: 1, alignContent: "center" }}>
         {OBJECTIVES.map((obj, i) => (
           <motion.div
             key={i}
@@ -110,18 +110,18 @@ export default function AimSlide({ lang }: { lang: Lang }) {
             whileHover={{ scale: 1.025, y: -2 }}
             style={{
               display: "flex",
-              gap: "12px",
+              gap: "16px",
               alignItems: "flex-start",
-              padding: "12px 14px",
+              padding: "16px 20px",
               background: obj.glow,
               border: `1px solid ${obj.color}44`,
-              borderLeft: `3px solid ${obj.color}`,
-              borderRadius: "12px",
-              boxShadow: `0 3px 16px ${obj.glow}`,
+              borderLeft: `4px solid ${obj.color}`,
+              borderRadius: "16px",
+              boxShadow: `0 6px 24px ${obj.glow}`,
             }}
           >
             <motion.span
-              style={{ fontSize: "clamp(20px, 3.1vw, 41px)", flexShrink: 0, marginTop: "2px" }}
+              style={{ fontSize: "clamp(24px, 3.5vw, 50px)", flexShrink: 0, marginTop: "2px" }}
               animate={{ scale: [1, 1.14, 1] }}
               transition={{ duration: 2.2, repeat: Infinity, delay: i * 0.3 }}
             >
@@ -131,21 +131,21 @@ export default function AimSlide({ lang }: { lang: Lang }) {
               <span
                 style={{
                   display: "inline-block",
-                  fontSize: "clamp(9px, 1.2vw, 15px)",
+                  fontSize: "clamp(10px, 1.4vw, 16px)",
                   fontWeight: 800,
                   letterSpacing: "1px",
                   textTransform: "uppercase",
                   color: obj.color,
                   background: `${obj.color}18`,
                   border: `1px solid ${obj.color}44`,
-                  borderRadius: "6px",
-                  padding: "1px 7px",
-                  marginBottom: "5px",
+                  borderRadius: "8px",
+                  padding: "2px 10px",
+                  marginBottom: "6px",
                 }}
               >
                 {ar ? obj.tagAr : obj.tag}
               </span>
-              <p style={{ fontSize: "12.5px", color: "var(--c-text-muted)", lineHeight: 1.55, margin: 0, fontWeight: 450 }}>
+              <p style={{ fontSize: "clamp(14px, 1.8vw, 20px)", color: "var(--c-text-muted)", lineHeight: 1.45, margin: 0, fontWeight: 500 }}>
                 {ar ? obj.ar : obj.en}
               </p>
             </div>

@@ -1120,29 +1120,29 @@
    Pure white bg · near-black text · thick visible borders · no blur tricks.
 ================================================================ */
 [data-theme="projector"] {
-  --c-bg: #ffffff;
-  --c-bg2: #f2f4ff;
+  --c-bg: #f4f6fb;
+  --c-bg2: #e2e8f0;
   --c-surface: #ffffff;
-  --c-surface2: #eef0fc;
-  --c-border: #b0b6d8;
-  --c-border2: #7880c0;
-  --c-text: #060918;
-  --c-text-muted: #1a2040;
-  --c-text-dim: #404878;
-  --c-gold: #7a4f00;
-  --c-gold-light: #5a3700;
-  --c-indigo: #3730a3;
-  --c-violet: #5b21b6;
-  --c-cyan: #0c4a6e;
-  --c-rose: #9f1239;
-  --c-emerald: #064e3b;
-  --c-amber: #78350f;
+  --c-surface2: #f1f5f9;
+  --c-border: #cbd5e1;
+  --c-border2: #94a3b8;
+  --c-text: #0f172a;
+  --c-text-muted: #334155;
+  --c-text-dim: #475569;
+  --c-gold: #b45309;
+  --c-gold-light: #78350f;
+  --c-indigo: #4338ca;
+  --c-violet: #6d28d9;
+  --c-cyan: #0369a1;
+  --c-rose: #be123c;
+  --c-emerald: #047857;
+  --c-amber: #b45309;
 }
 
 /* ─── Projector: layout & chrome ─── */
 [data-theme="projector"] .pres-root {
-  background: #ffffff;
-  color: #060918;
+  background: var(--c-bg);
+  color: var(--c-text);
 }
 
 [data-theme="projector"] .pres-bg-mesh {

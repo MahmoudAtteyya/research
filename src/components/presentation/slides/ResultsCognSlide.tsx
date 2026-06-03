@@ -219,20 +219,22 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, duration: 1.5 }}
-          style={{ display: "flex", flexDirection: "column", gap: "10px", minHeight: 0 }}
+          style={{ display: "flex", flexDirection: "column", gap: "8px", minHeight: 0, overflow: "hidden" }}
         >
           {/* Significant findings */}
           <div style={{
             flex: 1,
-            borderRadius: "16px",
+            borderRadius: "20px",
             border: "1px solid rgba(99,102,241,0.25)",
             background: "linear-gradient(160deg, rgba(99,102,241,0.1), rgba(99,102,241,0.04))",
-            padding: "14px",
+            padding: "12px 16px",
             display: "flex",
             flexDirection: "column",
-            gap: "8px",
+            gap: "6px",
+            minHeight: 0,
+            overflow: "hidden",
           }}>
-            <div style={{ fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, color: "#818cf8", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "4px" }}>
+            <div style={{ fontSize: "clamp(12px, 1.8vw, 20px)", fontWeight: 800, color: "#818cf8", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "4px" }}>
               ✅ {ar ? "تحسّن معنوي" : "Significant Improvement"}
             </div>
             {significantItems.map((cd, i) => (
@@ -244,27 +246,27 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
                 style={{
                   background: `linear-gradient(135deg, ${cd.color}18, ${cd.color}08)`,
                   border: `1px solid ${cd.color}30`,
-                  borderRadius: "10px",
+                  borderRadius: "14px",
                   padding: "8px 12px",
                   display: "flex",
                   alignItems: "center",
-                  gap: "8px",
+                  gap: "10px",
                 }}
               >
                 <div style={{
-                  width: "30px", height: "30px", borderRadius: "50%",
+                  width: "36px", height: "36px", borderRadius: "50%",
                   background: `linear-gradient(135deg, ${cd.color}, ${cd.color}88)`,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "clamp(14px, 2.0vw, 26px)", flexShrink: 0,
+                  fontSize: "clamp(16px, 2.2vw, 28px)", flexShrink: 0,
                   boxShadow: `0 4px 12px ${cd.color}44`,
                 }}>
                   {i === 0 ? "🧘" : i === 1 ? "🗃️" : "⚡"}
                 </div>
                 <div>
-                  <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
+                  <div style={{ fontSize: "clamp(12px, 1.5vw, 18px)", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
                     {ar ? cd.domainAr : cd.domain}
                   </div>
-                  <div style={{ fontSize: "9.5px", color: cd.color, fontWeight: 600, marginTop: "2px" }}>
+                  <div style={{ fontSize: "clamp(11px, 1.3vw, 16px)", color: cd.color, fontWeight: 600, marginTop: "2px" }}>
                     p {cd.pValue}
                   </div>
                 </div>
@@ -274,15 +276,15 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
 
           {/* Not significant */}
           <div style={{
-            borderRadius: "14px",
+            borderRadius: "20px",
             border: "1px solid rgba(245,158,11,0.2)",
             background: "rgba(245,158,11,0.05)",
-            padding: "12px",
+            padding: "10px 14px",
             display: "flex",
             flexDirection: "column",
             gap: "6px",
           }}>
-            <div style={{ fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, color: "#f59e0b", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "2px" }}>
+            <div style={{ fontSize: "clamp(12px, 1.8vw, 20px)", fontWeight: 800, color: "#f59e0b", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "4px" }}>
               ⚠️ {ar ? "بدون تغيير معنوي" : "No Sig. Change"}
             </div>
             {notSignificantItems.map((cd, i) => (
@@ -294,17 +296,17 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
                 style={{
                   background: "rgba(245,158,11,0.06)",
                   border: "1px solid rgba(245,158,11,0.15)",
-                  borderRadius: "8px",
-                  padding: "5px 10px",
-                  fontSize: "10.5px",
-                  fontWeight: 600,
+                  borderRadius: "12px",
+                  padding: "8px 12px",
+                  fontSize: "clamp(12px, 1.5vw, 18px)",
+                  fontWeight: 700,
                   color: "#94a3b8",
                   display: "flex",
                   alignItems: "center",
-                  gap: "6px",
+                  gap: "10px",
                 }}
               >
-                <span style={{ fontSize: "clamp(12px, 1.7vw, 21px)" }}>◈</span>
+                <span style={{ fontSize: "clamp(16px, 2vw, 28px)" }}>◈</span>
                 {ar ? cd.domainAr : cd.domain}
               </motion.div>
             ))}

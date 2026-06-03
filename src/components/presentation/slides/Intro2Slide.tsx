@@ -123,11 +123,11 @@ export default function Intro2Slide({ lang }: { lang: Lang }) {
             style={{
               background: `linear-gradient(135deg, ${h.color}10, ${h.color}04)`,
               border: `1px solid ${h.color}22`,
-              borderRadius: "12px",
-              padding: "12px 16px",
+              borderRadius: "16px",
+              padding: "20px 24px",
               display: "flex",
               alignItems: "center",
-              gap: "14px",
+              gap: "20px",
               position: "relative",
               overflow: "hidden",
             }}
@@ -140,14 +140,15 @@ export default function Intro2Slide({ lang }: { lang: Lang }) {
               borderRadius: ar ? "3px 0 0 3px" : "0 3px 3px 0",
             }} />
             <div style={{
-              width: "36px", height: "36px", borderRadius: "10px", flexShrink: 0,
-              background: `${h.color}18`, border: `1px solid ${h.color}30`,
+              width: "52px", height: "52px", borderRadius: "14px", flexShrink: 0,
+              background: `${h.color}20`, border: `1px solid ${h.color}40`,
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "clamp(18px, 2.8vw, 36px)",
+              fontSize: "clamp(24px, 3.5vw, 44px)",
+              boxShadow: `0 4px 16px ${h.color}30`,
             }}>
               {h.icon}
             </div>
-            <p style={{ fontSize: "13.5px", color: "var(--c-text)", margin: 0, fontWeight: 500, lineHeight: 1.5, flex: 1 }}>
+            <p style={{ fontSize: "clamp(16px, 2.2vw, 28px)", color: "var(--c-text)", margin: 0, fontWeight: 600, lineHeight: 1.4, flex: 1 }}>
               {ar ? h.ar : h.en}
             </p>
           </motion.div>
@@ -176,10 +177,10 @@ export default function Intro2Slide({ lang }: { lang: Lang }) {
           💡
         </motion.span>
         <div>
-          <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 800, letterSpacing: "1.5px", color: "#fbbf24", textTransform: "uppercase", marginBottom: "2px" }}>
+          <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 800, letterSpacing: "1.5px", color: "var(--c-gold)", textTransform: "uppercase", marginBottom: "2px" }}>
             {ar ? "الفجوة البحثية" : "Research Gap"}
           </div>
-          <span style={{ fontSize: "clamp(13px, 1.8vw, 24px)", color: "#fde68a", fontWeight: 500 }}>
+          <span style={{ fontSize: "clamp(13px, 1.8vw, 24px)", color: "var(--c-text)", fontWeight: 500 }}>
             {ar
               ? "نقص الدراسات الإقليمية يجعل هذا البحث ذا أهمية استثنائية للمجتمع المصري"
               : "Lack of regional data makes this study particularly valuable for the Egyptian population"}

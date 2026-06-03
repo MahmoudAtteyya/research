@@ -53,14 +53,14 @@ export default function ResultsSideEffectsSlide({ lang }: { lang: Lang }) {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={effectsData} layout="vertical" margin={{ top: 0, right: 20, left: 0, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
-                  <XAxis type="number" tick={{ fill: "var(--c-text-dim)", fontSize: 10 }} axisLine={false} tickLine={false} domain={[0, 16]} />
-                  <YAxis type="category" dataKey="name" tick={{ fill: "var(--c-text-muted)", fontSize: 11, fontWeight: 600 }} axisLine={false} tickLine={false} width={90} />
+                  <XAxis type="number" tick={{ fill: "var(--c-text-dim)", fontSize: 18 }} axisLine={false} tickLine={false} domain={[0, 16]} />
+                  <YAxis type="category" dataKey="name" tick={{ fill: "var(--c-text-muted)", fontSize: 18, fontWeight: 700 }} axisLine={false} tickLine={false} width={240} />
                   <Tooltip
                     cursor={{ fill: "rgba(255,255,255,0.03)" }}
                     contentStyle={{ background: "var(--c-bg2)", border: "1px solid var(--c-border)", borderRadius: "8px", fontSize: "clamp(12px, 1.7vw, 21px)" }}
                     formatter={(v: any) => [`n = ${v}`, ar ? "العدد" : "Count"]}
                   />
-                  <Bar dataKey="count" radius={[0, 4, 4, 0]} label={{ position: "right", fontSize: 11, fontWeight: 700, fill: "var(--c-text-muted)", formatter: (v: any) => `n=${v}` }}>
+                  <Bar dataKey="count" radius={[0, 4, 4, 0]} label={{ position: "right", fontSize: 18, fontWeight: 700, fill: "var(--c-text-muted)", formatter: (v: any) => `n=${v}` }}>
                     {effectsData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} fillOpacity={0.85} />
                     ))}
