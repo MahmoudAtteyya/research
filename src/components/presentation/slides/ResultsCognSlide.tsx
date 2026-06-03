@@ -126,7 +126,7 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
                       flexShrink: 0,
                       boxShadow: `0 0 8px ${cd.color}99`,
                     }} />
-                    <div style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.3 }}>
+                    <div style={{ fontSize: "clamp(13px, 1.8vw, 22px)", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.3 }}>
                       {ar ? cd.domainAr : cd.domain}
                     </div>
                   </div>
@@ -200,11 +200,11 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
 
             {/* Footer note */}
             <div style={{
-              padding: "5px 16px",
+              padding: "8px 16px",
               background: "rgba(255,255,255,0.02)",
               borderTop: "1px solid rgba(255,255,255,0.06)",
-              fontSize: "clamp(9px, 1.2vw, 15px)",
-              color: "#64748b",
+              fontSize: "clamp(12px, 1.6vw, 20px)",
+              color: "var(--c-text-muted)",
               fontStyle: "italic",
             }}>
               {ar

@@ -280,9 +280,9 @@ export default function Methods2Slide({ lang }: { lang: Lang }) {
         transition={{ delay: 0.9 }}
         style={{
           textAlign: "center",
-          fontSize: "10.5px",
+          fontSize: "clamp(14px, 2vw, 26px)",
           color: "var(--c-text-muted)",
-          marginTop: "8px",
+          marginTop: "12px",
           letterSpacing: "0.3px",
         }}
       >

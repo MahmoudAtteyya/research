@@ -95,9 +95,45 @@ export default function AimSlide({ lang }: { lang: Lang }) {
       </motion.div>
 
       {/* ── Secondary objectives label ── */}
-      <div style={{ fontSize: "clamp(12px, 1.8vw, 20px)", letterSpacing: "2.5px", textTransform: "uppercase", color: "var(--c-text-dim)", marginBottom: "12px", fontWeight: 700 }}>
-        {ar ? "الأهداف الفرعية" : "Secondary Objectives"}
-      </div>
+      <motion.div 
+        initial={{ opacity: 0, x: ar ? 20 : -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2 }}
+        style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          gap: "14px",
+          marginBottom: "16px",
+          marginTop: "6px"
+        }}
+      >
+        <div style={{
+          background: "linear-gradient(to bottom, #8b5cf6, #06b6d4)",
+          borderRadius: "8px",
+          width: "5px",
+          height: "26px",
+          boxShadow: "0 0 10px rgba(139,92,246,0.5)"
+        }} />
+        <span style={{ 
+          fontSize: "clamp(14px, 2vw, 24px)", 
+          fontWeight: 800, 
+          letterSpacing: "2.5px", 
+          textTransform: "uppercase", 
+          background: "linear-gradient(135deg, #c4b5fd, #67e8f9)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+        }}>
+          {ar ? "الأهداف الفرعية" : "Secondary Objectives"}
+        </span>
+        <div style={{ 
+          flex: 1, 
+          height: "2px", 
+          background: ar 
+            ? "linear-gradient(270deg, rgba(139,92,246,0.3), transparent)" 
+            : "linear-gradient(90deg, rgba(139,92,246,0.3), transparent)" 
+        }} />
+      </motion.div>
 
       {/* ── Objective cards ── */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", flex: 1, alignContent: "center" }}>

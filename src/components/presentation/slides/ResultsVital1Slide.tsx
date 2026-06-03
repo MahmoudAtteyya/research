@@ -127,10 +127,10 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
                         boxShadow: `0 0 6px ${vs.color}88`,
                       }} />
                       <div>
-                        <div style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
+                        <div style={{ fontSize: "clamp(13px, 1.8vw, 22px)", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
                           {ar ? vs.nameAr : vs.name}
                         </div>
-                        <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: "var(--c-text-muted)", marginTop: "1px" }}>{vs.unit}</div>
+                        <div style={{ fontSize: "clamp(11px, 1.5vw, 18px)", color: "var(--c-text-muted)", marginTop: "1px" }}>{vs.unit}</div>
                       </div>
                     </div>
 
@@ -185,10 +185,10 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
 
             {/* Footer */}
             <div style={{
-              padding: "6px 14px",
+              padding: "10px 18px",
               background: "rgba(16,185,129,0.06)",
               borderTop: "1px solid rgba(16,185,129,0.15)",
-              fontSize: "9.5px",
+              fontSize: "clamp(12px, 1.6vw, 22px)",
               color: "#6ee7b7",
               fontWeight: 600,
               textAlign: "center",

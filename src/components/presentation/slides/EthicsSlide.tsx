@@ -152,7 +152,7 @@ export default function EthicsSlide({ lang }: { lang: Lang }) {
           border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: "12px",
           textAlign: "center",
-          fontSize: "clamp(11px, 1.5vw, 20px)", color: "#64748b", fontStyle: "italic",
+          fontSize: "clamp(14px, 2vw, 26px)", color: "var(--c-text-muted)", fontStyle: "italic", fontWeight: 500,
         }}
       >
         🏛️ {ar
