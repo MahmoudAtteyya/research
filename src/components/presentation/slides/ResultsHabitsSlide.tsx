@@ -9,7 +9,7 @@ export default function ResultsHabitsSlide({ lang }: { lang: Lang }) {
 
   const yesNoData = [
     { name: ar ? "نعم / Yes" : "Yes (93.5%)", value: 93.5, color: "#3b82f6" },
-    { name: ar ? "لا / No" : "No (6.5%)",    value: 6.5,  color: "#64748b" }
+    { name: ar ? "لا / No" : "No (6.5%)", value: 6.5, color: "#64748b" }
   ];
 
   const freqData = ED_CONSUMPTION_FREQ.map(f => ({ name: ar ? f.labelAr : f.label, value: f.percent, color: f.color }));
@@ -19,7 +19,7 @@ export default function ResultsHabitsSlide({ lang }: { lang: Lang }) {
     <div className="pres-slide-inner">
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} style={{ flexShrink: 0 }}>
         <div className="pres-label">{ar ? "النتائج" : "Results"} · {ar ? "عادات الاستهلاك" : "Consumption Habits"}</div>
-        <h2 className="pres-h1" style={{ fontSize: "clamp(18px, 2.5vw, 28px)", marginBottom: "4px" }}>
+        <h2 className="pres-h1" style={{ fontSize: "clamp(18px, 2.8vw, 33px)", marginBottom: "4px" }}>
           {ar ? "معدل وأسباب " : "Frequency & "}<em>{ar ? "استهلاك مشروبات الطاقة" : "Motives"}</em>
         </h2>
         <div className="pres-divider" style={{ marginBottom: "12px" }} />
@@ -27,16 +27,16 @@ export default function ResultsHabitsSlide({ lang }: { lang: Lang }) {
 
       {/* 3-column grid */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr 1.6fr", gap: "12px", flex: 1, minHeight: 0 }}>
-        
+
         {/* Col 1 */}
         <motion.div className="pres-card" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
           style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "8px" }}>
-          <div style={{ fontSize: "11px", color: "var(--c-text-dim)", textTransform: "uppercase", fontWeight: 700 }}>
+          <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", color: "var(--c-text-dim)", textTransform: "uppercase", fontWeight: 700 }}>
             {ar ? "المستهلكون" : "Consumers"}
           </div>
           <div style={{ textAlign: "center", padding: "8px 0" }}>
-            <div style={{ fontSize: "42px", fontWeight: 900, color: "#3b82f6", lineHeight: 1 }}>93.5%</div>
-            <div style={{ fontSize: "11px", color: "var(--c-text-muted)", marginTop: "4px" }}>
+            <div style={{ fontSize: "clamp(42px, 5.8vw, 75px)", fontWeight: 900, color: "#3b82f6", lineHeight: 1 }}>93.5%</div>
+            <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", color: "var(--c-text-muted)", marginTop: "4px" }}>
               {ar ? "سبق لهم استهلاك مشروبات الطاقة" : "Had consumed energy drinks"}
             </div>
           </div>
@@ -47,8 +47,8 @@ export default function ResultsHabitsSlide({ lang }: { lang: Lang }) {
                   <Pie data={yesNoData} cx="50%" cy="50%" innerRadius="55%" outerRadius="80%" dataKey="value" stroke="none" startAngle={90} endAngle={-270}>
                     {yesNoData.map((e, i) => <Cell key={i} fill={e.color} />)}
                   </Pie>
-                  <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ background: "var(--c-bg2)", border: "1px solid var(--c-border)", borderRadius: "8px", fontSize: "12px" }} />
-                  <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "11px" }} />
+                  <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ background: "var(--c-bg2)", border: "1px solid var(--c-border)", borderRadius: "8px", fontSize: "clamp(12px, 1.7vw, 21px)" }} />
+                  <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "clamp(11px, 1.5vw, 20px)" }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -58,7 +58,7 @@ export default function ResultsHabitsSlide({ lang }: { lang: Lang }) {
         {/* Col 2 */}
         <motion.div className="pres-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "8px" }}>
-          <div style={{ fontSize: "11px", color: "var(--c-text-dim)", textTransform: "uppercase", fontWeight: 700 }}>
+          <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", color: "var(--c-text-dim)", textTransform: "uppercase", fontWeight: 700 }}>
             {ar ? "معدل الاستهلاك" : "Consumption Frequency"}
           </div>
           <div style={{ flex: 1, position: "relative" }}>
@@ -68,7 +68,7 @@ export default function ResultsHabitsSlide({ lang }: { lang: Lang }) {
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
                   <XAxis type="number" tick={{ fill: "var(--c-text-dim)", fontSize: 10 }} axisLine={false} tickLine={false} domain={[0, 50]} unit="%" />
                   <YAxis type="category" dataKey="name" tick={{ fill: "var(--c-text-muted)", fontSize: 10 }} axisLine={false} tickLine={false} width={80} />
-                  <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ background: "var(--c-bg2)", border: "1px solid var(--c-border)", borderRadius: "8px", fontSize: "12px" }} />
+                  <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ background: "var(--c-bg2)", border: "1px solid var(--c-border)", borderRadius: "8px", fontSize: "clamp(12px, 1.7vw, 21px)" }} />
                   <Bar dataKey="value" radius={[0, 4, 4, 0]} label={{ position: "right", fontSize: 10, fill: "var(--c-text-muted)", formatter: (v: any) => `${v}%` }}>
                     {freqData.map((e, i) => <Cell key={i} fill={e.color} />)}
                   </Bar>
@@ -81,7 +81,7 @@ export default function ResultsHabitsSlide({ lang }: { lang: Lang }) {
         {/* Col 3 */}
         <motion.div className="pres-card" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}
           style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "8px" }}>
-          <div style={{ fontSize: "11px", color: "var(--c-text-dim)", textTransform: "uppercase", fontWeight: 700 }}>
+          <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", color: "var(--c-text-dim)", textTransform: "uppercase", fontWeight: 700 }}>
             {ar ? "دوافع الاستهلاك" : "Motives for Consumption"}
           </div>
           <div style={{ flex: 1, position: "relative" }}>
@@ -103,8 +103,8 @@ export default function ResultsHabitsSlide({ lang }: { lang: Lang }) {
                     }}>
                     {reasonsData.map((e, i) => <Cell key={i} fill={e.color} />)}
                   </Pie>
-                  <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ background: "var(--c-bg2)", border: "1px solid var(--c-border)", borderRadius: "8px", fontSize: "12px" }} />
-                  <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "10px" }} />
+                  <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ background: "var(--c-bg2)", border: "1px solid var(--c-border)", borderRadius: "8px", fontSize: "clamp(12px, 1.7vw, 21px)" }} />
+                  <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "clamp(10px, 1.4vw, 18px)" }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>

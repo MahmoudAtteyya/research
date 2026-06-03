@@ -82,7 +82,7 @@ export default function TOCSlide({ lang }: { lang: Lang }) {
       {/* ── Header ── */}
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
         <div className="pres-label">{ar ? "جدول المحتويات" : "Agenda"}</div>
-        <h2 className="pres-h2" style={{ fontSize: "clamp(20px, 2.6vw, 32px)" }}>
+        <h2 className="pres-h2" style={{ fontSize: "clamp(20px, 3.4vw, 45px)" }}>
           {ar ? "مسار " : "Research "}<em className="grad-indigo">{ar ? "البحث" : "Roadmap"}</em>
         </h2>
         <div className="pres-divider" />
@@ -133,7 +133,7 @@ export default function TOCSlide({ lang }: { lang: Lang }) {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
               <motion.span
                 style={{
-                  fontSize: "clamp(22px, 3vw, 34px)",
+                  fontSize: "clamp(22px, 3.9vw, 48px)",
                   fontWeight: 900,
                   fontVariantNumeric: "tabular-nums",
                   background: `linear-gradient(135deg, ${sec.color}, ${sec.color}aa)`,
@@ -158,7 +158,7 @@ export default function TOCSlide({ lang }: { lang: Lang }) {
 
             {/* Title */}
             <div style={{
-              fontSize: "clamp(11px, 1.1vw, 14px)",
+              fontSize: "clamp(11px, 1.4vw, 20px)",
               fontWeight: 800,
               color: "var(--c-text)",
               marginBottom: "5px",
@@ -169,7 +169,7 @@ export default function TOCSlide({ lang }: { lang: Lang }) {
 
             {/* Description */}
             <div style={{
-              fontSize: "11px",
+              fontSize: "clamp(11px, 1.8vw, 24px)",
               color: "var(--c-text-muted)",
               lineHeight: 1.5,
               marginBottom: "10px",
@@ -187,7 +187,7 @@ export default function TOCSlide({ lang }: { lang: Lang }) {
               border: `1px solid ${sec.color}40`,
               borderRadius: "20px",
               padding: "2px 9px",
-              fontSize: "10px",
+              fontSize: "clamp(10px, 1.6vw, 21px)",
               fontWeight: 700,
               color: sec.color,
             }}>
@@ -205,13 +205,13 @@ export default function TOCSlide({ lang }: { lang: Lang }) {
         transition={{ delay: 0.6 }}
         style={{
           textAlign: "center",
-          fontSize: "10px",
+          fontSize: "clamp(10px, 1.6vw, 21px)",
           color: "var(--c-text-dim)",
           paddingTop: "8px",
           letterSpacing: "0.5px",
         }}
       >
-        {ar ? "انقر على أي قسم للانتقال إليه مباشرةً" : "Click any section to navigate directly"}
+
       </motion.div>
     </div>
   );

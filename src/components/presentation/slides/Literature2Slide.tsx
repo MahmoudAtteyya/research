@@ -36,10 +36,10 @@ export default function Literature2Slide({ lang }: { lang: Lang }) {
             <text x="92" y="68" fill="#94a3b8" fontSize="7">High dose</text>
           </svg>
           <div>
-            <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--c-text)", marginBottom: "4px" }}>
+            <div style={{ fontSize: "clamp(14px, 2.0vw, 26px)", fontWeight: 600, color: "var(--c-text)", marginBottom: "4px" }}>
               {ar ? "منحنى الأداء المقلوب–U" : "Inverted-U Dose-Response Curve"}
             </div>
-            <div style={{ fontSize: "13px", color: "var(--c-text-muted)", lineHeight: 1.5 }}>
+            <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", color: "var(--c-text-muted)", lineHeight: 1.5 }}>
               {ar
                 ? "الجرعة المنخفضة–المتوسطة تُعطي أفضل فائدة. الجرعات العالية تُسبّب قلقاً وتقلل الأداء."
                 : "Low-to-moderate doses yield best benefit. High doses cause anxiety and impair performance."}
@@ -59,7 +59,7 @@ export default function Literature2Slide({ lang }: { lang: Lang }) {
             whileHover={{ scale: 1.01 }}
             style={{ padding: "10px 16px", borderLeft: "3px solid var(--c-emerald)" }}
           >
-            <span style={{ fontSize: "14px", color: "var(--c-text-muted)" }}>{ar ? p.ar : p.en}</span>
+            <span style={{ fontSize: "clamp(14px, 2.0vw, 26px)", color: "var(--c-text-muted)" }}>{ar ? p.ar : p.en}</span>
           </motion.div>
         ))}
       </div>
@@ -71,7 +71,7 @@ export default function Literature2Slide({ lang }: { lang: Lang }) {
         className="pres-card"
         style={{ marginTop: "8px", padding: "8px 14px", border: "1px solid rgba(251,191,36,0.2)", background: "rgba(251,191,36,0.05)" }}
       >
-        <span style={{ fontSize: "13px", color: "var(--c-gold-light)" }}>
+        <span style={{ fontSize: "clamp(13px, 1.8vw, 24px)", color: "var(--c-gold-light)" }}>
           ⚠️ {ar
             ? "ملاحظة: أغلب الدراسات على عينات غربية — نتائجنا تضيف بيانات إقليمية نادرة"
             : "Note: Most studies used Western samples — our findings add rare regional data"}

@@ -20,7 +20,7 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
     <div className="pres-slide-inner">
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} style={{ flexShrink: 0 }}>
         <div className="pres-label">{ar ? "النتائج — العلامات الحيوية" : "Results — Vital Signs"} · 1 / 2</div>
-        <h2 className="pres-h1" style={{ fontSize: "clamp(18px, 2.5vw, 28px)", marginBottom: "4px" }}>
+        <h2 className="pres-h1" style={{ fontSize: "clamp(18px, 2.8vw, 33px)", marginBottom: "4px" }}>
           <span className="anim-heartbeat" style={{ display: "inline-block" }}>❤️</span>{" "}
           <em>{ar ? "ضغط الدم ومعدل القلب" : "Blood Pressure & Heart Rate"}</em>
         </h2>
@@ -33,7 +33,7 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 1.5 }}
           style={{ display: "flex", flexDirection: "column", minHeight: 0 }}
         >
           <div style={{
@@ -54,12 +54,12 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
               alignItems: "center",
               gap: "10px",
             }}>
-              <span style={{ fontSize: "16px" }}>📋</span>
+              <span style={{ fontSize: "clamp(16px, 2.5vw, 31px)" }}>📋</span>
               <div>
-                <div style={{ fontSize: "12px", fontWeight: 800, color: "var(--c-text)", letterSpacing: "0.3px" }}>
+                <div style={{ fontSize: "clamp(12px, 1.7vw, 21px)", fontWeight: 800, color: "var(--c-text)", letterSpacing: "0.3px" }}>
                   {ar ? "جدول 1. مقارنة العلامات الحيوية (ن=47)" : "Table 1. Vital Signs Comparison (n=47)"}
                 </div>
-                <div style={{ fontSize: "9px", color: "rgba(6,182,212,0.8)", fontWeight: 600, marginTop: "1px" }}>
+                <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: "rgba(6,182,212,0.8)", fontWeight: 600, marginTop: "1px" }}>
                   {ar ? "اختبار T المزدوج — كل القيم ذات دلالة إحصائية" : "Paired T-Test — All values statistically significant"}
                 </div>
               </div>
@@ -130,20 +130,20 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
                         <div style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
                           {ar ? vs.nameAr : vs.name}
                         </div>
-                        <div style={{ fontSize: "9px", color: "var(--c-text-muted)", marginTop: "1px" }}>{vs.unit}</div>
+                        <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: "var(--c-text-muted)", marginTop: "1px" }}>{vs.unit}</div>
                       </div>
                     </div>
 
                     {/* Pre */}
                     <div style={{ padding: "6px", textAlign: "center" }}>
-                      <div style={{ fontSize: "13px", fontWeight: 700, color: "#64748b", lineHeight: 1 }}>{vs.pre}</div>
-                      <div style={{ fontSize: "9px", color: "#475569", marginTop: "2px" }}>±{vs.preSD}</div>
+                      <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 700, color: "#64748b", lineHeight: 1 }}>{vs.pre}</div>
+                      <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: "#475569", marginTop: "2px" }}>±{vs.preSD}</div>
                     </div>
 
                     {/* Post */}
                     <div style={{ padding: "6px", textAlign: "center" }}>
-                      <div style={{ fontSize: "13px", fontWeight: 700, color: "#10b981", lineHeight: 1 }}>{vs.post}</div>
-                      <div style={{ fontSize: "9px", color: "#6ee7b7", marginTop: "2px" }}>±{vs.postSD}</div>
+                      <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 700, color: "#10b981", lineHeight: 1 }}>{vs.post}</div>
+                      <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: "#6ee7b7", marginTop: "2px" }}>±{vs.postSD}</div>
                     </div>
 
                     {/* Mean Diff */}
@@ -154,7 +154,7 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
                         border: `1px solid ${increase ? "rgba(16,185,129,0.25)" : "rgba(239,68,68,0.25)"}`,
                         borderRadius: "6px",
                         padding: "2px 6px",
-                        fontSize: "10px",
+                        fontSize: "clamp(10px, 1.4vw, 18px)",
                         fontWeight: 700,
                         color: increase ? "#10b981" : "#ef4444",
                       }}>
@@ -171,7 +171,7 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
                         border: "1px solid rgba(244,63,94,0.3)",
                         borderRadius: "6px",
                         padding: "3px 7px",
-                        fontSize: "10px",
+                        fontSize: "clamp(10px, 1.4vw, 18px)",
                         fontWeight: 800,
                         color: "#f43f5e",
                       }}>
@@ -202,7 +202,7 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
+          transition={{ delay: 0.3, duration: 1.5 }}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -222,8 +222,8 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
             boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
-              <span style={{ fontSize: "14px" }}>📊</span>
-              <div style={{ fontSize: "12px", fontWeight: 700, color: "#06b6d4" }}>
+              <span style={{ fontSize: "clamp(14px, 2.0vw, 26px)" }}>📊</span>
+              <div style={{ fontSize: "clamp(12px, 1.7vw, 21px)", fontWeight: 700, color: "#06b6d4" }}>
                 {ar ? "مقارنة القيم: قبل / بعد" : "Pre vs Post Comparison"}
               </div>
             </div>
@@ -236,9 +236,9 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
                     <YAxis tick={{ fill: "var(--c-text-dim)", fontSize: 10 }} axisLine={false} tickLine={false} />
                     <Tooltip
                       cursor={{ fill: "rgba(255,255,255,0.03)" }}
-                      contentStyle={{ background: "rgba(15,23,42,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", fontSize: "12px" }}
+                      contentStyle={{ background: "rgba(15,23,42,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", fontSize: "clamp(12px, 1.7vw, 21px)" }}
                     />
-                    <Legend wrapperStyle={{ fontSize: "11px", paddingTop: "4px" }} />
+                    <Legend wrapperStyle={{ fontSize: "clamp(11px, 1.5vw, 20px)", paddingTop: "4px" }} />
                     <Bar dataKey={ar ? "قبل" : "Pre"} fill="#64748b" radius={[5, 5, 0, 0]} />
                     <Bar dataKey={ar ? "بعد" : "Post"} fill="#10b981" radius={[5, 5, 0, 0]} />
                   </BarChart>

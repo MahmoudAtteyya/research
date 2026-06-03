@@ -5,189 +5,120 @@ import { Lang, TEAM_MEMBERS } from "@/lib/presentation/slides-data";
 
 const Symposium = "The Fourth Student Symposium for Research Projects, 2026";
 
-// Assign colors cycling through accent palette
-const COLORS = [
-  "#6366f1", "#8b5cf6", "#06b6d4", "#10b981",
-  "#f43f5e", "#f59e0b", "#6366f1", "#8b5cf6",
-  "#06b6d4", "#10b981", "#f43f5e", "#f59e0b",
-  "#6366f1", "#8b5cf6", "#06b6d4", "#10b981",
-];
-
-// Get initials from full name
-function getInitials(name: string): string {
-  return name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0].toUpperCase())
-    .join("");
-}
-
 const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.04 } },
+  hidden: {},
+  show: { transition: { staggerChildren: 0.04 } },
 };
-const cardVariant = {
-  hidden: { opacity: 0, scale: 0.9, y: 8 },
-  show: {
-    opacity: 1, scale: 1, y: 0,
-    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  },
+const item = {
+  hidden: { opacity: 0, x: -20 },
+  show: { opacity: 1, x: 0, transition: { type: "spring" as const, stiffness: 120, damping: 14 } },
 };
 
 export default function Cover2Slide({ lang }: { lang: Lang }) {
   const ar = lang === "ar";
 
   return (
-    <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", overflow: "hidden", position: "relative" }}>
+
+      {/* ── Ambient Glow Background ── */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
+        <motion.div animate={{ opacity: [0.05, 0.1, 0.05], scale: [1, 1.05, 1] }} transition={{ duration: 8, repeat: Infinity }}
+          style={{ position: "absolute", top: "0%", left: "-10%", width: "60%", height: "60%", borderRadius: "50%", background: "radial-gradient(circle, #6366f160, transparent 65%)" }} />
+        <motion.div animate={{ opacity: [0.05, 0.12, 0.05], scale: [1, 1.05, 1] }} transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+          style={{ position: "absolute", bottom: "-10%", right: "-10%", width: "50%", height: "50%", borderRadius: "50%", background: "radial-gradient(circle, #8b5cf660, transparent 65%)" }} />
+      </div>
 
       {/* ── Symposium banner ── */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
         style={{
-          background: "linear-gradient(135deg, rgba(99,102,241,0.18) 0%, rgba(139,92,246,0.14) 100%)",
-          borderBottom: "1px solid rgba(99,102,241,0.35)",
-          padding: "8px 40px",
-          textAlign: "center",
-          backdropFilter: "blur(10px)",
-          flexShrink: 0,
+          background: "linear-gradient(90deg, rgba(99,102,241,0.12), rgba(139,92,246,0.08))",
+          borderBottom: "1px solid rgba(99,102,241,0.25)",
+          padding: "8px 40px", textAlign: "center",
+          flexShrink: 0, zIndex: 2, position: "relative",
         }}
       >
-        <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(165,180,252,0.7)", marginBottom: "1px" }}>
+        <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(165,180,252,0.8)", marginRight: "8px" }}>
           🎓 {ar ? "يُقدَّم في" : "Presented at"}
-        </div>
-        <div style={{ fontSize: "clamp(11px, 1.3vw, 14px)", fontWeight: 800, color: "var(--c-text)" }}>
-          {Symposium}
-        </div>
+        </span>
+        <span style={{ fontSize: "clamp(11px, 1.4vw, 14px)", fontWeight: 800, color: "var(--c-text)" }}>{Symposium}</span>
       </motion.div>
 
-      {/* ── Main area ── */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "12px 36px 10px" }}>
+      {/* ── Main Content ── */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "clamp(16px, 3vh, 32px) 56px", gap: "clamp(16px, 3vh, 24px)", zIndex: 2, position: "relative" }}>
 
-        {/* Header row */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}
+        {/* ── Header ── */}
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+          style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: "16px" }}
         >
           <div>
-            <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: "var(--c-indigo)", marginBottom: "3px" }}>
+            <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: "4px", textTransform: "uppercase", color: "#6366f1", marginBottom: "8px" }}>
               {ar ? "أعضاء الفريق البحثي" : "Research Team Members"}
             </div>
-            <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
-              <span style={{ fontSize: "clamp(18px, 2.2vw, 26px)", fontWeight: 800, color: "var(--c-text)" }}>
-                {ar ? "المجموعة" : "Group"}
-              </span>
-              <motion.span
-                animate={{ opacity: [0.8, 1, 0.8] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                style={{
-                  fontSize: "clamp(22px, 2.8vw, 32px)", fontWeight: 900,
-                  background: "linear-gradient(135deg, var(--c-indigo), var(--c-cyan))",
-                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-                }}
-              >6</motion.span>
-            </div>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ delay: 0.25, duration: 0.55 }}
-              style={{
-                width: 44, height: 3, borderRadius: 2,
-                background: "linear-gradient(90deg, var(--c-indigo), var(--c-violet))",
-                marginTop: "6px",
-                transformOrigin: ar ? "right" : "left",
-              }}
-            />
+            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1 }}>
+              {ar ? "المجموعة " : "Group "}<span style={{ color: "#8b5cf6" }}>6</span>
+            </h2>
           </div>
 
-          {/* Member count pill */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              background: "rgba(99,102,241,0.06)",
-              border: "1px solid rgba(99,102,241,0.2)",
-              borderRadius: "30px",
-              padding: "6px 16px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-            }}
-          >
-            <span style={{ fontSize: "18px" }}>👥</span>
-            <div style={{ textAlign: ar ? "right" : "left" }}>
-              <div style={{ fontSize: "20px", fontWeight: 900, color: "var(--c-indigo)", lineHeight: 1 }}>
-                {TEAM_MEMBERS.length}
-              </div>
-              <div style={{ fontSize: "9px", color: "var(--c-text-dim)", letterSpacing: "1px", textTransform: "uppercase", fontWeight: 600 }}>
-                {ar ? "عضواً" : "Members"}
-              </div>
+          <div style={{ textAlign: ar ? "left" : "right" }}>
+            <div style={{ fontSize: "clamp(32px, 4vw, 46px)", fontWeight: 900, color: "#6366f1", lineHeight: 0.9 }}>{TEAM_MEMBERS.length}</div>
+            <div style={{ fontSize: "10px", fontWeight: 800, color: "var(--c-text-muted)", letterSpacing: "2px", textTransform: "uppercase", marginTop: "4px" }}>
+              {ar ? "عضواً" : "Members"}
             </div>
-          </motion.div>
+          </div>
         </motion.div>
 
-        {/* ── Members grid — Auto-fit Flex ── */}
+        {/* ── Names Grid (Clean Typographic Layout) ── */}
         <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
+          variants={container} initial="hidden" animate="show"
           style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "12px 18px",
             flex: 1,
-            alignContent: "center",
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "clamp(12px, 3vh, 24px) clamp(16px, 2vw, 32px)",
+            alignContent: "center"
           }}
         >
-          {TEAM_MEMBERS.map((name, i) => {
-            const color = COLORS[i % COLORS.length];
-            const initials = getInitials(name);
-
+          {TEAM_MEMBERS.map((name, idx) => {
+            const num = idx + 1;
             return (
               <motion.div
-                key={i}
-                variants={cardVariant}
-                whileHover={{ scale: 1.05, y: -2 }}
+                key={idx}
+                variants={item}
+                whileHover={{ x: ar ? -6 : 6, scale: 1.015 }}
                 style={{
-                  background: `linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))`,
-                  border: `1px solid rgba(255,255,255,0.08)`,
-                  borderBottom: `2px solid ${color}80`,
-                  borderRadius: "40px",
-                  padding: "6px 16px 6px 6px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
+                  display: "flex", alignItems: "center", gap: "16px",
+                  padding: "14px 20px",
+                  background: `linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))`,
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderLeft: ar ? "1px solid rgba(255,255,255,0.08)" : "4px solid #6366f1",
+                  borderRight: ar ? "4px solid #6366f1" : "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: "12px",
                   cursor: "default",
-                  boxShadow: `0 4px 12px rgba(0,0,0,0.1)`,
-                  transition: "all 0.2s ease",
-                  direction: ar ? "rtl" : "ltr",
-                  whiteSpace: "nowrap",
+                  boxShadow: `0 8px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06)`,
+                  backdropFilter: "blur(12px)",
                 }}
               >
-                {/* Avatar circle */}
-                <div
-                  style={{
-                    width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
-                    background: `linear-gradient(135deg, ${color}, ${color}88)`,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: "10px", fontWeight: 800, color: "#fff",
-                    letterSpacing: "-0.5px",
-                    boxShadow: `0 2px 6px ${color}66`,
-                  }}
-                >
-                  {initials}
+                {/* Number */}
+                <div style={{
+                  fontSize: "clamp(14px, 1.6vw, 18px)", fontWeight: 900,
+                  color: "#6366f1", opacity: 0.85,
+                  minWidth: "22px", textAlign: ar ? "right" : "left",
+                  fontFamily: "monospace"
+                }}>
+                  {String(num).padStart(2, "0")}
                 </div>
+
+                {/* Divider */}
+                <div style={{ width: "1px", height: "24px", background: "rgba(99,102,241,0.3)" }} />
 
                 {/* Name */}
                 <div style={{
-                  fontSize: "13px", fontWeight: 700, color: "var(--c-text)",
-                  letterSpacing: "0.2px"
+                  fontSize: "clamp(14px, 1.6vw, 20px)",
+                  fontWeight: 700,
+                  color: "var(--c-text)",
+                  lineHeight: 1.2,
+                  letterSpacing: "0.5px"
                 }}>
                   {name}
                 </div>
@@ -196,23 +127,19 @@ export default function Cover2Slide({ lang }: { lang: Lang }) {
           })}
         </motion.div>
 
-        {/* ── Bottom note ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
+        {/* ── Footer note ── */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
           style={{
-            textAlign: "center",
-            fontSize: "10px",
-            color: "var(--c-text-dim)",
-            paddingTop: "12px",
-            letterSpacing: "0.5px",
+            textAlign: "center", fontSize: "11px", fontWeight: 500, color: "var(--c-text-muted)",
+            letterSpacing: "1px", flexShrink: 0,
+            paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,0.06)",
           }}
         >
           {ar
             ? "طلاب السنة الدراسية الخامسة — كلية الطب — جامعة السويس"
-            : "5th Year Medical Students — Faculty of Medicine — Suez University"}
+            : "5th Year Medical Students  ·  Faculty of Medicine  ·  Suez University"}
         </motion.div>
+
       </div>
     </div>
   );

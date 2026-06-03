@@ -31,21 +31,21 @@ export default function Literature1Slide({ lang }: { lang: Lang }) {
         }}
       >
         <div style={{ textAlign: "center" }}>
-          <div className="anim-heartbeat" style={{ fontSize: "42px", marginBottom: "4px" }}>❤️</div>
-          <div style={{ fontSize: "12px", color: "var(--c-text-dim)" }}>{ar ? "معدل القلب" : "Heart Rate"}</div>
+          <div className="anim-heartbeat" style={{ fontSize: "clamp(42px, 5.8vw, 75px)", marginBottom: "4px" }}>❤️</div>
+          <div style={{ fontSize: "clamp(12px, 1.7vw, 21px)", color: "var(--c-text-dim)" }}>{ar ? "معدل القلب" : "Heart Rate"}</div>
         </div>
         <motion.div animate={{ x: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}
-          style={{ fontSize: "28px", color: "var(--c-rose)", fontWeight: 900 }}>↑</motion.div>
+          style={{ fontSize: "clamp(28px, 4.2vw, 50px)", color: "var(--c-rose)", fontWeight: 900 }}>↑</motion.div>
         <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "32px", fontWeight: 900, color: "var(--c-rose)" }}>BP</div>
-          <div style={{ fontSize: "12px", color: "var(--c-text-dim)" }}>{ar ? "ضغط الدم" : "Blood Pressure"}</div>
+          <div style={{ fontSize: "clamp(32px, 4.7vw, 57px)", fontWeight: 900, color: "var(--c-rose)" }}>BP</div>
+          <div style={{ fontSize: "clamp(12px, 1.7vw, 21px)", color: "var(--c-text-dim)" }}>{ar ? "ضغط الدم" : "Blood Pressure"}</div>
         </div>
         <motion.div animate={{ x: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
-          style={{ fontSize: "28px", color: "var(--c-rose)", fontWeight: 900 }}>↑</motion.div>
+          style={{ fontSize: "clamp(28px, 4.2vw, 50px)", color: "var(--c-rose)", fontWeight: 900 }}>↑</motion.div>
         <div style={{ textAlign: "center" }}>
           <motion.div animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 2, repeat: Infinity }}
-            style={{ fontSize: "32px", fontWeight: 900, color: "var(--c-amber)" }}>⚡</motion.div>
-          <div style={{ fontSize: "12px", color: "var(--c-text-dim)" }}>{ar ? "تأثير حاد" : "Acute Effect"}</div>
+            style={{ fontSize: "clamp(32px, 4.7vw, 57px)", fontWeight: 900, color: "var(--c-amber)" }}>⚡</motion.div>
+          <div style={{ fontSize: "clamp(12px, 1.7vw, 21px)", color: "var(--c-text-dim)" }}>{ar ? "تأثير حاد" : "Acute Effect"}</div>
         </div>
       </motion.div>
 
@@ -60,7 +60,7 @@ export default function Literature1Slide({ lang }: { lang: Lang }) {
             whileHover={{ scale: 1.01 }}
             style={{ padding: "10px 16px", borderLeft: "3px solid var(--c-rose)" }}
           >
-            <span style={{ fontSize: "14px", color: "var(--c-text-muted)" }}>{ar ? p.ar : p.en}</span>
+            <span style={{ fontSize: "clamp(14px, 2.0vw, 26px)", color: "var(--c-text-muted)" }}>{ar ? p.ar : p.en}</span>
           </motion.div>
         ))}
       </div>

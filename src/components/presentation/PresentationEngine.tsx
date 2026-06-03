@@ -34,6 +34,7 @@ import RecoSlide from "./slides/RecoSlide";
 import StatAnalysisSlide from "./slides/StatAnalysisSlide";
 import EthicsSlide from "./slides/EthicsSlide";
 import ThankYouSlide from "./slides/ThankYouSlide";
+import LimitationsSlide from "./slides/LimitationsSlide";
 
 const SLIDE_MAP: Record<string, React.ComponentType<{ lang: Lang }>> = {
   "cover-1":              Cover1Slide,
@@ -62,6 +63,7 @@ const SLIDE_MAP: Record<string, React.ComponentType<{ lang: Lang }>> = {
   "results-cognitive":    ResultsCognSlide,
   discussion:             DiscussionSlide,
   conclusion:             ConclusionSlide,
+  limitations:            LimitationsSlide,
   recommendations:        RecoSlide,
   thankyou:               ThankYouSlide,
 };
@@ -175,12 +177,16 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
     if (!document.fullscreenElement) {
       try {
         await document.documentElement.requestFullscreen();
-        // Lock orientation to landscape on mobile devices
-        if (
-          "screen" in window &&
-          (window.screen as unknown as { orientation?: { lock?: (o: string) => Promise<void> } }).orientation?.lock
-        ) {
-          await (window.screen as unknown as { orientation: { lock: (o: string) => Promise<void> } }).orientation.lock("landscape");
+        // Lock orientation to landscape on mobile devices (ignore errors if unsupported)
+        try {
+          if (
+            "screen" in window &&
+            (window.screen as unknown as { orientation?: { lock?: (o: string) => Promise<void> } }).orientation?.lock
+          ) {
+            await (window.screen as unknown as { orientation: { lock: (o: string) => Promise<void> } }).orientation.lock("landscape").catch(() => {});
+          }
+        } catch (e) {
+          console.warn("Orientation lock failed or not supported:", e);
         }
         return true;
       } catch (err) {
@@ -283,14 +289,29 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
     };
   }, [remoteEnabled, pres.nextSlide, pres.prevSlide, handleFullscreen, cycleChromeState, ar, showNotification]);
 
-  // ── Keyboard shortcuts ──
+  // ── Keyboard shortcuts & Fullscreen Events ──
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       if (e.key === "h" || e.key === "H") { e.preventDefault(); cycleChromeState(); }
+      if (e.key === "f" || e.key === "F") { e.preventDefault(); handleFullscreen(); }
     };
     window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [cycleChromeState]);
+    
+    const onFsChange = () => {
+      if (document.fullscreenElement) {
+        setChromeState(2); // Auto-hide when entering fullscreen
+      } else {
+        setChromeState(0); // Auto-show when exiting fullscreen
+      }
+    };
+    document.addEventListener("fullscreenchange", onFsChange);
+
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+      document.removeEventListener("fullscreenchange", onFsChange);
+    };
+  }, [cycleChromeState, handleFullscreen]);
 
   // ── Touch swipe ──
   const handleTouchStart = useCallback((e: React.TouchEvent) => {

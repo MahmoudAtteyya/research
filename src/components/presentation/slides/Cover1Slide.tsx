@@ -5,193 +5,96 @@ import { Lang } from "@/lib/presentation/slides-data";
 
 const Symposium = "The 4th Annual Student Symposium for Research Projects • 9 Jun 2026";
 
-const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.12 } } };
-const item = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } } };
+const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.15 } } };
+const item = { 
+  hidden: { opacity: 0, y: 30, filter: "blur(8px)" }, 
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } } 
+};
 
 export default function Cover1Slide({ lang }: { lang: Lang }) {
   const ar = lang === "ar";
   return (
     <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", overflow: "hidden", position: "relative" }}>
 
-      {/* Decorative orbs */}
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 180, 270, 360] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-        style={{
-          position: "absolute", width: 400, height: 400, borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)",
-          top: "-100px", right: "-100px", pointerEvents: "none",
-        }}
-      />
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], rotate: [0, -90, -180, -270, -360] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-        style={{
-          position: "absolute", width: 300, height: 300, borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 70%)",
-          bottom: "-80px", left: "-80px", pointerEvents: "none",
-        }}
-      />
+      {/* ── Premium Background Elements ── */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
+        {/* Subtle Mesh / Grid */}
+        <div style={{
+          position: "absolute", inset: 0,
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+          maskImage: "radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%)",
+          WebkitMaskImage: "radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%)",
+        }} />
+        <motion.div animate={{ scale: [1, 1.1, 1], opacity: [0.08, 0.15, 0.08] }} transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          style={{ position: "absolute", top: "-20%", left: "-10%", width: "60%", height: "70%", borderRadius: "50%", background: "radial-gradient(circle, #6366f160, transparent 70%)" }} />
+        <motion.div animate={{ scale: [1, 1.2, 1], opacity: [0.06, 0.12, 0.06] }} transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          style={{ position: "absolute", bottom: "-20%", right: "-10%", width: "50%", height: "60%", borderRadius: "50%", background: "radial-gradient(circle, #ec489950, transparent 70%)" }} />
+      </div>
 
-      {/* Symposium Banner */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+      {/* ── Symposium Banner ── */}
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
         style={{
-          background: "linear-gradient(135deg, rgba(99,102,241,0.18) 0%, rgba(139,92,246,0.14) 100%)",
-          borderBottom: "1px solid rgba(99,102,241,0.35)",
+          background: "linear-gradient(90deg, rgba(99,102,241,0.15), rgba(236,72,153,0.1))",
+          borderBottom: "1px solid rgba(99,102,241,0.3)",
           padding: "10px 40px", textAlign: "center",
-          backdropFilter: "blur(10px)", flexShrink: 0, position: "relative", zIndex: 2,
+          backdropFilter: "blur(12px)", flexShrink: 0, position: "relative", zIndex: 2,
         }}
       >
-        <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "rgba(165,180,252,0.7)", marginBottom: "2px" }}>
+        <span style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "2px", textTransform: "uppercase", color: "var(--c-gold)", marginRight: "8px" }}>
           🎓 {ar ? "يُقدَّم في" : "Presented at"}
-        </div>
-        <div style={{ fontSize: "clamp(12px, 1.5vw, 15px)", fontWeight: 800, color: "var(--c-text)" }}>
+        </span>
+        <span style={{ fontSize: "clamp(12px, 1.5vw, 15px)", fontWeight: 800, color: "var(--c-text)" }}>
           {Symposium}
-        </div>
+        </span>
       </motion.div>
 
-      {/* Main Content */}
-      <motion.div
-        variants={container} initial="hidden" animate="show"
+      {/* ── Main Content ── */}
+      <motion.div variants={container} initial="hidden" animate="show"
         style={{
           flex: 1, display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center",
-          padding: "20px 48px", textAlign: "center", position: "relative", zIndex: 2,
+          padding: "clamp(20px, 4vh, 60px) 48px", textAlign: "center", position: "relative", zIndex: 2,
         }}
       >
-        {/* Logos — bigger, with glow */}
-        <motion.div variants={item} style={{ display: "flex", alignItems: "center", gap: 36, marginBottom: 20 }}>
-          <motion.div
-            style={{ position: "relative" }}
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <motion.div
-              animate={{ opacity: [0.3, 0.7, 0.3] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              style={{
-                position: "absolute", inset: -8, borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(251,191,36,0.2), transparent 70%)",
-              }}
-            />
-            <img
-              src="/university.svg" alt="Suez University"
-              style={{ width: 82, height: 82, objectFit: "contain", filter: "drop-shadow(0 6px 24px rgba(251,191,36,0.32))", position: "relative" }}
-            />
-          </motion.div>
-
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-            <motion.div
-              animate={{ opacity: [0.4, 1, 0.4], scaleY: [0.85, 1, 0.85] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
-              style={{ width: 1.5, height: 55, background: "linear-gradient(to bottom, transparent, var(--c-gold), transparent)" }}
-            />
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              style={{ fontSize: "10px", color: "var(--c-indigo)", opacity: 0.6 }}
-            >✦</motion.div>
-            <motion.div
-              animate={{ opacity: [0.4, 1, 0.4], scaleY: [0.85, 1, 0.85] }}
-              transition={{ duration: 2.5, repeat: Infinity, delay: 0.4 }}
-              style={{ width: 1.5, height: 55, background: "linear-gradient(to bottom, transparent, var(--c-gold), transparent)" }}
-            />
-          </div>
-
-          {/* Symposium Logo */}
-          <motion.div
-            style={{ position: "relative" }}
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-          >
-            <motion.div
-              animate={{ opacity: [0.3, 0.7, 0.3] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 0.7 }}
-              style={{
-                position: "absolute", inset: -8, borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(236,72,153,0.2), transparent 70%)",
-              }}
-            />
-            <img
-              src="/symposium-logo.png" alt="Symposium"
-              style={{ width: 82, height: 82, objectFit: "contain", filter: "drop-shadow(0 6px 24px rgba(236,72,153,0.32))", position: "relative" }}
-            />
-          </motion.div>
-
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-            <motion.div
-              animate={{ opacity: [0.4, 1, 0.4], scaleY: [0.85, 1, 0.85] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
-              style={{ width: 1.5, height: 55, background: "linear-gradient(to bottom, transparent, var(--c-gold), transparent)" }}
-            />
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              style={{ fontSize: "10px", color: "var(--c-indigo)", opacity: 0.6 }}
-            >✦</motion.div>
-            <motion.div
-              animate={{ opacity: [0.4, 1, 0.4], scaleY: [0.85, 1, 0.85] }}
-              transition={{ duration: 2.5, repeat: Infinity, delay: 0.4 }}
-              style={{ width: 1.5, height: 55, background: "linear-gradient(to bottom, transparent, var(--c-gold), transparent)" }}
-            />
-          </div>
-
-          <motion.div
-            style={{ position: "relative" }}
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-          >
-            <motion.div
-              animate={{ opacity: [0.3, 0.7, 0.3] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-              style={{
-                position: "absolute", inset: -8, borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(99,102,241,0.2), transparent 70%)",
-              }}
-            />
-            <img
-              src="/faculty.svg" alt="Faculty"
-              style={{ width: 82, height: 82, objectFit: "contain", filter: "drop-shadow(0 6px 24px rgba(99,102,241,0.32))", position: "relative" }}
-            />
-          </motion.div>
+        {/* Logos Container - Glass Pill */}
+        <motion.div variants={item}
+          style={{
+            display: "flex", alignItems: "center", gap: "24px",
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.06)",
+            borderRadius: "60px",
+            padding: "12px 32px",
+            marginBottom: "clamp(20px, 4vh, 32px)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05)",
+            backdropFilter: "blur(16px)"
+          }}
+        >
+          <img src="/university.svg" alt="Suez University" style={{ width: 64, height: 64, objectFit: "contain", filter: "drop-shadow(0 4px 12px rgba(251,191,36,0.3))" }} />
+          <div style={{ width: "1px", height: "40px", background: "rgba(255,255,255,0.1)" }} />
+          <img src="/symposium-logo.png" alt="Symposium" style={{ width: 72, height: 72, objectFit: "contain", filter: "drop-shadow(0 4px 12px rgba(236,72,153,0.3))" }} />
+          <div style={{ width: "1px", height: "40px", background: "rgba(255,255,255,0.1)" }} />
+          <img src="/faculty.svg" alt="Faculty" style={{ width: 64, height: 64, objectFit: "contain", filter: "drop-shadow(0 4px 12px rgba(99,102,241,0.3))" }} />
         </motion.div>
 
-        {/* University & Faculty names */}
-        <motion.div variants={item} style={{ marginBottom: 14 }}>
-          <div style={{ fontSize: "14px", fontWeight: 800, color: "var(--c-gold)", letterSpacing: "4px", textTransform: "uppercase", marginBottom: 4 }}>
+        {/* University & Faculty */}
+        <motion.div variants={item} style={{ marginBottom: "clamp(16px, 3vh, 24px)" }}>
+          <div style={{ fontSize: "clamp(14px, 1.8vw, 18px)", fontWeight: 900, color: "var(--c-gold)", letterSpacing: "5px", textTransform: "uppercase", marginBottom: 6 }}>
             {ar ? "جامعة السويس" : "Suez University"}
           </div>
-          <div style={{ fontSize: "13px", color: "var(--c-text-muted)", letterSpacing: "1px" }}>
+          <div style={{ fontSize: "clamp(12px, 1.4vw, 15px)", fontWeight: 600, color: "var(--c-text-muted)", letterSpacing: "2px", textTransform: "uppercase" }}>
             {ar ? "كلية الطب" : "Faculty of Medicine"}
           </div>
         </motion.div>
 
-        {/* Animated separator */}
-        <motion.div variants={item} style={{ marginBottom: 16, display: "flex", alignItems: "center", gap: 10 }}>
-          <motion.div
-            animate={{ scaleX: [0.5, 1, 0.5] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            style={{ width: 60, height: 1.5, background: "linear-gradient(90deg, transparent, rgba(99,102,241,0.6))" }}
-          />
-          <motion.span
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            style={{ fontSize: "12px", color: "var(--c-indigo)", opacity: 0.7 }}
-          >✦</motion.span>
-          <motion.div
-            animate={{ scaleX: [0.5, 1, 0.5] }}
-            transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-            style={{ width: 60, height: 1.5, background: "linear-gradient(90deg, rgba(99,102,241,0.6), transparent)" }}
-          />
-        </motion.div>
-
-        {/* Study Title */}
-        <motion.h1
-          variants={item}
+        {/* Title */}
+        <motion.h1 variants={item}
           style={{
-            fontSize: "clamp(18px, 2.4vw, 29px)", fontWeight: 800, color: "var(--c-text)",
-            lineHeight: 1.3, maxWidth: 820, letterSpacing: "-0.2px", marginBottom: 12,
+            fontSize: "clamp(28px, 4.5vw, 56px)", fontWeight: 900,
+            background: "linear-gradient(180deg, #ffffff 0%, #a5b4fc 100%)",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+            lineHeight: 1.15, maxWidth: "1000px", letterSpacing: "-0.5px", marginBottom: "clamp(16px, 3vh, 24px)",
+            filter: "drop-shadow(0 4px 12px rgba(99,102,241,0.2))",
           }}
         >
           {ar
@@ -199,36 +102,43 @@ export default function Cover1Slide({ lang }: { lang: Lang }) {
             : "Acute Effects of Energy Drinks Consumption on Vital Signs and Cognitive Performance"}
         </motion.h1>
 
-        <motion.p
-          variants={item}
+        {/* Subtitle */}
+        <motion.p variants={item}
           style={{
-            fontSize: "clamp(12px, 1.4vw, 15px)", color: "var(--c-text-muted)",
-            maxWidth: 700, marginBottom: 20, lineHeight: 1.5,
+            fontSize: "clamp(14px, 1.8vw, 20px)", fontWeight: 500, color: "var(--c-text-muted)",
+            maxWidth: "800px", marginBottom: "clamp(24px, 4vh, 40px)", lineHeight: 1.6,
           }}
         >
           {ar
             ? "دراسة تجريبية قبلية-بعدية بين البالغين في جامعة السويس والمرضى المترددين على مستشفى جامعة السويس"
-            : "A Pre-Post exprimental Study among adults at Suez University and patients attending Suez University hospital"}
+            : "A Pre-Post Experimental Study among adults at Suez University and patients attending Suez University hospital"}
         </motion.p>
 
         {/* Badges */}
-        <motion.div variants={item} style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
-          <motion.div
-            whileHover={{ scale: 1.05, y: -2 }}
+        <motion.div variants={item} style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap", justifyContent: "center" }}>
+          <motion.div whileHover={{ scale: 1.05, y: -2 }}
             style={{
-              background: "linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15))",
-              border: "1px solid rgba(99,102,241,0.4)", borderRadius: 30, padding: "9px 22px",
-              fontSize: "13px", fontWeight: 700, color: "#a5b4fc", letterSpacing: "0.5px",
+              display: "flex", alignItems: "center", gap: "10px",
+              background: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1))",
+              border: "1px solid rgba(99,102,241,0.3)", borderRadius: "40px", padding: "10px 24px",
+              boxShadow: "0 8px 20px rgba(99,102,241,0.1)",
             }}>
-            🎓 {ar ? "طلاب السنة الخامسة · المجموعة السادسة" : "5th Year Students · Group 6"}
+            <span style={{ fontSize: "16px" }}>🎓</span>
+            <span style={{ fontSize: "clamp(12px, 1.4vw, 15px)", fontWeight: 800, color: "#a5b4fc", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+              {ar ? "طلاب السنة الخامسة · المجموعة السادسة" : "5th Year Students · Group 6"}
+            </span>
           </motion.div>
-          <motion.div
-            whileHover={{ scale: 1.05, y: -2 }}
+          <motion.div whileHover={{ scale: 1.05, y: -2 }}
             style={{
-              background: "rgba(251,191,36,0.1)", border: "1px solid rgba(251,191,36,0.35)",
-              borderRadius: 30, padding: "9px 18px", fontSize: "13px", fontWeight: 700, color: "var(--c-gold)",
+              display: "flex", alignItems: "center", gap: "10px",
+              background: "linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05))",
+              border: "1px solid rgba(251,191,36,0.3)", borderRadius: "40px", padding: "10px 24px",
+              boxShadow: "0 8px 20px rgba(251,191,36,0.1)",
             }}>
-            2021 / 2026
+            <span style={{ fontSize: "16px" }}>📅</span>
+            <span style={{ fontSize: "clamp(12px, 1.4vw, 15px)", fontWeight: 800, color: "var(--c-gold)", letterSpacing: "1px" }}>
+              2021 / 2026
+            </span>
           </motion.div>
         </motion.div>
       </motion.div>

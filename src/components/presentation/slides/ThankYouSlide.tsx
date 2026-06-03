@@ -4,6 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Lang, SUPERVISORS } from "@/lib/presentation/slides-data";
 import { Stethoscope, Award, Heart, GraduationCap, ArrowUpRight } from "lucide-react";
 
+// Map supervisor name → image file
+const PHOTO_MAP: Record<string, string> = {
+  "Prof Dr. Maysa Ibrahim": "/images/maysa.jpeg",
+  "Dr. Mohammed Wagih Saleh": "/images/wagih.jpeg",
+  "Dr. Nanees Kamel Hussein": "/images/nanees.jpeg",
+  "Dr. Yosra Saeed Abdalla": "/images/yosra.jpeg",
+};
+
 /** Animated sparkle particles */
 function Sparkles() {
   const particles = Array.from({ length: 15 }, (_, i) => ({
@@ -76,7 +84,7 @@ export default function ThankYouSlide({ lang }: { lang: Lang }) {
   ];
 
   return (
-    <div 
+    <div
       className="pres-slide-inner relative flex flex-col justify-between items-center text-center overflow-hidden py-10 px-8 select-none"
       style={{ background: "#04071a", minHeight: "100%", width: "100%" }}
     >
@@ -92,16 +100,16 @@ export default function ThankYouSlide({ lang }: { lang: Lang }) {
         transition={{ duration: 0.6 }}
         className="flex items-center gap-6 z-10"
       >
-        <img 
-          src="/university.svg" 
-          alt="Suez University" 
-          className="w-14 h-14 object-contain filter drop-shadow-[0_4px_12px_rgba(251,191,36,0.15)]" 
+        <img
+          src="/university.svg"
+          alt="Suez University"
+          className="w-14 h-14 object-contain filter drop-shadow-[0_4px_12px_rgba(251,191,36,0.15)]"
         />
         <div className="h-10 w-[1px] bg-gradient-to-b from-transparent via-slate-600 to-transparent" />
-        <img 
-          src="/faculty.svg" 
-          alt="Faculty" 
-          className="w-14 h-14 object-contain rounded-full bg-white p-0.5 filter drop-shadow-[0_4px_12px_rgba(99,102,241,0.15)]" 
+        <img
+          src="/faculty.svg"
+          alt="Faculty"
+          className="w-14 h-14 object-contain rounded-full bg-white p-0.5 filter drop-shadow-[0_4px_12px_rgba(99,102,241,0.15)]"
         />
       </motion.div>
 
@@ -166,7 +174,7 @@ export default function ThankYouSlide({ lang }: { lang: Lang }) {
           transition={{ delay: 0.5 }}
           className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-3"
         >
-          {ar ? "تحت إشراف" : "SUPERVISED BY"}
+          {ar ? "تحت إشراف" : "Heartfelt Thanks To Our Supervisors"}
         </motion.p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
@@ -176,14 +184,18 @@ export default function ThankYouSlide({ lang }: { lang: Lang }) {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 + i * 0.1 }}
-              whileHover={{ y: -3, borderColor: "rgba(251,191,36,0.3)" }}
-              className="bg-slate-900/40 border border-white/5 hover:bg-slate-900/60 rounded-xl p-3 text-center backdrop-blur-md transition-all shadow-md group relative"
+              whileHover={{ y: -3, borderColor: "rgba(251,191,36,0.4)", boxShadow: "0 8px 24px rgba(251,191,36,0.15)" }}
+              className="bg-slate-900/40 border border-white/5 hover:bg-slate-900/60 rounded-xl p-4 text-center backdrop-blur-md transition-all shadow-md group relative"
             >
-              {/* Doctor/Supervisor Icon */}
-              <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mx-auto mb-2 group-hover:scale-105 transition-transform">
-                <Stethoscope className="w-4 h-4 text-indigo-400" />
+              {/* Doctor/Supervisor Photo */}
+              <div className="relative w-14 h-14 rounded-full border-2 border-indigo-500/30 flex items-center justify-center bg-slate-800 mx-auto mb-3 overflow-hidden group-hover:scale-105 group-hover:border-amber-400/50 transition-all shadow-[0_0_12px_rgba(99,102,241,0.2)]">
+                {PHOTO_MAP[s.name] ? (
+                  <img src={PHOTO_MAP[s.name]} alt={s.name} className="w-full h-full object-cover object-top" />
+                ) : (
+                  <Stethoscope className="w-6 h-6 text-indigo-400" />
+                )}
               </div>
-              
+
               <h3 className="text-xs font-bold text-slate-200 tracking-wide line-clamp-1">
                 {s.name}
               </h3>

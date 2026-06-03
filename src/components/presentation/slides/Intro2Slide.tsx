@@ -40,13 +40,13 @@ export default function Intro2Slide({ lang }: { lang: Lang }) {
           <div style={{
             background: "linear-gradient(135deg, #6366f1, #06b6d4)",
             borderRadius: "10px", padding: "6px 10px",
-            fontSize: "10px", fontWeight: 800, letterSpacing: "2px",
+            fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, letterSpacing: "2px",
             color: "#fff", textTransform: "uppercase",
           }}>
             {ar ? "المقدمة" : "Introduction"} · 2 / 3
           </div>
         </div>
-        <h2 style={{ margin: 0, fontSize: "clamp(20px, 2.8vw, 34px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
+        <h2 style={{ margin: 0, fontSize: "clamp(20px, 3.1vw, 41px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
           {ar ? "حجم " : "The "}
           <span style={{
             background: "linear-gradient(135deg, #6366f1, #06b6d4)",
@@ -91,12 +91,12 @@ export default function Intro2Slide({ lang }: { lang: Lang }) {
               pointerEvents: "none",
             }} />
 
-            <div style={{ fontSize: "20px", marginBottom: "4px" }}>{s.icon}</div>
+            <div style={{ fontSize: "clamp(20px, 3.1vw, 41px)", marginBottom: "4px" }}>{s.icon}</div>
             <motion.div
               animate={{ opacity: [0.85, 1, 0.85] }}
               transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
               style={{
-                fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 900,
+                fontSize: "clamp(22px, 3.3vw, 36px)", fontWeight: 900,
                 background: `linear-gradient(135deg, ${s.color}, ${s.color}cc)`,
                 WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                 lineHeight: 1.1,
@@ -143,7 +143,7 @@ export default function Intro2Slide({ lang }: { lang: Lang }) {
               width: "36px", height: "36px", borderRadius: "10px", flexShrink: 0,
               background: `${h.color}18`, border: `1px solid ${h.color}30`,
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "18px",
+              fontSize: "clamp(18px, 2.8vw, 36px)",
             }}>
               {h.icon}
             </div>
@@ -171,15 +171,15 @@ export default function Intro2Slide({ lang }: { lang: Lang }) {
         <motion.span
           animate={{ scale: [1, 1.2, 1], rotate: [0, 10, 0] }}
           transition={{ duration: 2.5, repeat: Infinity }}
-          style={{ fontSize: "20px", flexShrink: 0 }}
+          style={{ fontSize: "clamp(20px, 3.1vw, 41px)", flexShrink: 0 }}
         >
           💡
         </motion.span>
         <div>
-          <div style={{ fontSize: "9px", fontWeight: 800, letterSpacing: "1.5px", color: "#fbbf24", textTransform: "uppercase", marginBottom: "2px" }}>
+          <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 800, letterSpacing: "1.5px", color: "#fbbf24", textTransform: "uppercase", marginBottom: "2px" }}>
             {ar ? "الفجوة البحثية" : "Research Gap"}
           </div>
-          <span style={{ fontSize: "13px", color: "#fde68a", fontWeight: 500 }}>
+          <span style={{ fontSize: "clamp(13px, 1.8vw, 24px)", color: "#fde68a", fontWeight: 500 }}>
             {ar
               ? "نقص الدراسات الإقليمية يجعل هذا البحث ذا أهمية استثنائية للمجتمع المصري"
               : "Lack of regional data makes this study particularly valuable for the Egyptian population"}

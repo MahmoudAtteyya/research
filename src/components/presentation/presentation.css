@@ -276,7 +276,7 @@
 }
 
 .pres-body-text {
-  font-size: 16px;
+  font-size: clamp(16px, 2.2vw, 26px);
   line-height: 1.65;
   color: var(--c-text-muted);
   font-weight: 400;
@@ -365,7 +365,7 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 14px;
+  font-size: clamp(15px, 2vw, 24px);
   color: var(--c-text-muted);
   line-height: 1.5;
 }

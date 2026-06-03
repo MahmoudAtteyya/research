@@ -56,13 +56,13 @@ export default function RecoSlide({ lang }: { lang: Lang }) {
           <div style={{
             background: "linear-gradient(135deg, #10b981, #6366f1)",
             borderRadius: "10px", padding: "5px 12px",
-            fontSize: "10px", fontWeight: 800, letterSpacing: "2px",
+            fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, letterSpacing: "2px",
             color: "#fff", textTransform: "uppercase",
           }}>
             {ar ? "التوصيات" : "Recommendations"}
           </div>
         </div>
-        <h2 style={{ margin: 0, fontSize: "clamp(20px, 2.8vw, 32px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
+        <h2 style={{ margin: 0, fontSize: "clamp(20px, 3.1vw, 38px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
           {ar ? "ماذا " : "What We "}
           <span style={{ background: "linear-gradient(135deg, #10b981, #6366f1)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
             {ar ? "نُوصي به؟" : "Recommend"}
@@ -109,7 +109,7 @@ export default function RecoSlide({ lang }: { lang: Lang }) {
               width: "20px", height: "20px", borderRadius: "50%", flexShrink: 0,
               background: `${r.color}18`, border: `1px solid ${r.color}35`,
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "9px", fontWeight: 900, color: r.color,
+              fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 900, color: r.color,
             }}>
               {i + 1}
             </div>
@@ -123,7 +123,7 @@ export default function RecoSlide({ lang }: { lang: Lang }) {
                 background: `linear-gradient(135deg, ${r.color}22, ${r.color}0c)`,
                 border: `1px solid ${r.color}35`,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "18px",
+                fontSize: "clamp(18px, 2.8vw, 36px)",
                 boxShadow: `0 4px 14px ${r.color}18`,
               }}
             >
@@ -133,7 +133,7 @@ export default function RecoSlide({ lang }: { lang: Lang }) {
             {/* Text */}
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}>
-                <span style={{ fontSize: "13px", fontWeight: 800, color: "var(--c-text)" }}>
+                <span style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 800, color: "var(--c-text)" }}>
                   {ar ? r.titleAr : r.titleEn}
                 </span>
                 <span style={{
@@ -150,7 +150,7 @@ export default function RecoSlide({ lang }: { lang: Lang }) {
             </div>
 
             {/* Arrow indicator */}
-            <div style={{ fontSize: "16px", color: r.color, opacity: 0.5, flexShrink: 0 }}>
+            <div style={{ fontSize: "clamp(16px, 2.5vw, 31px)", color: r.color, opacity: 0.5, flexShrink: 0 }}>
               {ar ? "←" : "→"}
             </div>
           </motion.div>

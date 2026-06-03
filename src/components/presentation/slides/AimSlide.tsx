@@ -76,17 +76,17 @@ export default function AimSlide({ lang }: { lang: Lang }) {
         }}
       >
         <motion.span
-          style={{ fontSize: "26px", flexShrink: 0 }}
+          style={{ fontSize: "clamp(26px, 4.0vw, 47px)", flexShrink: 0 }}
           animate={{ scale: [1, 1.12, 1] }}
           transition={{ duration: 2.5, repeat: Infinity }}
         >
           🎯
         </motion.span>
         <div>
-          <div style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "2px", textTransform: "uppercase", color: "var(--c-indigo)", marginBottom: "5px" }}>
+          <div style={{ fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, letterSpacing: "2px", textTransform: "uppercase", color: "var(--c-indigo)", marginBottom: "5px" }}>
             {ar ? "الهدف الرئيسي" : "Primary Aim"}
           </div>
-          <p style={{ fontSize: "14px", color: "var(--c-text)", lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
+          <p style={{ fontSize: "clamp(14px, 2.0vw, 26px)", color: "var(--c-text)", lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
             {ar
               ? " تقييم التأثيرات الحادة لاستهلاك مشروبات الطاقة على المؤشرات الفسيولوجية والأداء المعرفي لدى البالغين في جامعة السويس ومستشفى جامعة السويس."
               : "Evaluate the acute effects of energy drink consumption on physiological parameters and cognitive performance in healthy adults at Suez University and Suez University Hospital."}
@@ -95,7 +95,7 @@ export default function AimSlide({ lang }: { lang: Lang }) {
       </motion.div>
 
       {/* ── Secondary objectives label ── */}
-      <div style={{ fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: "var(--c-text-dim)", marginBottom: "8px", fontWeight: 700 }}>
+      <div style={{ fontSize: "clamp(10px, 1.4vw, 18px)", letterSpacing: "2.5px", textTransform: "uppercase", color: "var(--c-text-dim)", marginBottom: "8px", fontWeight: 700 }}>
         {ar ? "الأهداف الفرعية" : "Secondary Objectives"}
       </div>
 
@@ -121,7 +121,7 @@ export default function AimSlide({ lang }: { lang: Lang }) {
             }}
           >
             <motion.span
-              style={{ fontSize: "20px", flexShrink: 0, marginTop: "2px" }}
+              style={{ fontSize: "clamp(20px, 3.1vw, 41px)", flexShrink: 0, marginTop: "2px" }}
               animate={{ scale: [1, 1.14, 1] }}
               transition={{ duration: 2.2, repeat: Infinity, delay: i * 0.3 }}
             >
@@ -131,7 +131,7 @@ export default function AimSlide({ lang }: { lang: Lang }) {
               <span
                 style={{
                   display: "inline-block",
-                  fontSize: "9px",
+                  fontSize: "clamp(9px, 1.2vw, 15px)",
                   fontWeight: 800,
                   letterSpacing: "1px",
                   textTransform: "uppercase",

@@ -61,13 +61,13 @@ export default function Intro1Slide({ lang }: { lang: Lang }) {
           <div style={{
             background: "linear-gradient(135deg, #f59e0b, #ef4444)",
             borderRadius: "10px", padding: "6px 10px",
-            fontSize: "10px", fontWeight: 800, letterSpacing: "2px",
+            fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, letterSpacing: "2px",
             color: "#fff", textTransform: "uppercase",
           }}>
             {ar ? "المقدمة" : "Introduction"} · 1 / 3
           </div>
         </div>
-        <h2 style={{ margin: 0, fontSize: "clamp(20px, 2.8vw, 34px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
+        <h2 style={{ margin: 0, fontSize: "clamp(20px, 3.1vw, 41px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
           {ar ? "ما هي " : "What Are "}
           <span style={{
             background: "linear-gradient(135deg, #f59e0b, #ef4444)",
@@ -133,7 +133,7 @@ export default function Intro1Slide({ lang }: { lang: Lang }) {
 
             {/* Text */}
             <span style={{
-              fontSize: "14px",
+              fontSize: "clamp(14px, 2.0vw, 26px)",
               color: "var(--c-text)",
               fontWeight: 500,
               lineHeight: 1.5,
@@ -147,7 +147,7 @@ export default function Intro1Slide({ lang }: { lang: Lang }) {
               width: "24px", height: "24px", borderRadius: "50%", flexShrink: 0,
               background: `${p.color}18`, border: `1px solid ${p.border}`,
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "11px", fontWeight: 800, color: p.color,
+              fontSize: "clamp(11px, 1.5vw, 20px)", fontWeight: 800, color: p.color,
             }}>
               {i + 1}
             </div>

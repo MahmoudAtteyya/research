@@ -13,7 +13,7 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
     <div className="pres-slide-inner">
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} style={{ flexShrink: 0 }}>
         <div className="pres-label">{ar ? "النتائج" : "Results"} · {ar ? "الأداء المعرفي" : "Cognitive Performance"}</div>
-        <h2 className="pres-h1" style={{ fontSize: "clamp(18px, 2.5vw, 28px)", marginBottom: "4px" }}>
+        <h2 className="pres-h1" style={{ fontSize: "clamp(18px, 2.8vw, 33px)", marginBottom: "4px" }}>
           🧠 <em>{ar ? "الأداء المعرفي" : "Cognitive Outcomes"}</em>
         </h2>
         <div className="pres-divider" style={{ marginBottom: "10px" }} />
@@ -25,7 +25,7 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 1.5 }}
           style={{ display: "flex", flexDirection: "column", minHeight: 0 }}
         >
           <div style={{
@@ -46,12 +46,12 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
               alignItems: "center",
               gap: "12px",
             }}>
-              <span style={{ fontSize: "18px" }}>🧠</span>
+              <span style={{ fontSize: "clamp(18px, 2.8vw, 36px)" }}>🧠</span>
               <div>
-                <div style={{ fontSize: "13px", fontWeight: 800, color: "var(--c-text)", letterSpacing: "0.3px" }}>
+                <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 800, color: "var(--c-text)", letterSpacing: "0.3px" }}>
                   {ar ? "جدول 2. مقارنة الأداء المعرفي قبل وبعد تناول مشروبات الطاقة (ن=47)" : "Table 2. Cognitive Performance — Pre vs Post Energy Drink (n=47)"}
                 </div>
-                <div style={{ fontSize: "9px", color: "rgba(165,180,252,0.85)", fontWeight: 600, marginTop: "1px" }}>
+                <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: "rgba(165,180,252,0.85)", fontWeight: 600, marginTop: "1px" }}>
                   {ar ? "اختبار T المزدوج — SPSS v26" : "Paired T-Test — SPSS v26"}
                 </div>
               </div>
@@ -135,11 +135,11 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
                   <div style={{ padding: "6px 8px", textAlign: "center", borderLeft: "1px solid rgba(255,255,255,0.05)" }}>
                     {cd.preSD !== null ? (
                       <>
-                        <div style={{ fontSize: "13px", fontWeight: 700, color: "#64748b", lineHeight: 1 }}>{cd.pre}</div>
-                        <div style={{ fontSize: "9px", color: "#475569", marginTop: "2px" }}>±{cd.preSD}</div>
+                        <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 700, color: "#64748b", lineHeight: 1 }}>{cd.pre}</div>
+                        <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: "#475569", marginTop: "2px" }}>±{cd.preSD}</div>
                       </>
                     ) : (
-                      <div style={{ fontSize: "13px", fontWeight: 700, color: "#64748b" }}>{cd.pre}</div>
+                      <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 700, color: "#64748b" }}>{cd.pre}</div>
                     )}
                   </div>
 
@@ -147,11 +147,11 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
                   <div style={{ padding: "6px 8px", textAlign: "center", borderLeft: "1px solid rgba(255,255,255,0.05)" }}>
                     {cd.postSD !== null ? (
                       <>
-                        <div style={{ fontSize: "13px", fontWeight: 700, color: cd.improvement ? "#10b981" : "#94a3b8", lineHeight: 1 }}>{cd.post}</div>
-                        <div style={{ fontSize: "9px", color: cd.improvement ? "#6ee7b7" : "#64748b", marginTop: "2px" }}>±{cd.postSD}</div>
+                        <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 700, color: cd.improvement ? "#10b981" : "#94a3b8", lineHeight: 1 }}>{cd.post}</div>
+                        <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: cd.improvement ? "#6ee7b7" : "#64748b", marginTop: "2px" }}>±{cd.postSD}</div>
                       </>
                     ) : (
-                      <div style={{ fontSize: "13px", fontWeight: 700, color: "#94a3b8" }}>{cd.post}</div>
+                      <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 700, color: "#94a3b8" }}>{cd.post}</div>
                     )}
                   </div>
 
@@ -164,14 +164,14 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
                         border: `1px solid ${cd.improvement ? "rgba(16,185,129,0.3)" : "rgba(245,158,11,0.3)"}`,
                         borderRadius: "6px",
                         padding: "3px 7px",
-                        fontSize: "10px",
+                        fontSize: "clamp(10px, 1.4vw, 18px)",
                         fontWeight: 700,
                         color: cd.improvement ? "#10b981" : "#f59e0b",
                       }}>
                         {cd.diff}
                       </div>
                     ) : (
-                      <span style={{ color: "#475569", fontSize: "13px", fontWeight: 500 }}>—</span>
+                      <span style={{ color: "#475569", fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 500 }}>—</span>
                     )}
                   </div>
 
@@ -184,14 +184,14 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
                         border: "1px solid rgba(99,102,241,0.35)",
                         borderRadius: "6px",
                         padding: "3px 7px",
-                        fontSize: "10px",
+                        fontSize: "clamp(10px, 1.4vw, 18px)",
                         fontWeight: 800,
                         color: "#818cf8",
                       }}>
                         {cd.pValue}
                       </div>
                     ) : (
-                      <span style={{ color: "#475569", fontSize: "11px" }}>—</span>
+                      <span style={{ color: "#475569", fontSize: "clamp(11px, 1.5vw, 20px)" }}>—</span>
                     )}
                   </div>
                 </motion.div>
@@ -203,7 +203,7 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
               padding: "5px 16px",
               background: "rgba(255,255,255,0.02)",
               borderTop: "1px solid rgba(255,255,255,0.06)",
-              fontSize: "9px",
+              fontSize: "clamp(9px, 1.2vw, 15px)",
               color: "#64748b",
               fontStyle: "italic",
             }}>
@@ -218,7 +218,7 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
+          transition={{ delay: 0.3, duration: 1.5 }}
           style={{ display: "flex", flexDirection: "column", gap: "10px", minHeight: 0 }}
         >
           {/* Significant findings */}
@@ -232,7 +232,7 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
             flexDirection: "column",
             gap: "8px",
           }}>
-            <div style={{ fontSize: "10px", fontWeight: 800, color: "#818cf8", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "4px" }}>
+            <div style={{ fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, color: "#818cf8", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "4px" }}>
               ✅ {ar ? "تحسّن معنوي" : "Significant Improvement"}
             </div>
             {significantItems.map((cd, i) => (
@@ -255,13 +255,13 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
                   width: "30px", height: "30px", borderRadius: "50%",
                   background: `linear-gradient(135deg, ${cd.color}, ${cd.color}88)`,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "14px", flexShrink: 0,
+                  fontSize: "clamp(14px, 2.0vw, 26px)", flexShrink: 0,
                   boxShadow: `0 4px 12px ${cd.color}44`,
                 }}>
                   {i === 0 ? "🧘" : i === 1 ? "🗃️" : "⚡"}
                 </div>
                 <div>
-                  <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
+                  <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
                     {ar ? cd.domainAr : cd.domain}
                   </div>
                   <div style={{ fontSize: "9.5px", color: cd.color, fontWeight: 600, marginTop: "2px" }}>
@@ -282,7 +282,7 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
             flexDirection: "column",
             gap: "6px",
           }}>
-            <div style={{ fontSize: "10px", fontWeight: 800, color: "#f59e0b", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "2px" }}>
+            <div style={{ fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, color: "#f59e0b", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "2px" }}>
               ⚠️ {ar ? "بدون تغيير معنوي" : "No Sig. Change"}
             </div>
             {notSignificantItems.map((cd, i) => (
@@ -304,7 +304,7 @@ export default function ResultsCognSlide({ lang }: { lang: Lang }) {
                   gap: "6px",
                 }}
               >
-                <span style={{ fontSize: "12px" }}>◈</span>
+                <span style={{ fontSize: "clamp(12px, 1.7vw, 21px)" }}>◈</span>
                 {ar ? cd.domainAr : cd.domain}
               </motion.div>
             ))}

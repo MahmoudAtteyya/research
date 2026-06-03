@@ -7,9 +7,9 @@ const POINTS = [
   {
     icon: "🤝", color: "#10b981",
     titleEn: "Informed Consent", titleAr: "الموافقة المستنيرة",
-    textEn: "Written informed consent obtained from all participants; participation was entirely voluntary",
+    textEn: "Informed consent was obtained from all participants prior to participation.",
     textAr: "موافقة خطية مستنيرة من جميع المشاركين؛ طوعية تمامًا",
-    badge: "IRB", badgeColor: "#10b981",
+    badge: "ETHICS", badgeColor: "#10b981",
   },
   {
     icon: "🔒", color: "#8b5cf6",
@@ -35,7 +35,7 @@ const POINTS = [
 ];
 
 const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.12 } } };
-const item = { hidden: { opacity: 0, x: -28 }, show: { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] } } };
+const item = { hidden: { opacity: 0, x: -28 }, show: { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } } };
 
 export default function EthicsSlide({ lang }: { lang: Lang }) {
   const ar = lang === "ar";
@@ -48,13 +48,13 @@ export default function EthicsSlide({ lang }: { lang: Lang }) {
           <div style={{
             background: "linear-gradient(135deg, #10b981, #06b6d4)",
             borderRadius: "10px", padding: "5px 12px",
-            fontSize: "10px", fontWeight: 800, letterSpacing: "2px",
+            fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, letterSpacing: "2px",
             color: "#fff", textTransform: "uppercase",
           }}>
             {ar ? "الاعتبارات الأخلاقية" : "Ethical Considerations"}
           </div>
         </div>
-        <h2 style={{ margin: 0, fontSize: "clamp(20px, 2.8vw, 32px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
+        <h2 style={{ margin: 0, fontSize: "clamp(20px, 3.1vw, 38px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
           {ar ? "الاعتبارات " : "Ethical "}
           <span style={{ background: "linear-gradient(135deg, #10b981, #06b6d4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
             {ar ? "الأخلاقية" : "Safeguards"}
@@ -67,7 +67,7 @@ export default function EthicsSlide({ lang }: { lang: Lang }) {
       {/* Ethics pillars */}
       <motion.div
         variants={container} initial="hidden" animate="show"
-        style={{ display: "flex", flexDirection: "column", gap: "10px", flex: 1, justifyContent: "center" }}
+        style={{ display: "flex", flexDirection: "column", gap: "8px", flex: 1, justifyContent: "center" }}
       >
         {POINTS.map((p, i) => (
           <motion.div
@@ -78,10 +78,10 @@ export default function EthicsSlide({ lang }: { lang: Lang }) {
               background: `linear-gradient(135deg, ${p.color}10, ${p.color}04)`,
               border: `1px solid ${p.color}28`,
               borderRadius: "16px",
-              padding: "14px 18px",
+              padding: "10px 14px",
               display: "flex",
               alignItems: "center",
-              gap: "16px",
+              gap: "14px",
               position: "relative",
               overflow: "hidden",
               boxShadow: `0 3px 16px ${p.color}0c`,
@@ -100,11 +100,11 @@ export default function EthicsSlide({ lang }: { lang: Lang }) {
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 4, repeat: Infinity, delay: i * 0.6 }}
               style={{
-                width: "50px", height: "50px", borderRadius: "14px", flexShrink: 0,
+                width: "42px", height: "42px", borderRadius: "12px", flexShrink: 0,
                 background: `linear-gradient(135deg, ${p.color}28, ${p.color}0e)`,
                 border: `1px solid ${p.color}40`,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "24px",
+                fontSize: "clamp(24px, 3.7vw, 43px)",
                 boxShadow: `0 6px 20px ${p.color}20`,
               }}
             >
@@ -114,18 +114,18 @@ export default function EthicsSlide({ lang }: { lang: Lang }) {
             {/* Content */}
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
-                <span style={{ fontSize: "15px", fontWeight: 800, color: "var(--c-text)" }}>
+                <span style={{ fontSize: "clamp(15px, 2.2vw, 29px)", fontWeight: 800, color: "var(--c-text)" }}>
                   {ar ? p.titleAr : p.titleEn}
                 </span>
                 <span style={{
-                  fontSize: "9px", fontWeight: 800, letterSpacing: "0.8px", textTransform: "uppercase",
+                  fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 800, letterSpacing: "0.8px", textTransform: "uppercase",
                   background: `${p.badgeColor}18`, border: `1px solid ${p.badgeColor}35`,
                   borderRadius: "20px", padding: "2px 8px", color: p.badgeColor,
                 }}>
                   {p.badge}
                 </span>
               </div>
-              <div style={{ fontSize: "13px", color: "var(--c-text-muted)", lineHeight: 1.55, fontWeight: 450 }}>
+              <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", color: "var(--c-text-muted)", lineHeight: 1.55, fontWeight: 450 }}>
                 {ar ? p.textAr : p.textEn}
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function EthicsSlide({ lang }: { lang: Lang }) {
               width: "28px", height: "28px", borderRadius: "50%", flexShrink: 0,
               background: `${p.color}18`, border: `1px solid ${p.color}35`,
               display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "14px",
+              fontSize: "clamp(14px, 2.0vw, 26px)",
             }}>
               ✓
             </div>
@@ -152,7 +152,7 @@ export default function EthicsSlide({ lang }: { lang: Lang }) {
           border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: "12px",
           textAlign: "center",
-          fontSize: "11px", color: "#64748b", fontStyle: "italic",
+          fontSize: "clamp(11px, 1.5vw, 20px)", color: "#64748b", fontStyle: "italic",
         }}
       >
         🏛️ {ar

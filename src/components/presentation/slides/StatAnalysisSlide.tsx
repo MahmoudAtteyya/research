@@ -26,13 +26,13 @@ export default function StatAnalysisSlide({ lang }: { lang: Lang }) {
           <div style={{
             background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
             borderRadius: "10px", padding: "5px 12px",
-            fontSize: "10px", fontWeight: 800, letterSpacing: "2px",
+            fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, letterSpacing: "2px",
             color: "#fff", textTransform: "uppercase",
           }}>
             {ar ? "المناهج — التحليل" : "Methods — Analysis"}
           </div>
         </div>
-        <h2 style={{ margin: 0, fontSize: "clamp(20px, 2.8vw, 32px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
+        <h2 style={{ margin: 0, fontSize: "clamp(20px, 3.1vw, 38px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
           {ar ? "خطة " : "Statistical "}
           <span style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
             {ar ? "التحليل الإحصائي" : "Analysis Plan"}
@@ -46,7 +46,7 @@ export default function StatAnalysisSlide({ lang }: { lang: Lang }) {
 
         {/* Left: Pipeline */}
         <div style={{ display: "flex", flexDirection: "column", gap: "10px", justifyContent: "center" }}>
-          <div style={{ fontSize: "9px", fontWeight: 800, letterSpacing: "2px", color: "#94a3b8", textTransform: "uppercase", marginBottom: "4px" }}>
+          <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 800, letterSpacing: "2px", color: "#94a3b8", textTransform: "uppercase", marginBottom: "4px" }}>
             {ar ? "مراحل التحليل" : "Analysis Pipeline"}
           </div>
           {PIPELINE.map((step, i) => (
@@ -54,7 +54,7 @@ export default function StatAnalysisSlide({ lang }: { lang: Lang }) {
               key={i}
               initial={{ opacity: 0, x: ar ? 20 : -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.12 + i * 0.12, duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
+              transition={{ delay: 0.12 + i * 0.12, duration: 1.5, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
               whileHover={{ scale: 1.02, x: ar ? -4 : 4 }}
               style={{
                 background: `linear-gradient(135deg, ${step.color}10, ${step.color}04)`,
@@ -73,7 +73,7 @@ export default function StatAnalysisSlide({ lang }: { lang: Lang }) {
                 width: "36px", height: "36px", borderRadius: "10px", flexShrink: 0,
                 background: `linear-gradient(135deg, ${step.color}, ${step.color}99)`,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "16px", fontWeight: 900, color: "#fff",
+                fontSize: "clamp(16px, 2.5vw, 31px)", fontWeight: 900, color: "#fff",
                 boxShadow: `0 4px 14px ${step.color}44`,
               }}>
                 {step.icon}
@@ -81,11 +81,11 @@ export default function StatAnalysisSlide({ lang }: { lang: Lang }) {
 
               <div style={{ flex: 1 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}>
-                  <span style={{ fontSize: "9px", fontWeight: 800, color: step.color, letterSpacing: "1px" }}>
+                  <span style={{ fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 800, color: step.color, letterSpacing: "1px" }}>
                     {step.step}
                   </span>
                   <span style={{
-                    fontSize: "9px", fontWeight: 800, letterSpacing: "0.6px",
+                    fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 800, letterSpacing: "0.6px",
                     background: `${step.color}18`, border: `1px solid ${step.color}35`,
                     borderRadius: "20px", padding: "1px 7px", color: step.color,
                     textTransform: "uppercase",
@@ -119,7 +119,7 @@ export default function StatAnalysisSlide({ lang }: { lang: Lang }) {
           transition={{ delay: 0.3, duration: 0.5 }}
           style={{ display: "flex", flexDirection: "column", gap: "10px", justifyContent: "center" }}
         >
-          <div style={{ fontSize: "9px", fontWeight: 800, letterSpacing: "2px", color: "#94a3b8", textTransform: "uppercase", marginBottom: "4px" }}>
+          <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 800, letterSpacing: "2px", color: "#94a3b8", textTransform: "uppercase", marginBottom: "4px" }}>
             {ar ? "الاختبارات الإحصائية" : "Statistical Tests"}
           </div>
 
@@ -147,13 +147,13 @@ export default function StatAnalysisSlide({ lang }: { lang: Lang }) {
                 background: `linear-gradient(135deg, ${t.color}22, ${t.color}0a)`,
                 border: `1px solid ${t.color}35`,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "20px", fontWeight: 900, color: t.color,
+                fontSize: "clamp(20px, 3.1vw, 41px)", fontWeight: 900, color: t.color,
                 fontFamily: "Georgia, serif",
                 boxShadow: `0 4px 14px ${t.color}20`,
               }}>
                 {t.icon}
               </div>
-              <div style={{ flex: 1, fontSize: "13px", color: "var(--c-text)", fontWeight: 500, lineHeight: 1.45 }}>
+              <div style={{ flex: 1, fontSize: "clamp(13px, 1.8vw, 24px)", color: "var(--c-text)", fontWeight: 500, lineHeight: 1.45 }}>
                 {ar ? t.ar : t.en}
               </div>
             </motion.div>
@@ -175,14 +175,14 @@ export default function StatAnalysisSlide({ lang }: { lang: Lang }) {
             <div style={{
               background: "linear-gradient(135deg, #06b6d4, #0891b2)",
               borderRadius: "8px", padding: "6px 10px",
-              fontSize: "13px", fontWeight: 900, color: "#fff",
+              fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 900, color: "#fff",
               letterSpacing: "-0.5px",
             }}>
               SPSS
             </div>
             <div>
-              <div style={{ fontSize: "11px", fontWeight: 800, color: "#06b6d4" }}>IBM SPSS Statistics</div>
-              <div style={{ fontSize: "10px", color: "var(--c-text-muted)", marginTop: "1px" }}>Version 26 — {ar ? "تحليل إحصائي متقدم" : "Advanced Statistical Analysis"}</div>
+              <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", fontWeight: 800, color: "#06b6d4" }}>IBM SPSS Statistics</div>
+              <div style={{ fontSize: "clamp(10px, 1.4vw, 18px)", color: "var(--c-text-muted)", marginTop: "1px" }}>Version 26 — {ar ? "تحليل إحصائي متقدم" : "Advanced Statistical Analysis"}</div>
             </div>
           </motion.div>
         </motion.div>

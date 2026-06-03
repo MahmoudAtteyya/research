@@ -22,10 +22,10 @@ export default function HypothesisSlide({ lang }: { lang: Lang }) {
           transition={{ delay: 0.15 }}
           style={{ padding: "18px 22px", border: "1px solid rgba(99,102,241,0.3)", background: "rgba(99,102,241,0.07)" }}
         >
-          <div style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "var(--c-indigo)", marginBottom: "8px" }}>
+          <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "var(--c-indigo)", marginBottom: "8px" }}>
             🔬 {ar ? "السؤال البحثي" : "Research Question"}
           </div>
-          <p style={{ fontSize: "16px", color: "var(--c-text)", lineHeight: 1.6, fontWeight: 500 }}>
+          <p style={{ fontSize: "clamp(16px, 2.5vw, 31px)", color: "var(--c-text)", lineHeight: 1.6, fontWeight: 500 }}>
             {ar
               ? "هل لاستهلاك مشروبات الطاقة تأثير معنوي على العلامات الحيوية والأداء المعرفي لدى البالغين في جامعة السويس؟"
               : "Does energy drink consumption have a significant effect on vital signs and cognitive performance among adults at Suez University?"}
@@ -41,10 +41,10 @@ export default function HypothesisSlide({ lang }: { lang: Lang }) {
           whileHover={{ scale: 1.01 }}
           style={{ padding: "18px 22px", border: "1px solid rgba(251,191,36,0.25)", background: "rgba(251,191,36,0.06)" }}
         >
-          <div style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "var(--c-gold)", marginBottom: "8px" }}>
+          <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", color: "var(--c-gold)", marginBottom: "8px" }}>
             💡 {ar ? "الفرضية" : "Hypothesis"}
           </div>
-          <p style={{ fontSize: "16px", color: "var(--c-text)", lineHeight: 1.6, fontWeight: 500 }}>
+          <p style={{ fontSize: "clamp(16px, 2.5vw, 31px)", color: "var(--c-text)", lineHeight: 1.6, fontWeight: 500 }}>
             {ar
               ? "لمشروبات الطاقة تأثير معنوي على العلامات الحيوية، وقد تُحسّن الأداء المعرفي مع تغيرات قلبية وعائية قابلة للقياس."
               : "Energy drinks have a significant effect on vital signs and may improve cognitive performance, with measurable cardiovascular changes."}
@@ -74,7 +74,7 @@ export default function HypothesisSlide({ lang }: { lang: Lang }) {
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
               >{item.icon}</motion.div>
-              <div style={{ fontSize: "13px", color: "var(--c-text-muted)", fontWeight: 500 }}>{ar ? item.labelAr : item.labelEn}</div>
+              <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", color: "var(--c-text-muted)", fontWeight: 500 }}>{ar ? item.labelAr : item.labelEn}</div>
             </motion.div>
           ))}
         </motion.div>

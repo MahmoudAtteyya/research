@@ -64,13 +64,13 @@ export default function Intro3Slide({ lang }: { lang: Lang }) {
           <div style={{
             background: "linear-gradient(135deg, #10b981, #06b6d4)",
             borderRadius: "10px", padding: "6px 10px",
-            fontSize: "10px", fontWeight: 800, letterSpacing: "2px",
+            fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, letterSpacing: "2px",
             color: "#fff", textTransform: "uppercase",
           }}>
             {ar ? "المقدمة" : "Introduction"} · 3 / 3
           </div>
         </div>
-        <h2 style={{ margin: 0, fontSize: "clamp(20px, 2.8vw, 34px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
+        <h2 style={{ margin: 0, fontSize: "clamp(20px, 3.1vw, 41px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
           {ar ? "المكوّنات " : "Active "}
           <span style={{
             background: "linear-gradient(135deg, #10b981, #06b6d4)",
@@ -136,17 +136,17 @@ export default function Intro3Slide({ lang }: { lang: Lang }) {
             {/* Info */}
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}>
-                <span style={{ fontSize: "14px", fontWeight: 800, color: "var(--c-text)" }}>
+                <span style={{ fontSize: "clamp(14px, 2.0vw, 26px)", fontWeight: 800, color: "var(--c-text)" }}>
                   {ar ? c.nameAr : c.name}
                 </span>
                 <span style={{
-                  fontSize: "9px", fontWeight: 800, letterSpacing: "0.8px",
+                  fontSize: "clamp(9px, 1.2vw, 15px)", fontWeight: 800, letterSpacing: "0.8px",
                   background: `${c.color}20`, border: `1px solid ${c.color}40`,
                   borderRadius: "20px", padding: "1px 7px", color: c.color,
                 }}>
                   {ar ? c.tagAr : c.tag}
                 </span>
-                <span style={{ fontSize: "10px", color: "var(--c-text-muted)", marginLeft: "auto" }}>
+                <span style={{ fontSize: "clamp(10px, 1.4vw, 18px)", color: "var(--c-text-muted)", marginLeft: "auto" }}>
                   {c.dose}
                 </span>
               </div>
@@ -174,7 +174,7 @@ export default function Intro3Slide({ lang }: { lang: Lang }) {
 
             {/* Percentage */}
             <div style={{
-              fontSize: "18px", fontWeight: 900, color: c.color,
+              fontSize: "clamp(18px, 2.8vw, 36px)", fontWeight: 900, color: c.color,
               opacity: 0.8, flexShrink: 0, minWidth: "40px", textAlign: "center",
             }}>
               {c.pct}%

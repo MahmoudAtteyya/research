@@ -85,7 +85,7 @@ function CriteriaList({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "10px",
+              fontSize: "clamp(12px, 1.7vw, 20px)",
               color: color,
               fontWeight: 800,
               flexShrink: 0,
@@ -94,7 +94,7 @@ function CriteriaList({
           >
             {i + 1}
           </span>
-          <span style={{ fontSize: "12.5px", color: "var(--c-text)", lineHeight: 1.6, fontWeight: 430 }}>
+          <span style={{ fontSize: "clamp(14px, 1.9vw, 24px)", color: "var(--c-text)", lineHeight: 1.6, fontWeight: 430 }}>
             {ar ? item.ar : item.en}
           </span>
         </motion.li>
@@ -111,8 +111,8 @@ export default function Methods2Slide({ lang }: { lang: Lang }) {
     <div className="pres-slide-inner">
       {/* ── Header ── */}
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-        <div className="pres-label">{ar ? "الطرق" : "Methods"} · 2 / 3</div>
-        <h2 className="pres-h1" style={{ fontSize: "clamp(20px, 2.8vw, 32px)" }}>
+        <div className="pres-label">{ar ? "الطرق" : "Methods"} · 2 / 4</div>
+        <h2 className="pres-h1" style={{ fontSize: "clamp(20px, 3.1vw, 38px)" }}>
           {ar ? "معايير " : "Eligibility "}
           <em>{ar ? "الاختيار" : "Criteria"}</em>
         </h2>
@@ -141,25 +141,25 @@ export default function Methods2Slide({ lang }: { lang: Lang }) {
             border: "1px solid rgba(16,185,129,0.28)",
             borderTop: "3px solid #10b981",
             borderRadius: "16px",
-            padding: "18px 16px",
+            padding: "clamp(14px, 2vh, 30px) clamp(14px, 2vw, 24px)",
             display: "flex",
             flexDirection: "column",
-            gap: "14px",
+            gap: "clamp(12px, 1.5vh, 20px)",
             boxShadow: "0 6px 28px rgba(16,185,129,0.12)",
           }}
         >
           {/* Card header */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
             <motion.span
               style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: "38px",
-                height: "38px",
+                width: "clamp(38px, 5vw, 60px)",
+                height: "clamp(38px, 5vw, 60px)",
                 borderRadius: "11px",
                 background: "rgba(16,185,129,0.18)",
-                fontSize: "20px",
+                fontSize: "clamp(20px, 3.1vw, 41px)",
                 flexShrink: 0,
               }}
               animate={{ scale: [1, 1.08, 1] }}
@@ -170,7 +170,7 @@ export default function Methods2Slide({ lang }: { lang: Lang }) {
             <div>
               <div
                 style={{
-                  fontSize: "11px",
+                  fontSize: "clamp(12px, 1.7vw, 22px)",
                   fontWeight: 800,
                   color: "#6ee7b7",
                   letterSpacing: "1.5px",
@@ -179,7 +179,7 @@ export default function Methods2Slide({ lang }: { lang: Lang }) {
               >
                 {ar ? "معايير الإدراج" : "Inclusion Criteria"}
               </div>
-              <div style={{ fontSize: "10px", color: "rgba(110,231,183,0.45)", marginTop: "2px" }}>
+              <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", color: "rgba(110,231,183,0.45)", marginTop: "2px" }}>
                 {ar ? "شروط المشاركة" : "Who qualifies"}
               </div>
             </div>
@@ -212,25 +212,25 @@ export default function Methods2Slide({ lang }: { lang: Lang }) {
             border: "1px solid rgba(244,63,94,0.28)",
             borderTop: "3px solid #f43f5e",
             borderRadius: "16px",
-            padding: "18px 16px",
+            padding: "clamp(14px, 2vh, 30px) clamp(14px, 2vw, 24px)",
             display: "flex",
             flexDirection: "column",
-            gap: "14px",
+            gap: "clamp(12px, 1.5vh, 20px)",
             boxShadow: "0 6px 28px rgba(244,63,94,0.12)",
           }}
         >
           {/* Card header */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
             <motion.span
               style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: "38px",
-                height: "38px",
+                width: "clamp(38px, 5vw, 60px)",
+                height: "clamp(38px, 5vw, 60px)",
                 borderRadius: "11px",
                 background: "rgba(244,63,94,0.18)",
-                fontSize: "20px",
+                fontSize: "clamp(20px, 3.1vw, 41px)",
                 flexShrink: 0,
               }}
               animate={{ scale: [1, 1.08, 1] }}
@@ -241,7 +241,7 @@ export default function Methods2Slide({ lang }: { lang: Lang }) {
             <div>
               <div
                 style={{
-                  fontSize: "11px",
+                  fontSize: "clamp(12px, 1.7vw, 22px)",
                   fontWeight: 800,
                   color: "#fca5a5",
                   letterSpacing: "1.5px",
@@ -250,7 +250,7 @@ export default function Methods2Slide({ lang }: { lang: Lang }) {
               >
                 {ar ? "معايير الاستبعاد" : "Exclusion Criteria"}
               </div>
-              <div style={{ fontSize: "10px", color: "rgba(252,165,165,0.45)", marginTop: "2px" }}>
+              <div style={{ fontSize: "clamp(11px, 1.5vw, 20px)", color: "rgba(252,165,165,0.45)", marginTop: "2px" }}>
                 {ar ? "موانع المشاركة" : "Who is excluded"}
               </div>
             </div>

@@ -16,7 +16,7 @@ export default function ResultsIntroSlide({ lang }: { lang: Lang }) {
         transition={{ duration: 1.2, ease: "easeOut" }}
         style={{
           position: "absolute",
-          fontSize: "300px",
+          fontSize: "clamp(300px, 6.6vw, 536px)",
           pointerEvents: "none",
           zIndex: 0,
         }}
@@ -38,7 +38,7 @@ export default function ResultsIntroSlide({ lang }: { lang: Lang }) {
             border: "1px solid rgba(99,102,241,0.4)",
             borderRadius: "30px",
             padding: "8px 24px",
-            fontSize: "14px",
+            fontSize: "clamp(14px, 2.0vw, 26px)",
             fontWeight: 700,
             color: "var(--c-indigo)",
             letterSpacing: "1px",
@@ -50,7 +50,7 @@ export default function ResultsIntroSlide({ lang }: { lang: Lang }) {
         </motion.div>
 
         <h1 style={{
-          fontSize: "clamp(40px, 6vw, 70px)",
+          fontSize: "clamp(40px, 6.6vw, 83px)",
           fontWeight: 900,
           color: "var(--c-text)",
           margin: 0,
@@ -76,7 +76,7 @@ export default function ResultsIntroSlide({ lang }: { lang: Lang }) {
         />
 
         <p style={{
-          fontSize: "clamp(16px, 2vw, 20px)",
+          fontSize: "clamp(16px, 2.2vw, 24px)",
           color: "var(--c-text-muted)",
           maxWidth: "600px",
           lineHeight: 1.6

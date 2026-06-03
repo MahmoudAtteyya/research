@@ -49,13 +49,13 @@ export default function ConclusionSlide({ lang }: { lang: Lang }) {
           <div style={{
             background: "linear-gradient(135deg, #8b5cf6, #6366f1)",
             borderRadius: "10px", padding: "5px 12px",
-            fontSize: "10px", fontWeight: 800, letterSpacing: "2px",
+            fontSize: "clamp(10px, 1.4vw, 18px)", fontWeight: 800, letterSpacing: "2px",
             color: "#fff", textTransform: "uppercase",
           }}>
             {ar ? "الخلاصة" : "Conclusion"}
           </div>
         </div>
-        <h2 style={{ margin: 0, fontSize: "clamp(20px, 2.8vw, 32px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
+        <h2 style={{ margin: 0, fontSize: "clamp(20px, 3.1vw, 38px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1.15 }}>
           {ar ? "ما " : "What We "}
           <span style={{ background: "linear-gradient(135deg, #8b5cf6, #6366f1)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
             {ar ? "توصّلنا إليه" : "Found"}
@@ -83,8 +83,8 @@ export default function ConclusionSlide({ lang }: { lang: Lang }) {
         {/* Shimmer top */}
         <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: "2px", background: "linear-gradient(90deg, transparent, rgba(139,92,246,0.7), transparent)" }} />
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <span style={{ fontSize: "20px", flexShrink: 0 }}>💬</span>
-          <p style={{ fontSize: "14px", color: "var(--c-text)", lineHeight: 1.7, margin: 0, fontWeight: 500, fontStyle: "italic" }}>
+          <span style={{ fontSize: "clamp(20px, 3.1vw, 41px)", flexShrink: 0 }}>💬</span>
+          <p style={{ fontSize: "clamp(14px, 2.0vw, 26px)", color: "var(--c-text)", lineHeight: 1.7, margin: 0, fontWeight: 500, fontStyle: "italic" }}>
             {ar
               ? "«تُنتج مشروبات الطاقة تأثيراً مزدوجاً: تعزيز معرفي مؤقت مع تحفيز قلبي وعائي قابل للقياس — مما يستوجب الاعتدال وتوعية صحية أوسع.»"
               : "\"Energy drinks produce a dual effect: temporary cognitive enhancement alongside measurable cardiovascular stimulation — necessitating moderation and broader health education.\""}
@@ -126,7 +126,7 @@ export default function ConclusionSlide({ lang }: { lang: Lang }) {
                 background: `linear-gradient(135deg, ${f.color}28, ${f.color}0e)`,
                 border: `1px solid ${f.color}35`,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "20px",
+                fontSize: "clamp(20px, 3.1vw, 41px)",
               }}
             >
               {f.icon}
@@ -149,7 +149,7 @@ export default function ConclusionSlide({ lang }: { lang: Lang }) {
                   {f.stat}
                 </span>
               </div>
-              <p style={{ fontSize: "12px", color: "var(--c-text)", lineHeight: 1.55, margin: 0, fontWeight: 500 }}>
+              <p style={{ fontSize: "clamp(12px, 1.7vw, 21px)", color: "var(--c-text)", lineHeight: 1.55, margin: 0, fontWeight: 500 }}>
                 {ar ? f.ar : f.en}
               </p>
             </div>
