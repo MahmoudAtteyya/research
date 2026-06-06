@@ -182,6 +182,35 @@ export default function Intro3Slide({ lang }: { lang: Lang }) {
           </motion.div>
         ))}
       </motion.div>
+
+      {/* ── Footer Note ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.5 }}
+        style={{
+          marginTop: "12px",
+          background: "rgba(255, 255, 255, 0.02)",
+          border: "1px solid rgba(251, 191, 36, 0.3)",
+          borderRadius: "12px",
+          padding: "10px 16px",
+          display: "flex",
+          alignItems: "center",
+          gap: "14px"
+        }}
+      >
+        <span style={{ fontSize: "clamp(24px, 3.5vw, 36px)" }}>💡</span>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: ar ? "flex-start" : "flex-start", gap: "2px" }}>
+          <span style={{ fontSize: "clamp(9px, 1.1vw, 14px)", fontWeight: 800, color: "#fbbf24", letterSpacing: "1px", textTransform: "uppercase" }}>
+            {ar ? "تحليل السوق" : "Market Analysis"}
+          </span>
+          <span style={{ fontSize: "clamp(12px, 1.5vw, 19px)", color: "#f8fafc", fontWeight: 500 }}>
+            {ar 
+              ? "النسب المئوية أعلاه تعبر عن انتشار المكون في منتجات الطاقة التجارية، وليس التركيز داخل العبوة الواحدة" 
+              : "Percentages indicate the prevalence of each ingredient across commercial energy drinks, not the concentration"}
+          </span>
+        </div>
+      </motion.div>
     </div>
   );
 }

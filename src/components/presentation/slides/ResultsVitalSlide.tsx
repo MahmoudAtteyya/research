@@ -2,15 +2,15 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Lang, VITAL_SIGNS_DATA } from "@/lib/presentation/slides-data";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-const VS = VITAL_SIGNS_DATA.slice(0, 3); // SBP, DBP, HR
+const VS = VITAL_SIGNS_DATA; // All vital signs (SBP, DBP, HR, RR, Temp)
 
-export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
+export default function ResultsVitalSlide({ lang }: { lang: Lang }) {
   const ar = lang === "ar";
 
   const chartData = VS.map(vs => ({
-    name: ar ? vs.nameAr.split(" ")[0] : vs.name.split(" ")[0],
+    name: ar ? vs.nameAr : vs.name,
     [ar ? "قبل" : "Pre"]: vs.pre,
     [ar ? "بعد" : "Post"]: vs.post,
     color: vs.color,
@@ -19,10 +19,10 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
   return (
     <div className="pres-slide-inner">
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} style={{ flexShrink: 0 }}>
-        <div className="pres-label">{ar ? "النتائج — العلامات الحيوية" : "Results — Vital Signs"} · 1 / 2</div>
+        <div className="pres-label">{ar ? "النتائج — العلامات الحيوية" : "Results — Vital Signs"}</div>
         <h2 className="pres-h1" style={{ fontSize: "clamp(18px, 2.8vw, 33px)", marginBottom: "4px" }}>
           <span className="anim-heartbeat" style={{ display: "inline-block" }}>❤️</span>{" "}
-          <em>{ar ? "ضغط الدم ومعدل القلب" : "Blood Pressure & Heart Rate"}</em>
+          <em>{ar ? "التغيرات في العلامات الحيوية" : "Changes in Vital Signs"}</em>
         </h2>
         <div className="pres-divider" style={{ marginBottom: "10px" }} />
       </motion.div>
@@ -74,23 +74,23 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
             }}>
               {[
                 ar ? "المؤشر" : "PARAMETER",
-                ar ? "قبل (MEAN±SD)" : "PRE (MEAN±SD)",
-                ar ? "بعد (MEAN±SD)" : "POST (MEAN±SD)",
+                ar ? "قبل (MEAN±SD)" : "PRE",
+                ar ? "بعد (MEAN±SD)" : "POST",
                 ar ? "متوسط الفرق" : "MEAN DIFF.",
                 ar ? "p-value" : "p-value",
               ].map((h, hi) => (
                 <div key={hi} style={{
-                  padding: "8px 6px",
+                  padding: "6px 4px",
                   fontSize: "8.5px",
                   fontWeight: 800,
                   color: "#94a3b8",
                   textAlign: hi === 0 ? "left" : "center",
-                  letterSpacing: "0.6px",
+                  letterSpacing: "0.4px",
                   textTransform: "uppercase",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: hi === 0 ? "flex-start" : "center",
-                  paddingLeft: hi === 0 ? "14px" : "6px",
+                  paddingLeft: hi === 0 ? "10px" : "4px",
                 }}>
                   {h}
                 </div>
@@ -119,59 +119,59 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
                     }}
                   >
                     {/* Parameter name */}
-                    <div style={{ padding: "10px 14px", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <div style={{ padding: "8px 10px", display: "flex", alignItems: "center", gap: "6px" }}>
                       <div style={{
-                        width: "8px", height: "8px", borderRadius: "50%",
+                        width: "6px", height: "6px", borderRadius: "50%",
                         background: vs.color,
                         flexShrink: 0,
                         boxShadow: `0 0 6px ${vs.color}88`,
                       }} />
                       <div>
-                        <div style={{ fontSize: "clamp(13px, 1.8vw, 22px)", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
+                        <div style={{ fontSize: "clamp(11px, 1.6vw, 18px)", fontWeight: 700, color: "var(--c-text)", lineHeight: 1.2 }}>
                           {ar ? vs.nameAr : vs.name}
                         </div>
-                        <div style={{ fontSize: "clamp(11px, 1.5vw, 18px)", color: "var(--c-text-muted)", marginTop: "1px" }}>{vs.unit}</div>
+                        <div style={{ fontSize: "clamp(9px, 1.2vw, 14px)", color: "var(--c-text-muted)", marginTop: "1px" }}>{vs.unit}</div>
                       </div>
                     </div>
 
                     {/* Pre */}
-                    <div style={{ padding: "6px", textAlign: "center" }}>
-                      <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 700, color: "#64748b", lineHeight: 1 }}>{vs.pre}</div>
-                      <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: "#475569", marginTop: "2px" }}>±{vs.preSD}</div>
+                    <div style={{ padding: "4px", textAlign: "center" }}>
+                      <div style={{ fontSize: "clamp(12px, 1.7vw, 20px)", fontWeight: 700, color: "#64748b", lineHeight: 1 }}>{vs.pre}</div>
+                      <div style={{ fontSize: "clamp(8px, 1.1vw, 13px)", color: "#475569", marginTop: "2px" }}>±{vs.preSD}</div>
                     </div>
 
                     {/* Post */}
-                    <div style={{ padding: "6px", textAlign: "center" }}>
-                      <div style={{ fontSize: "clamp(13px, 1.8vw, 24px)", fontWeight: 700, color: "#10b981", lineHeight: 1 }}>{vs.post}</div>
-                      <div style={{ fontSize: "clamp(9px, 1.2vw, 15px)", color: "#6ee7b7", marginTop: "2px" }}>±{vs.postSD}</div>
+                    <div style={{ padding: "4px", textAlign: "center" }}>
+                      <div style={{ fontSize: "clamp(12px, 1.7vw, 20px)", fontWeight: 700, color: "#10b981", lineHeight: 1 }}>{vs.post}</div>
+                      <div style={{ fontSize: "clamp(8px, 1.1vw, 13px)", color: "#6ee7b7", marginTop: "2px" }}>±{vs.postSD}</div>
                     </div>
 
                     {/* Mean Diff */}
-                    <div style={{ padding: "6px", textAlign: "center" }}>
+                    <div style={{ padding: "4px", textAlign: "center" }}>
                       <div style={{
-                        display: "inline-flex", alignItems: "center", gap: "3px",
+                        display: "inline-flex", alignItems: "center", gap: "2px",
                         background: increase ? "rgba(16,185,129,0.12)" : "rgba(239,68,68,0.12)",
                         border: `1px solid ${increase ? "rgba(16,185,129,0.25)" : "rgba(239,68,68,0.25)"}`,
-                        borderRadius: "6px",
-                        padding: "2px 6px",
-                        fontSize: "clamp(10px, 1.4vw, 18px)",
+                        borderRadius: "4px",
+                        padding: "1px 4px",
+                        fontSize: "clamp(9px, 1.3vw, 15px)",
                         fontWeight: 700,
                         color: increase ? "#10b981" : "#ef4444",
                       }}>
-                        {increase ? "↑" : "↓"} {Math.abs(vs.diff)} <span style={{ fontSize: "8px", opacity: 0.7 }}>±{vs.diffSD}</span>
+                        {increase ? "↑" : "↓"} {Math.abs(vs.diff)} <span style={{ fontSize: "7px", opacity: 0.7 }}>±{vs.diffSD}</span>
                       </div>
-                      <div style={{ fontSize: "8.5px", color: "var(--c-text-dim)", marginTop: "2px" }}>({pct}%)</div>
+                      <div style={{ fontSize: "7.5px", color: "var(--c-text-dim)", marginTop: "1px" }}>({pct}%)</div>
                     </div>
 
                     {/* P-Value */}
-                    <div style={{ padding: "6px", textAlign: "center" }}>
+                    <div style={{ padding: "4px", textAlign: "center" }}>
                       <div style={{
                         display: "inline-block",
                         background: "rgba(244,63,94,0.15)",
                         border: "1px solid rgba(244,63,94,0.3)",
-                        borderRadius: "6px",
-                        padding: "3px 7px",
-                        fontSize: "clamp(10px, 1.4vw, 18px)",
+                        borderRadius: "4px",
+                        padding: "2px 5px",
+                        fontSize: "clamp(9px, 1.3vw, 15px)",
                         fontWeight: 800,
                         color: "#f43f5e",
                       }}>
@@ -185,10 +185,10 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
 
             {/* Footer */}
             <div style={{
-              padding: "10px 18px",
+              padding: "8px 14px",
               background: "rgba(16,185,129,0.06)",
               borderTop: "1px solid rgba(16,185,129,0.15)",
-              fontSize: "clamp(12px, 1.6vw, 22px)",
+              fontSize: "clamp(11px, 1.4vw, 18px)",
               color: "#6ee7b7",
               fontWeight: 600,
               textAlign: "center",
@@ -230,17 +230,33 @@ export default function ResultsVital1Slide({ lang }: { lang: Lang }) {
             <div style={{ flex: 1, position: "relative" }}>
               <div style={{ position: "absolute", inset: 0 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }} barCategoryGap="30%">
+                  <BarChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 20 }} barCategoryGap="25%">
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                    <XAxis dataKey="name" tick={{ fill: "var(--c-text-muted)", fontSize: 11, fontWeight: 600 }} axisLine={false} tickLine={false} />
+                    <XAxis dataKey="name" tick={{ fill: "var(--c-text-muted)", fontSize: 10, fontWeight: 600 }} axisLine={false} tickLine={false} interval={0} angle={-25} textAnchor="end" />
                     <YAxis tick={{ fill: "var(--c-text-dim)", fontSize: 10 }} axisLine={false} tickLine={false} />
                     <Tooltip
                       cursor={{ fill: "rgba(255,255,255,0.03)" }}
-                      contentStyle={{ background: "rgba(15,23,42,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", fontSize: "clamp(12px, 1.7vw, 21px)" }}
+                      contentStyle={{ background: "rgba(15,23,42,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", fontSize: "clamp(11px, 1.5vw, 18px)" }}
                     />
-                    <Legend wrapperStyle={{ fontSize: "clamp(11px, 1.5vw, 20px)", paddingTop: "4px" }} />
-                    <Bar dataKey={ar ? "قبل" : "Pre"} fill="#64748b" radius={[5, 5, 0, 0]} />
-                    <Bar dataKey={ar ? "بعد" : "Post"} fill="#10b981" radius={[5, 5, 0, 0]} />
+                    <Legend content={() => (
+                      <div style={{ 
+                        display: "flex", justifyContent: "center", gap: "20px", 
+                        marginTop: "16px", fontSize: "clamp(10px, 1.4vw, 16px)", 
+                        color: "var(--c-text-muted)",
+                        transform: ar ? "translateX(60px)" : "translateX(-60px)"
+                      }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          <div style={{ width: "14px", height: "14px", background: "#64748b", borderRadius: "2px" }} />
+                          <span style={{ fontWeight: 500 }}>{ar ? "قبل" : "Pre"}</span>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          <div style={{ width: "14px", height: "14px", background: "#a855f7", borderRadius: "2px" }} />
+                          <span style={{ fontWeight: 500 }}>{ar ? "بعد" : "Post"}</span>
+                        </div>
+                      </div>
+                    )} />
+                    <Bar dataKey={ar ? "قبل" : "Pre"} fill="#64748b" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey={ar ? "بعد" : "Post"} fill="#a855f7" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

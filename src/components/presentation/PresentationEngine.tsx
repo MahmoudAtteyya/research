@@ -25,8 +25,7 @@ import ResultsIntroSlide from "./slides/ResultsIntroSlide";
 import ResultsDemoSlide from "./slides/ResultsDemoSlide";
 import ResultsHabitsSlide from "./slides/ResultsHabitsSlide";
 import ResultsSideEffectsSlide from "./slides/ResultsSideEffectsSlide";
-import ResultsVital1Slide from "./slides/ResultsVital1Slide";
-import ResultsVital2Slide from "./slides/ResultsVital2Slide";
+import ResultsVitalSlide from "./slides/ResultsVitalSlide";
 import ResultsCognSlide from "./slides/ResultsCognSlide";
 import DiscussionSlide from "./slides/DiscussionSlide";
 import ConclusionSlide from "./slides/ConclusionSlide";
@@ -58,8 +57,7 @@ const SLIDE_MAP: Record<string, React.ComponentType<{ lang: Lang }>> = {
   "results-demo":         ResultsDemoSlide,
   "results-habits":       ResultsHabitsSlide,
   "results-side-effects": ResultsSideEffectsSlide,
-  "results-vital-1":      ResultsVital1Slide,
-  "results-vital-2":      ResultsVital2Slide,
+  "results-vital":        ResultsVitalSlide,
   "results-cognitive":    ResultsCognSlide,
   discussion:             DiscussionSlide,
   conclusion:             ConclusionSlide,
