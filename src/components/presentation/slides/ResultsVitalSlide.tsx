@@ -250,13 +250,13 @@ export default function ResultsVitalSlide({ lang }: { lang: Lang }) {
                           <span style={{ fontWeight: 500 }}>{ar ? "قبل" : "Pre"}</span>
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                          <div style={{ width: "14px", height: "14px", background: "#a855f7", borderRadius: "2px" }} />
+                          <div style={{ width: "14px", height: "14px", background: "#10b981", borderRadius: "2px" }} />
                           <span style={{ fontWeight: 500 }}>{ar ? "بعد" : "Post"}</span>
                         </div>
                       </div>
                     )} />
                     <Bar dataKey={ar ? "قبل" : "Pre"} fill="#64748b" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey={ar ? "بعد" : "Post"} fill="#a855f7" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey={ar ? "بعد" : "Post"} fill="#10b981" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

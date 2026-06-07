@@ -8,10 +8,10 @@ const Symposium = "The Fourth Student Symposium for Research Projects, 2026";
 
 // Map supervisor name → image file
 const PHOTO_MAP: Record<string, string> = {
-  "Prof Dr. Maysa Ibrahim":    "/images/maysa.jpeg",
-  "Dr. Mohammed Wagih Saleh":  "/images/wagih.jpeg",
-  "Dr. Nanees Kamel Hussein":  "/images/nanees.jpeg",
-  "Dr. Yosra Saeed Abdalla":   "/images/yosra.jpeg",
+  "Prof Dr. Maysa Ibrahim": "/images/maysa.jpeg",
+  "Dr. Mohamed Wagih Saleh": "/images/wagih.jpeg",
+  "Dr. Nanees Kamel Hussein": "/images/nanees.jpeg",
+  "Dr. Yosra Saeed Abdalla": "/images/yosra.jpeg",
 };
 
 const ROLE_CONFIG: Record<string, { color: string; badge: string }> = {

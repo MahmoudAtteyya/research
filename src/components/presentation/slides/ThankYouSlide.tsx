@@ -7,7 +7,7 @@ import { Stethoscope, Award, Heart, GraduationCap } from "lucide-react";
 // Map supervisor name → image file
 const PHOTO_MAP: Record<string, string> = {
   "Prof Dr. Maysa Ibrahim": "/images/maysa.jpeg",
-  "Dr. Mohammed Wagih Saleh": "/images/wagih.jpeg",
+  "Dr. Mohamed Wagih Saleh": "/images/wagih.jpeg",
   "Dr. Nanees Kamel Hussein": "/images/nanees.jpeg",
   "Dr. Yosra Saeed Abdalla": "/images/yosra.jpeg",
 };
