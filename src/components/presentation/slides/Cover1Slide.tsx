@@ -125,7 +125,7 @@ export default function Cover1Slide({ lang }: { lang: Lang }) {
             }}>
             <span style={{ fontSize: "16px" }}>🎓</span>
             <span style={{ fontSize: "clamp(12px, 1.4vw, 15px)", fontWeight: 800, color: "#a5b4fc", letterSpacing: "0.5px", textTransform: "uppercase" }}>
-              {ar ? "طلاب السنة الخامسة · المجموعة السادسة" : "5th Year Students · Group 6"}
+              {ar ? "طلاب السنة الخامسة" : "5th Year Students"}
             </span>
           </motion.div>
           <motion.div whileHover={{ scale: 1.05, y: -2 }}

@@ -191,8 +191,8 @@ export default function TeamSection({ lang }: { lang: "en" | "ar" }) {
         </h2>
         <p style={{ color: "var(--text-muted)" }}>
           {isAr
-            ? "الفرقة الخامسة – المجموعة السادسة – كلية الطب البشري، جامعة السويس"
-            : "Fifth Year Students – Group 6 – Faculty of Medicine, Suez University"}
+            ? "الفرقة الخامسة – أسماء الفريق – كلية الطب البشري، جامعة السويس"
+            : "Fifth Year Students – Group names – Faculty of Medicine, Suez University"}
         </p>
         <div className="mt-3 h-1 w-16 rounded-full"
           style={{ background: "linear-gradient(90deg, var(--accent-cyan), var(--accent-green))" }} />

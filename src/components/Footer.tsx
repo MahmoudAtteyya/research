@@ -46,7 +46,7 @@ export default function Footer({ lang }: { lang: "en" | "ar" }) {
               <p>📍 {isAr ? "جامعة السويس، مصر" : "Suez University, Egypt"}</p>
               <p>📅 2021–2026</p>
               <p>🔬 {isAr ? "قسم الصحة العامة وطب المجتمع" : "Dept. of Community Medicine"}</p>
-              <p>👥 {isAr ? "47 مشاركاً | المجموعة السادسة" : "47 Participants | Group 6"}</p>
+              <p>👥 {isAr ? "47 مشاركاً" : "47 Participants"}</p>
             </div>
           </div>
         </div>

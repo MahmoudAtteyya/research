@@ -29,7 +29,7 @@ export default function CoverSlide({ lang }: { lang: Lang }) {
           : "Effect of Energy Drinks Consumption on Vital Signs and Cognitive Performance Among Adults"}
       </motion.h1>
       <motion.div className="pres-cover-group" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
-        {ar ? "المجموعة السادسة — 2021 / 2026" : "Group 6 · 2021 / 2026"}
+        {ar ? "دفعة 2021 / 2026" : "Batch 2021 / 2026"}
       </motion.div>
 
       {/* Team */}

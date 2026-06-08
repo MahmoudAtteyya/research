@@ -246,7 +246,7 @@ export default function ThankYouSlide({ lang }: { lang: Lang }) {
         }}
       >
         <span style={{ fontSize: "clamp(11px, 1.3vw, 16px)", fontWeight: 700, color: "var(--c-gold)", letterSpacing: "0.12em" }}>
-          {ar ? "المجموعة السادسة — الدفعة الخامسة" : "GROUP 6 • 5TH YEAR BATCH"}
+          {ar ? "الدفعة الخامسة" : "5TH YEAR BATCH"}
         </span>
         <span style={{ fontSize: "clamp(10px, 1.2vw, 15px)", color: "var(--c-text-dim)", letterSpacing: "0.08em" }}>
           {ar ? "كلية الطب — جامعة السويس — 2021/2026" : "FACULTY OF MEDICINE • SUEZ UNIVERSITY • 2021 / 2026"}

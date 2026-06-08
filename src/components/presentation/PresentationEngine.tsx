@@ -7,7 +7,7 @@ import "./presentation.css";
 
 // ── Slide Components ──
 import Cover1Slide from "./slides/Cover1Slide";
-
+import Cover2Slide from "./slides/Cover2Slide";
 
 import TOCSlide from "./slides/TOCSlide";
 import Intro1Slide from "./slides/Intro1Slide";
@@ -37,7 +37,7 @@ import LimitationsSlide from "./slides/LimitationsSlide";
 
 const SLIDE_MAP: Record<string, React.ComponentType<{ lang: Lang }>> = {
   "cover-1":              Cover1Slide,
-
+  "cover-2":              Cover2Slide,
 
   toc:                    TOCSlide,
   "intro-1":              Intro1Slide,
@@ -455,7 +455,7 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
                 : "Acute Effects of Energy Drinks on Vital Signs & Cognitive Performance"}
             </div>
             <div className="pres-header-right">
-              <div className="pres-group-badge">{ar ? "المجموعة 6 — 2026" : "Group 6 — 2026"}</div>
+              <div className="pres-group-badge">{ar ? "دفعة 2026" : "Batch 2026"}</div>
               <img src="/faculty.svg" alt="Faculty" className="pres-logo" style={{ borderRadius: "50%", objectFit: "cover", background: "white" }} />
             </div>
           </motion.header>

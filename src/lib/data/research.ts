@@ -5,7 +5,7 @@ export const researchData = {
   },
   university: { en: "Suez University – Faculty of Medicine", ar: "جامعة السويس – كلية الطب البشري" },
   year: "2021–2026",
-  group: "Group 6 – Fifth Year Students",
+  group: "Fifth Year Students",
 
   team: [
     { name: "Rehab Shaban", icon: "Crown", isLead: true },
