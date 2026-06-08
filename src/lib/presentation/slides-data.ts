@@ -15,7 +15,7 @@ export interface Slide {
 export const SLIDES: Slide[] = [
   { id: "cover-1", titleEn: "Title", titleAr: "العنوان", speakerNotesEn: "Welcome. Present the study title and 5th year student group.", speakerNotesAr: "الترحيب. عنوان الدراسة وطلاب السنة الخامسة." },
   { id: "cover-2", titleEn: "Team Members", titleAr: "أعضاء الفريق", speakerNotesEn: "Introduce all 16 research team members.", speakerNotesAr: "تقديم أعضاء الفريق البحثي الستة عشر." },
-  { id: "cover-3", titleEn: "Supervisors", titleAr: "المشرفون", speakerNotesEn: "Acknowledge and introduce all four supervisors.", speakerNotesAr: "الإشارة إلى جميع المشرفين الأربعة وتقديمهم." },
+
   { id: "toc", titleEn: "Table of Contents", titleAr: "جدول المحتويات", speakerNotesEn: "Give a brief overview of the presentation structure.", speakerNotesAr: "أعطِ نظرة عامة موجزة على هيكل العرض." },
   { id: "intro-1", titleEn: "Introduction — Overview", titleAr: "المقدمة — نظرة عامة", speakerNotesEn: "Energy drinks are beverages marketed for boosting energy, alertness, and performance.", speakerNotesAr: "مشروبات الطاقة هي مشروبات تُسوَّق لتعزيز الطاقة واليقظة والأداء." },
   { id: "intro-2", titleEn: "Introduction — Market", titleAr: "المقدمة — السوق العالمي", speakerNotesEn: "The global market is massive and growing. University students are a key demographic.", speakerNotesAr: "السوق العالمي ضخم ومتنامٍ. طلاب الجامعات فئة مستهدفة رئيسية." },

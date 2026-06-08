@@ -8,7 +8,7 @@ import "./presentation.css";
 // ── Slide Components ──
 import Cover1Slide from "./slides/Cover1Slide";
 import Cover2Slide from "./slides/Cover2Slide";
-import Cover3Slide from "./slides/Cover3Slide";
+
 import TOCSlide from "./slides/TOCSlide";
 import Intro1Slide from "./slides/Intro1Slide";
 import Intro2Slide from "./slides/Intro2Slide";
@@ -38,7 +38,7 @@ import LimitationsSlide from "./slides/LimitationsSlide";
 const SLIDE_MAP: Record<string, React.ComponentType<{ lang: Lang }>> = {
   "cover-1":              Cover1Slide,
   "cover-2":              Cover2Slide,
-  "cover-3":              Cover3Slide,
+
   toc:                    TOCSlide,
   "intro-1":              Intro1Slide,
   "intro-2":              Intro2Slide,

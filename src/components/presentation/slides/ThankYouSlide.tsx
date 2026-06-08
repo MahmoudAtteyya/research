@@ -1,16 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lang, SUPERVISORS } from "@/lib/presentation/slides-data";
+import { Lang } from "@/lib/presentation/slides-data";
 import { Stethoscope, Award, Heart, GraduationCap } from "lucide-react";
 
-// Map supervisor name → image file
-const PHOTO_MAP: Record<string, string> = {
-  "Prof Dr. Maysa Ibrahim": "/images/maysa.jpeg",
-  "Dr. Mohamed Wagih Saleh": "/images/wagih.jpeg",
-  "Dr. Nanees Kamel Hussein": "/images/nanees.jpeg",
-  "Dr. Yosra Saeed Abdalla": "/images/yosra.jpeg",
-};
+
 
 /** Animated sparkle particles */
 function Sparkles() {
@@ -196,92 +190,42 @@ export default function ThankYouSlide({ lang }: { lang: Lang }) {
         />
       </div>
 
-      {/* ── Supervisors ── */}
-      <div style={{ width: "100%", zIndex: 10 }}>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.55 }}
+      {/* ── Final Message / Q&A Banner ── */}
+      <div style={{ width: "100%", zIndex: 10, display: "flex", justifyContent: "center" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           style={{
-            margin: "0 0 12px",
-            fontSize: "clamp(11px, 1.4vw, 18px)",
-            fontWeight: 800,
-            color: "var(--c-text-muted)",
-            textTransform: "uppercase",
-            letterSpacing: "0.18em",
+            background: "linear-gradient(135deg, rgba(99,102,241,0.1), rgba(6,182,212,0.05))",
+            border: "1px solid rgba(99,102,241,0.2)",
+            borderRadius: 24,
+            padding: "24px 40px",
+            display: "flex",
+            alignItems: "center",
+            gap: 24,
+            backdropFilter: "blur(12px)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+            maxWidth: 680,
+            width: "100%"
           }}
         >
-          {ar ? "تحت إشراف" : "Heartfelt Thanks To Our Supervisors"}
-        </motion.p>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
-          {SUPERVISORS.map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.65 + i * 0.1 }}
-              whileHover={{ y: -5, borderColor: "rgba(251,191,36,0.5)", boxShadow: "0 12px 32px rgba(251,191,36,0.18)" }}
-              style={{
-                background: "var(--c-surface)",
-                border: "1px solid var(--c-border)",
-                borderRadius: 20,
-                padding: "20px 16px",
-                textAlign: "center",
-                backdropFilter: "blur(12px)",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-                position: "relative",
-                overflow: "hidden",
-                cursor: "default",
-                transition: "all 0.3s ease",
-              }}
-            >
-              {/* Subtle top gradient accent */}
-              <div style={{
-                position: "absolute", top: 0, left: 0, right: 0, height: 3,
-                background: `linear-gradient(90deg, #6366f1, #06b6d4, #8b5cf6)`,
-                borderRadius: "20px 20px 0 0",
-              }} />
-
-              {/* Photo */}
-              <div style={{
-                width: 72, height: 72, borderRadius: "50%",
-                border: "2.5px solid rgba(99,102,241,0.35)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                background: "var(--c-bg2)", margin: "0 auto 14px",
-                overflow: "hidden",
-                boxShadow: "0 0 20px rgba(99,102,241,0.25)",
-              }}>
-                {PHOTO_MAP[s.name] ? (
-                  <img src={PHOTO_MAP[s.name]} alt={s.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
-                ) : (
-                  <Stethoscope style={{ width: 28, height: 28, color: "#818cf8" }} />
-                )}
-              </div>
-
-              <h3 style={{
-                margin: "0 0 6px",
-                fontSize: "clamp(12px, 1.4vw, 18px)",
-                fontWeight: 700,
-                color: "var(--c-text)",
-                lineHeight: 1.3,
-              }}>
-                {s.name}
-              </h3>
-              <p style={{
-                margin: 0,
-                fontSize: "clamp(10px, 1.1vw, 14px)",
-                color: "var(--c-text-dim)",
-                fontWeight: 500,
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                lineHeight: 1.4,
-              }}>
-                {ar ? s.roleAr : s.roleEn}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+          <div style={{
+            width: 64, height: 64, borderRadius: "50%", background: "rgba(99,102,241,0.15)",
+            display: "flex", alignItems: "center", justifyContent: "center", color: "#818cf8",
+            flexShrink: 0
+          }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          </div>
+          <div style={{ textAlign: ar ? "right" : "left", flex: 1 }}>
+            <h3 style={{ margin: "0 0 8px", fontSize: "22px", fontWeight: 700, color: "var(--c-text)" }}>
+              {ar ? "جلسة الأسئلة والمناقشة" : "Q&A Session"}
+            </h3>
+            <p style={{ margin: 0, fontSize: "15px", color: "var(--c-text-muted)", lineHeight: 1.6 }}>
+              {ar ? "نأمل أن يكون هذا العرض قد قدم رؤى قيمة حول تأثير مشروبات الطاقة. نفتح الآن باب النقاش لأي استفسارات أو تعليقات." : "We hope this presentation provided valuable insights into the impact of energy drinks. The floor is now open for your questions and comments."}
+            </p>
+          </div>
+        </motion.div>
       </div>
 
       {/* ── Footer ── */}
