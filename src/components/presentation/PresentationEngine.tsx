@@ -353,23 +353,43 @@ export default function PresentationEngine({ lang, onLangChange }: Props) {
             document.exitFullscreen().catch(() => {});
             pres.setIsFullscreen(false);
           }
+          setChromeState(0); // Ensure header/footer show up
           break;
       }
     };
 
     const onFsChange = () => {
-      if (document.fullscreenElement) {
+      // @ts-ignore
+      const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+      if (isFs) {
         setChromeState(2);
+        pres.setIsFullscreen(true);
       } else {
         setChromeState(0);
+        pres.setIsFullscreen(false);
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setChromeState(0);
+        pres.setIsFullscreen(false);
       }
     };
 
     window.addEventListener("keydown", handleKey);
+    window.addEventListener("keyup", handleKeyUp);
     document.addEventListener("fullscreenchange", onFsChange);
+    document.addEventListener("webkitfullscreenchange", onFsChange);
+    document.addEventListener("mozfullscreenchange", onFsChange);
+    document.addEventListener("MSFullscreenChange", onFsChange);
     return () => {
       window.removeEventListener("keydown", handleKey);
+      window.removeEventListener("keyup", handleKeyUp);
       document.removeEventListener("fullscreenchange", onFsChange);
+      document.removeEventListener("webkitfullscreenchange", onFsChange);
+      document.removeEventListener("mozfullscreenchange", onFsChange);
+      document.removeEventListener("MSFullscreenChange", onFsChange);
     };
   }, [pres, cycleChromeState, handleFullscreen, toggleTheme]);
 
