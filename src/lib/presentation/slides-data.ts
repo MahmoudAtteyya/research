@@ -58,7 +58,7 @@ export const DEMOGRAPHICS_DATA = {
 };
 
 export const ED_CONSUMPTION_FREQ = [
-  { label: "Rarely", labelAr: "نادراً", percent: 42.2, color: "#22c55e" },
+  { label: "Occasionally", labelAr: "نادراً", percent: 42.2, color: "#22c55e" },
   { label: "1-3 times/month", labelAr: "1-3 مرات شهرياً", percent: 31.1, color: "#a855f7" },
   { label: "1-2 times/week", labelAr: "1-2 مرة أسبوعياً", percent: 13.3, color: "#f59e0b" },
   { label: "3-5 times/week", labelAr: "3-5 مرات أسبوعياً", percent: 11.1, color: "#3b82f6" },
