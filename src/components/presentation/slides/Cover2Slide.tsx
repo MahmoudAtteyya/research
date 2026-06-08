@@ -56,7 +56,7 @@ export default function Cover2Slide({ lang }: { lang: Lang }) {
               {ar ? "أعضاء الفريق البحثي" : "Research Team Members"}
             </div>
             <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 900, color: "var(--c-text)", lineHeight: 1 }}>
-              {ar ? "المجموعة " : "Group "}<span style={{ color: "#8b5cf6" }}>6</span>
+              {ar ? "أسماء " : "Group "}<span style={{ color: "#8b5cf6" }}>{ar ? "الفريق" : "names"}</span>
             </h2>
           </div>
 
