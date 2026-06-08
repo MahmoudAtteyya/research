@@ -14,7 +14,7 @@ export interface Slide {
 
 export const SLIDES: Slide[] = [
   { id: "cover-1", titleEn: "Title", titleAr: "العنوان", speakerNotesEn: "Welcome. Present the study title and 5th year student group.", speakerNotesAr: "الترحيب. عنوان الدراسة وطلاب السنة الخامسة." },
-  { id: "cover-2", titleEn: "Team Members", titleAr: "أعضاء الفريق", speakerNotesEn: "Introduce all 16 research team members.", speakerNotesAr: "تقديم أعضاء الفريق البحثي الستة عشر." },
+
 
   { id: "toc", titleEn: "Table of Contents", titleAr: "جدول المحتويات", speakerNotesEn: "Give a brief overview of the presentation structure.", speakerNotesAr: "أعطِ نظرة عامة موجزة على هيكل العرض." },
   { id: "intro-1", titleEn: "Introduction — Overview", titleAr: "المقدمة — نظرة عامة", speakerNotesEn: "Energy drinks are beverages marketed for boosting energy, alertness, and performance.", speakerNotesAr: "مشروبات الطاقة هي مشروبات تُسوَّق لتعزيز الطاقة واليقظة والأداء." },
