@@ -89,7 +89,7 @@ export function SectionHeader({
         <span aria-hidden className={cn("h-px w-8", onDark ? "bg-gold-300/50" : "bg-accent/50")} />
         <span className="eyebrow">{kicker}</span>
       </p>
-      <h2 id={`${id}-title`} className={cn("mt-5 text-display-2", onDark ? "text-white" : "text-gradient")}>
+      <h2 id={`${id}-title`} className={cn("mt-5 type-display-2", onDark ? "text-white" : "ink-gradient")}>
         {title}
       </h2>
       {lead ? (
@@ -101,7 +101,7 @@ export function SectionHeader({
 
 export function SubHeading({ index, children, id }: { index: string; children: React.ReactNode; id?: string }) {
   return (
-    <h3 id={id} className="reveal flex items-baseline gap-3 text-display-3 text-ink">
+    <h3 id={id} className="reveal flex items-baseline gap-3 type-display-3 text-ink">
       <span className="tnum font-mono text-sm font-medium text-accent-ink">{index}</span>
       {children}
     </h3>

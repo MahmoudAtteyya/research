@@ -38,14 +38,14 @@ const copy = {
 
 const html = (c) => `<!doctype html>
 <html lang="${c.lang}" dir="${c.dir}"><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Naskh+Arabic:wght@600&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Alexandria:wght@600&display=block" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   .bg { position: absolute; inset: 0; overflow: hidden; }
   body {
-    background: #0b1b33; color: #fff; overflow: hidden; position: relative;
-    font-family: ${c.lang === "ar" ? "'IBM Plex Sans Arabic', " : ""}Inter, system-ui, sans-serif;
+    background: #03060d; color: #fff; overflow: hidden; position: relative;
+    font-family: ${c.lang === "ar" ? "'IBM Plex Sans Arabic', " : ""}Geist, system-ui, sans-serif;
   }
   .grid { position: absolute; inset: 0;
     background-image: linear-gradient(rgb(255 255 255 / .06) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / .06) 1px, transparent 1px),
@@ -62,8 +62,9 @@ const html = (c) => `<!doctype html>
   .crests img { width: 86%; height: 86%; object-fit: contain; }
   .kicker { font-size: 24px; color: #c9d3e3; ${c.lang === "ar" ? "" : "letter-spacing: .01em;"} }
   .chip { margin-top: 30px; align-self: flex-start; font-size: 19px; font-weight: 500; color: #e3c868; border: 1.5px solid rgb(227 200 104 / .35); background: rgb(227 200 104 / .08); padding: 8px 18px; border-radius: 999px; }
-  h1 { margin-top: 26px; font-family: ${c.lang === "ar" ? "'Noto Naskh Arabic', " : ""}Newsreader, Georgia, serif; font-weight: ${c.lang === "ar" ? 600 : 500};
-    font-size: ${c.lang === "ar" ? 54 : 58}px; line-height: ${c.lang === "ar" ? 1.35 : 1.06}; max-width: 1000px; ${c.lang === "ar" ? "" : "letter-spacing: -0.01em;"} }
+  h1 { margin-top: 26px; font-family: ${c.lang === "ar" ? "Alexandria, " : ""}Geist, system-ui, sans-serif; font-weight: 600;
+    font-size: ${c.lang === "ar" ? 50 : 60}px; line-height: ${c.lang === "ar" ? 1.35 : 1.04}; max-width: 1020px; ${c.lang === "ar" ? "" : "letter-spacing: -0.035em;"}
+    background: linear-gradient(180deg, #fff 40%, #b9c4d6); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .foot { margin-top: auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
   .byline { font-size: 22px; color: rgb(255 255 255 / .82); }
   .byline b { color: #fff; font-weight: 600; }

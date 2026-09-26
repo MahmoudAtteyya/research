@@ -43,7 +43,7 @@ export function Quiz({ t }: { t: Dictionary["quiz"] }) {
   const message = t.scoreMessages[Math.min(t.scoreMessages.length - 1, Math.floor((score / total) * (t.scoreMessages.length - 1) + 0.0001))];
 
   return (
-    <div className="reveal mx-auto max-w-2xl rounded-3xl border border-line bg-surface p-6 shadow-lift sm:p-9">
+    <div className="glass-card glow-border reveal mx-auto max-w-3xl p-5 sm:p-10">
       <div className="flex items-center justify-between gap-4">
         <p className="text-sm font-medium text-muted">
           {done ? (
@@ -69,7 +69,7 @@ export function Quiz({ t }: { t: Dictionary["quiz"] }) {
 
       {done ? (
         <div className="py-6 text-center">
-          <h3 ref={headingRef} tabIndex={-1} className="font-display text-6xl font-medium text-ink outline-none">
+          <h3 ref={headingRef} tabIndex={-1} className="ink-gradient text-7xl font-semibold tracking-tight outline-none">
             <bdi dir="ltr" className="tnum">
               {score}/{total}
             </bdi>
@@ -80,7 +80,7 @@ export function Quiz({ t }: { t: Dictionary["quiz"] }) {
           <button
             type="button"
             onClick={restart}
-            className="mt-8 inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-2.5 text-sm font-semibold text-ink hover:bg-surface-2"
+            className="tap-target mt-8 inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-2.5 text-sm font-semibold text-ink hover:bg-surface-2"
           >
             <RotateCcw className="h-4 w-4" aria-hidden />
             {t.restart}
@@ -88,7 +88,7 @@ export function Quiz({ t }: { t: Dictionary["quiz"] }) {
         </div>
       ) : (
         <div className="mt-6">
-          <h3 ref={headingRef} tabIndex={-1} className="font-display text-2xl leading-snug font-medium text-ink outline-none sm:text-[1.75rem]">
+          <h3 ref={headingRef} tabIndex={-1} className="type-display-3 text-ink outline-none">
             {q.q}
           </h3>
           <div role="group" aria-label={q.q} className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -103,8 +103,8 @@ export function Quiz({ t }: { t: Dictionary["quiz"] }) {
                   disabled={answered}
                   aria-pressed={isPicked}
                   className={cn(
-                    "flex items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-start text-[0.9375rem] font-medium transition-[border-color,background-color] duration-200",
-                    !answered && "border-line-strong bg-surface hover:border-ink/40 hover:bg-surface-2",
+                    "flex min-h-14 items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-start text-[0.9375rem] font-medium transition-[border-color,background-color,box-shadow] duration-200",
+                    !answered && "border-line-strong bg-glass hover:border-ink/40 hover:bg-surface-2 hover:shadow-[0_0_30px_-10px_var(--glow-blue)]",
                     answered && isCorrect && "border-pre bg-pre/10 text-ink",
                     answered && isPicked && !isCorrect && "border-accent bg-accent/10 text-ink",
                     answered && !isCorrect && !isPicked && "border-line text-muted",
@@ -120,7 +120,7 @@ export function Quiz({ t }: { t: Dictionary["quiz"] }) {
 
           <div aria-live="polite" className="min-h-0">
             {answered ? (
-              <div className="mt-6 rounded-2xl bg-surface-2 p-4 sm:p-5">
+              <div className="mt-6 rounded-2xl border border-line bg-surface-2/70 p-4 sm:p-5">
                 <p className="text-[0.9375rem] leading-relaxed text-ink-2">
                   <strong className={cn("font-semibold", picked === q.answer ? "text-pre" : "text-accent-ink")}>
                     {picked === q.answer ? t.correct : t.incorrect}
@@ -136,7 +136,7 @@ export function Quiz({ t }: { t: Dictionary["quiz"] }) {
               <button
                 type="button"
                 onClick={next}
-                className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-paper transition-opacity hover:opacity-90"
+                className="tap-target inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-paper transition-opacity hover:opacity-90"
               >
                 {index + 1 >= total ? t.finish : t.next}
                 <ArrowRight className="h-4 w-4 rtl:-scale-x-100" aria-hidden />

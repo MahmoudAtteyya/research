@@ -26,22 +26,22 @@ function Disclosure({
   children: React.ReactNode;
 }) {
   return (
-    <details className="reveal group rounded-3xl border border-line bg-surface shadow-card open:shadow-lift">
-      <summary className="flex items-center justify-between gap-4 rounded-3xl p-6 sm:p-7">
+    <details className="glass-card reveal group transition-colors open:border-line-strong">
+      <summary className="flex min-h-[4.5rem] items-center justify-between gap-4 rounded-3xl p-5 sm:p-6">
         <span className="flex items-center gap-3.5">
-          <span className="inline-grid h-10 w-10 place-items-center rounded-xl bg-surface-2 text-accent-ink">
+          <span className="inline-grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-surface-2 text-accent-ink ring-1 ring-line">
             <Icon className="h-5 w-5" aria-hidden />
           </span>
-          <span className="font-display text-xl font-medium text-ink">{title}</span>
+          <span className="text-lg font-semibold tracking-tight text-ink">{title}</span>
         </span>
         <span
           aria-hidden
-          className="inline-grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line-strong text-lg text-ink-2 transition-transform duration-300 group-open:rotate-45"
+          className="inline-grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line-strong text-lg text-ink-2 transition-transform duration-300 group-open:rotate-45"
         >
           +
         </span>
       </summary>
-      <div className="border-t border-line px-6 pt-6 pb-7 sm:px-7">{children}</div>
+      <div className="border-t border-line px-5 pt-5 pb-6 sm:px-6">{children}</div>
     </details>
   );
 }
@@ -85,25 +85,32 @@ function ToolTable({
 export function Methods({ t }: { t: Dictionary }) {
   const m = t.methods;
   return (
-    <Section id="methods" index={3} kicker={t.sections.methods.kicker} title={t.sections.methods.title} lead={m.lead}>
-      <ol className="reveal relative grid gap-y-8 sm:grid-cols-2 lg:grid-cols-6 lg:gap-x-4">
-        <span aria-hidden className="absolute start-6 top-6 hidden h-px w-[calc(100%-3rem)] bg-line-strong lg:block" />
+    <Section id="methods" index={3} kicker={t.sections.methods.kicker} title={t.sections.methods.title} lead={m.lead} glow="crimson" glowSide="start">
+      <ol className="relative grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 2xl:grid-cols-6">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-x-8 top-[3.25rem] hidden h-px bg-linear-to-r from-transparent via-accent/50 to-transparent 2xl:block"
+        />
         {m.steps.map((s, i) => {
           const Icon = STEP_ICONS[i];
           const highlight = i === 2 || i === 3;
           return (
-            <li key={s.title} className="relative flex gap-4 lg:flex-col lg:gap-5">
-              <span
-                className={
-                  "relative z-10 inline-grid h-12 w-12 shrink-0 place-items-center rounded-full ring-8 ring-paper " +
-                  (highlight ? "bg-accent text-white dark:text-navy-950" : "bg-navy-900 text-white dark:bg-surface-2")
-                }
-              >
-                <Icon className="h-5 w-5" aria-hidden />
+            <li key={s.title} className="glass-card card-hover reveal relative flex flex-col gap-4 p-5 sm:p-6">
+              <span className="flex items-center justify-between">
+                <span
+                  className={
+                    "relative z-10 inline-grid h-12 w-12 place-items-center rounded-2xl ring-1 " +
+                    (highlight
+                      ? "bg-accent text-white ring-accent/40 shadow-[0_0_32px_-4px_var(--glow-crimson)]"
+                      : "bg-surface-2 text-ink ring-line")
+                  }
+                >
+                  <Icon className="h-5 w-5" aria-hidden />
+                </span>
+                <span className="tnum font-mono text-xs text-muted">{String(i + 1).padStart(2, "0")}</span>
               </span>
               <div>
-                <p className="tnum text-xs font-semibold text-muted">{String(i + 1).padStart(2, "0")}</p>
-                <h3 className="mt-1 font-display text-xl font-medium text-ink">{s.title}</h3>
+                <h3 className="text-lg font-semibold tracking-tight text-ink">{s.title}</h3>
                 <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">{s.text}</p>
               </div>
             </li>
@@ -111,19 +118,19 @@ export function Methods({ t }: { t: Dictionary }) {
         })}
       </ol>
 
-      <div className="reveal mt-16 rounded-3xl bg-navy-900 p-7 text-white sm:p-9 dark:bg-surface">
-        <p className="eyebrow text-gold-300">{m.factsTitle}</p>
-        <dl className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/10 rtl:lg:divide-x-reverse">
+      <div className="glass-card glow-border reveal mt-6 p-6 sm:p-8">
+        <p className="eyebrow text-gold-ink">{m.factsTitle}</p>
+        <dl className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-line rtl:lg:divide-x-reverse">
           {m.facts.map((f) => (
             <div key={f.label} className="lg:px-6 lg:first:ps-0 lg:last:pe-0">
-              <dt className="text-sm text-mist/75">{f.label}</dt>
-              <dd className="mt-1.5 font-display text-xl leading-snug font-medium text-white">{f.value}</dd>
+              <dt className="text-sm text-muted">{f.label}</dt>
+              <dd className="mt-1.5 text-lg leading-snug font-semibold tracking-tight text-ink">{f.value}</dd>
             </div>
           ))}
         </dl>
       </div>
 
-      <div className="mt-8 grid gap-5 lg:grid-cols-3 lg:items-start">
+      <div className="mt-6 grid gap-4 lg:grid-cols-3 lg:items-start">
         <Disclosure icon={Users} title={m.eligibility.title}>
           <div className="grid gap-6">
             <div>
@@ -168,7 +175,7 @@ export function Methods({ t }: { t: Dictionary }) {
               </li>
             ))}
           </ul>
-          <p className="mt-5 rounded-xl bg-surface-2 px-4 py-3 text-sm font-medium text-ink">{m.ethics.note}</p>
+          <p className="mt-5 rounded-xl border border-line bg-surface-2 px-4 py-3 text-sm font-medium text-ink">{m.ethics.note}</p>
         </Disclosure>
       </div>
     </Section>

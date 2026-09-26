@@ -23,10 +23,13 @@ Highlights of the site:
 - **Every number comes from the official poster** and lives in one file (`src/content/study.ts`). Charts, tables, the quiz and the text all read from it.
 - **Figures built for reading:** before/after dumbbell charts with ±1 SD bands on each measure's own axis, ordinal and emphasis bar charts, a unit chart of all 47 participants, and a "view as table" option for every figure. Chart colours were checked for colour-blind separation and contrast in both themes.
 - **Patient-monitor hero** that animates the group means from baseline to +30 minutes.
-- **Suez identity throughout:** University and Faculty crests, symposium branding and a palette taken from the poster (navy, crimson, Suez gold).
+- **Dark premium design:** a deep navy canvas with glass surfaces, brand glows (crimson, blue, Suez gold) and a travelling ECG pulse. A light theme is one click away and is remembered.
+- **Cinematic motion:** a word-by-word hero entrance, numbers that count up, bars that grow and dots that travel from "before" to "after" as you scroll. All motion is CSS and is switched off for visitors who prefer reduced motion.
+- **Suez identity throughout:** University and Faculty crests, symposium branding and a palette taken from the poster.
+- **Responsive on every screen:** tested from 320 px phones to 2560 px displays, portrait and landscape. The patient monitor uses container queries, type scales fluidly, touch targets are at least 44 px and nothing is clipped.
 - **Bilingual with full right-to-left support:** separate static pages for English and Arabic, each with the correct `lang`/`dir`, so there is no flash of the wrong language.
-- **Accessible:** zero axe violations (WCAG 2.2 AA), keyboard support, skip link, reduced-motion support, pinch-zoom allowed.
-- **Fast:** server-rendered, with small client islands only. The site uses no chart library or animation framework, and fonts are self-hosted with `next/font`.
+- **Accessible:** zero axe violations (WCAG 2.2 AA) in both themes and languages, keyboard support, skip link, back-to-top button, and pinch-zoom allowed.
+- **Fast:** server-rendered, with small client islands only and no layout shift. The site uses no chart library or animation framework, and fonts (Geist, Geist Mono, Alexandria, IBM Plex Sans Arabic) are self-hosted with `next/font`.
 - **Shareable:** Open Graph images in both languages, JSON-LD (ScholarlyArticle), sitemap, robots and hreflang.
 
 ## Tech stack

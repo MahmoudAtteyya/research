@@ -14,7 +14,7 @@ export function PosterViewer({ t }: { t: Dictionary["poster"] }) {
       <button
         type="button"
         onClick={() => dialog.current?.showModal()}
-        className="group relative block w-full overflow-hidden rounded-2xl border border-line bg-surface p-3 shadow-lift transition-transform duration-500 hover:-translate-y-1"
+        className="group relative block w-full overflow-hidden rounded-3xl border border-glass-border bg-glass p-3 shadow-[0_40px_80px_-40px_rgb(0_0_0/0.8)] transition-transform duration-700 ease-[var(--ease-out-expo)] [transform:perspective(1200px)] motion-safe:hover:[transform:perspective(1200px)_rotateX(4deg)_rotateY(-6deg)_translateY(-4px)] rtl:motion-safe:hover:[transform:perspective(1200px)_rotateX(4deg)_rotateY(6deg)_translateY(-4px)]"
         aria-haspopup="dialog"
       >
         <Image

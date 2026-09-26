@@ -18,7 +18,7 @@ export function FigureCard({
   className?: string;
 }) {
   return (
-    <figure className={cn("reveal flex flex-col rounded-3xl border border-line bg-surface p-6 shadow-card sm:p-7", className)}>
+    <figure className={cn("glass-card reveal flex flex-col p-5 sm:p-7", className)}>
       <figcaption className="mb-6">
         <span className="block font-semibold text-ink">{title}</span>
         <span className="mt-1 block text-sm text-muted">
@@ -59,8 +59,8 @@ export function BarList({
                 <span className="absolute inset-0 rounded-e-full bg-grid" />
                 <span
                   className={cn(
-                    "absolute inset-y-0 start-0 rounded-e-[4px]",
-                    emphasis ? (strong ? "bg-accent" : "bg-bar-muted") : "bg-bar",
+                    "reveal-bar absolute inset-y-0 start-0 rounded-e-[4px]",
+                    emphasis ? (strong ? "bg-accent shadow-[0_0_18px_var(--glow-crimson)]" : "bg-bar-muted") : "bg-bar",
                   )}
                   style={{ width: `${Math.max(w, item.pct > 0 ? 1.2 : 0)}%` }}
                 />
@@ -80,10 +80,10 @@ export function BarList({
 export function StackedShare({ items, labels }: { items: Share[]; labels: Record<string, string> }) {
   const tones = ["var(--ord-1)", "var(--ord-2)", "var(--ord-3)", "var(--ord-4)", "var(--ord-5)"];
   // Inline labels only where they fit; light steps get dark ink, dark steps white.
-  const inkOn = (i: number) => (i < 2 ? "text-navy-900 dark:text-white" : "text-white dark:text-navy-950");
+  const inkOn = (i: number) => (i < 2 ? "text-white light:text-navy-900" : "text-navy-950 light:text-white");
   return (
     <div>
-      <div className="flex h-12 w-full gap-[2px] overflow-hidden rounded-lg" aria-hidden>
+      <div className="reveal-bar flex h-12 w-full gap-[2px] overflow-hidden rounded-xl" aria-hidden>
         {items.map((item, i) => (
           <span
             key={item.id}
@@ -131,7 +131,7 @@ export function UnitDots({
             key={i}
             className={cn(
               "aspect-square rounded-full",
-              i < filled ? "bg-ink" : "border-[2.5px] border-ink/70 bg-transparent",
+              i < filled ? "bg-ink shadow-[0_0_10px_rgb(255_255_255/0.18)] light:shadow-none" : "border-[2.5px] border-ink/70 bg-transparent",
             )}
           />
         ))}

@@ -80,10 +80,10 @@ export function Hero({ t }: { t: Dictionary }) {
             <p className="eyebrow enter mt-10 text-mist/70" style={{ ["--d" as string]: "160ms" }}>
               {t.hero.eyebrow}
             </p>
-            <h1 id="study-title" className="mt-5 text-display-1 text-white">
+            <h1 id="study-title" className="mt-5 type-display-1 text-white">
               {words.map((w, i) => (
                 <span key={i}>
-                  <span className="enter text-gradient inline-block pb-[0.08em]" style={{ ["--d" as string]: `${220 + i * 55}ms` }}>
+                  <span className="enter ink-gradient inline-block pb-[0.08em]" style={{ ["--d" as string]: `${220 + i * 55}ms` }}>
                     {w}
                   </span>
                   {i < words.length - 1 ? " " : null}

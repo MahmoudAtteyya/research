@@ -289,7 +289,7 @@
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-@utility text-display-1 {
+@utility type-display-1 {
   font-family: var(--font-heading);
   font-size: clamp(2rem, 0.85rem + 3.1vw, 4.75rem);
   line-height: 1.03;
@@ -302,7 +302,7 @@
   }
 }
 
-@utility text-display-2 {
+@utility type-display-2 {
   font-family: var(--font-heading);
   font-size: clamp(1.9rem, 1.3rem + 2.3vw, 3.75rem);
   line-height: 1.06;
@@ -314,7 +314,7 @@
   }
 }
 
-@utility text-display-3 {
+@utility type-display-3 {
   font-family: var(--font-heading);
   font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.85rem);
   line-height: 1.2;
@@ -341,7 +341,7 @@
   }
 }
 
-@utility text-gradient {
+@utility ink-gradient {
   background-image: linear-gradient(180deg, var(--heading-from) 35%, var(--heading-to));
   -webkit-background-clip: text;
   background-clip: text;
@@ -350,7 +350,7 @@
   box-decoration-break: clone;
 }
 
-@utility text-signature {
+@utility type-signature {
   font-family: var(--font-signature);
   font-style: italic;
   font-weight: 500;
@@ -422,7 +422,7 @@
 
 /* Minimum touch target on touch screens (WCAG 2.5.5 / platform guidelines). */
 @utility tap-target {
-  @media (pointer: coarse) {
+  @media (pointer: coarse), (max-width: 1023px) {
     min-height: 44px;
     min-width: 44px;
   }

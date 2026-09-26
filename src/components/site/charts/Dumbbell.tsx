@@ -33,17 +33,17 @@ function Legend({ labels }: { labels: ChartLabels }) {
   );
 }
 
-function Dot({ at, tone, label }: { at: number; tone: "pre" | "post"; label: string }) {
+function Dot({ at, from, tone, label }: { at: number; from?: number; tone: "pre" | "post"; label: string }) {
   return (
     <span
-      className="group/dot absolute top-1/2 z-10 -mt-[7px] -ms-[7px] h-3.5 w-3.5"
-      style={{ insetInlineStart: `${at}%` }}
+      className={cn("group/dot absolute top-1/2 z-10 -mt-2 -ms-2 h-4 w-4", from !== undefined && "reveal-dot")}
+      style={{ insetInlineStart: `${at}%`, ...(from !== undefined ? { ["--from" as string]: `${from}%` } : {}) }}
     >
       <span
-        className={
-          "block h-full w-full rounded-full ring-[3px] ring-surface transition-transform duration-200 group-hover/dot:scale-125 " +
-          (tone === "pre" ? "bg-pre" : "bg-post")
-        }
+        className={cn(
+          "block h-full w-full rounded-full ring-[3px] ring-surface transition-transform duration-200 group-hover/dot:scale-125",
+          tone === "pre" ? "bg-pre shadow-[0_0_14px_var(--glow-blue)]" : "bg-post shadow-[0_0_16px_var(--glow-crimson)]",
+        )}
       />
       <span className="pointer-events-none absolute bottom-full start-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-2 py-1 text-xs font-medium text-paper opacity-0 shadow-lg transition-opacity duration-150 group-hover/dot:opacity-100 rtl:translate-x-1/2">
         <Num>{label}</Num>
@@ -85,24 +85,28 @@ function Row({ m, name, labels }: { m: Measure; name: string; labels: ChartLabel
             <span key={t} className="absolute inset-y-0 w-px bg-grid" style={{ insetInlineStart: `${scale(t, m.domain)}%` }} />
           ))}
           {/* ±1 SD bands */}
-          <span className="absolute top-[9px] h-[5px] rounded-full bg-pre/25" style={band(m.pre.mean, m.pre.sd)} />
-          <span className="absolute bottom-[9px] h-[5px] rounded-full bg-post/25" style={band(m.post.mean, m.post.sd)} />
+          <span className="absolute top-[9px] h-[5px] rounded-full bg-pre/30" style={band(m.pre.mean, m.pre.sd)} />
+          <span className="absolute bottom-[9px] h-[5px] rounded-full bg-post/30" style={band(m.post.mean, m.post.sd)} />
           {/* connector */}
           <span
-            className="absolute top-1/2 -mt-px h-0.5 rounded-full bg-linear-to-r from-pre to-post rtl:bg-linear-to-l"
+            className="reveal-bar absolute top-1/2 -mt-px h-0.5 rounded-full bg-linear-to-r from-pre to-post rtl:bg-linear-to-l"
             style={{ insetInlineStart: `${lo}%`, width: `${hi - lo}%` }}
           />
           <Dot at={pre} tone="pre" label={meanSD(m.pre.mean, m.pre.sd, m.dp, m.sdDp)} />
-          <Dot at={post} tone="post" label={meanSD(m.post.mean, m.post.sd, m.dp, m.sdDp)} />
+          <Dot at={post} from={pre} tone="post" label={meanSD(m.post.mean, m.post.sd, m.dp, m.sdDp)} />
         </div>
-        <div className="relative mt-1 h-4 text-[0.6875rem] text-muted">
+        <div className="relative mt-1.5 h-4 font-mono text-xs text-muted">
           {m.ticks.map((t, i) => {
             const first = i === 0;
             const last = i === m.ticks.length - 1;
             return (
               <span
                 key={t}
-                className={cn("tnum absolute", !first && !last && "-translate-x-1/2 rtl:translate-x-1/2")}
+                className={cn(
+                  "tnum absolute",
+                  !first && !last && "-translate-x-1/2 rtl:translate-x-1/2",
+                  !first && !last && m.ticks.length > 5 && i % 2 === 1 && "max-sm:hidden",
+                )}
                 style={last ? { insetInlineEnd: 0 } : { insetInlineStart: `${scale(t, m.domain)}%` }}
               >
                 <bdi dir="ltr">{t}</bdi>
@@ -116,7 +120,7 @@ function Row({ m, name, labels }: { m: Measure; name: string; labels: ChartLabel
       <dl className="flex items-baseline gap-6 md:flex-col md:items-end md:gap-1 md:text-end">
         <div className="flex items-baseline gap-2">
           <dt className="sr-only">{labels.change}</dt>
-          <dd className="text-xl font-semibold text-ink">
+          <dd className="text-2xl font-semibold tracking-tight text-ink">
             <Num>{signed(delta, m.dp)}</Num>
             {m.unit ? <bdi dir="ltr" className="ms-1 text-sm font-normal text-muted">{m.unit}</bdi> : null}
           </dd>
@@ -151,7 +155,7 @@ export function DumbbellFigure({
   after?: React.ReactNode;
 }) {
   return (
-    <figure aria-labelledby={`${id}-caption`} className="reveal rounded-3xl border border-line bg-surface p-5 shadow-card sm:p-8">
+    <figure aria-labelledby={`${id}-caption`} className="glass-card reveal p-5 sm:p-8">
       <figcaption id={`${id}-caption`} className="flex flex-col gap-4 border-b border-line pb-5 lg:flex-row lg:items-center lg:justify-between">
         <span className="text-[0.9375rem] font-semibold text-ink">
           <Num tabular={false}>{title}</Num>
@@ -167,8 +171,8 @@ export function DumbbellFigure({
 
       {after}
 
-      <details className="group mt-4 border-t border-line pt-4">
-        <summary className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-accent-ink hover:underline">
+      <details className="group mt-4 border-t border-line pt-5">
+        <summary className="tap-target inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-semibold text-accent-ink transition-colors hover:border-line-strong hover:bg-surface-2">
           <span aria-hidden className="transition-transform duration-200 group-open:rotate-90 rtl:group-open:-rotate-90 rtl:-scale-x-100">
             ›
           </span>

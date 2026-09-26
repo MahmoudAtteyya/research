@@ -15,15 +15,15 @@ export default function GlobalNotFound() {
   return (
     <html lang="en" className={`${latinFontVariables} dark`}>
       <body>
-        <main className="relative isolate grid min-h-dvh place-items-center overflow-hidden bg-navy-900 px-6 text-center text-white">
+        <main className="relative isolate grid min-h-dvh place-items-center overflow-hidden bg-navy-975 px-6 text-center text-white">
           <div aria-hidden className="bg-ecg absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_center,#000_20%,transparent_70%)]" />
           <div className="max-w-xl">
             <div className="flex justify-center -space-x-2">
               <CrestPlate src={SITE.brand.university} alt={en.brand.universityAlt} size={56} />
               <CrestPlate src={SITE.brand.faculty} alt={en.brand.facultyAlt} size={56} />
             </div>
-            <p className="tnum mt-10 font-display text-8xl font-medium text-gold-300">404</p>
-            <h1 className="mt-4 font-display text-3xl font-medium">{en.notFound.title}</h1>
+            <p className="tnum ink-gradient mt-10 font-mono text-8xl font-medium">404</p>
+            <h1 className="mt-4 type-display-3">{en.notFound.title}</h1>
             <p className="mt-3 text-mist">{en.notFound.text}</p>
             <p lang="ar" dir="rtl" className="mt-2 text-mist/70">
               {ar.notFound.text}

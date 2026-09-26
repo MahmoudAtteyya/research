@@ -182,11 +182,10 @@ export function SiteHeader({ locale, brand, nav, a11y, lang }: HeaderProps) {
           <a
             href={localePath(other)}
             hrefLang={lang.hrefLang}
-            lang={lang.hrefLang}
             onClick={switchLanguage}
             className="flex h-12 items-center justify-center gap-2 rounded-full border border-white/15 text-sm font-semibold"
           >
-            {lang.switchLabel}
+            <span lang={lang.hrefLang}>{lang.switchLabel}</span>
             <ArrowUpRight className="h-4 w-4 rtl:-scale-x-100" aria-hidden />
           </a>
         </div>
