@@ -12,8 +12,9 @@ export type MeanSD = { mean: number; sd: number };
 export type Measure = {
   id: string;
   unit: string;
-  /** Decimal places used when displaying means, SDs and change. */
+  /** Decimal places for means and change, and for SDs (as printed on the poster). */
   dp: number;
+  sdDp: number;
   pre: MeanSD;
   post: MeanSD;
   /** p-value exactly as printed on the poster. */
@@ -26,17 +27,17 @@ export type Measure = {
 export const SAMPLE_SIZE = 47;
 
 export const VITAL_SIGNS: Measure[] = [
-  { id: "sbp", unit: "mmHg", dp: 2, pre: { mean: 116.83, sd: 8.18 }, post: { mean: 119.85, sd: 8.18 }, p: "< 0.001", domain: [105, 130], ticks: [105, 110, 115, 120, 125, 130] },
-  { id: "dbp", unit: "mmHg", dp: 2, pre: { mean: 76.21, sd: 8.34 }, post: { mean: 77.49, sd: 8.62 }, p: "< 0.001", domain: [65, 90], ticks: [65, 70, 75, 80, 85, 90] },
-  { id: "hr", unit: "bpm", dp: 2, pre: { mean: 75.62, sd: 9.91 }, post: { mean: 78.64, sd: 10.31 }, p: "< 0.001", domain: [60, 95], ticks: [60, 65, 70, 75, 80, 85, 90, 95] },
-  { id: "rr", unit: "/min", dp: 2, pre: { mean: 16.7, sd: 1.99 }, post: { mean: 17.45, sd: 2.77 }, p: "< 0.001", domain: [14, 21], ticks: [14, 15, 16, 17, 18, 19, 20, 21] },
-  { id: "temp", unit: "°C", dp: 3, pre: { mean: 37.004, sd: 0.35 }, post: { mean: 37.215, sd: 0.351 }, p: "< 0.001", domain: [36.6, 37.6], ticks: [36.6, 36.8, 37, 37.2, 37.4, 37.6] },
+  { id: "sbp", unit: "mmHg", dp: 2, sdDp: 2, pre: { mean: 116.83, sd: 8.18 }, post: { mean: 119.85, sd: 8.18 }, p: "< 0.001", domain: [105, 130], ticks: [105, 110, 115, 120, 125, 130] },
+  { id: "dbp", unit: "mmHg", dp: 2, sdDp: 2, pre: { mean: 76.21, sd: 8.34 }, post: { mean: 77.49, sd: 8.62 }, p: "< 0.001", domain: [65, 90], ticks: [65, 70, 75, 80, 85, 90] },
+  { id: "hr", unit: "bpm", dp: 2, sdDp: 2, pre: { mean: 75.62, sd: 9.91 }, post: { mean: 78.64, sd: 10.31 }, p: "< 0.001", domain: [60, 95], ticks: [60, 65, 70, 75, 80, 85, 90, 95] },
+  { id: "rr", unit: "/min", dp: 2, sdDp: 2, pre: { mean: 16.7, sd: 1.99 }, post: { mean: 17.45, sd: 2.77 }, p: "< 0.001", domain: [14, 21], ticks: [14, 15, 16, 17, 18, 19, 20, 21] },
+  { id: "temp", unit: "°C", dp: 3, sdDp: 3, pre: { mean: 37.004, sd: 0.35 }, post: { mean: 37.215, sd: 0.351 }, p: "< 0.001", domain: [36.6, 37.6], ticks: [36.6, 36.8, 37, 37.2, 37.4, 37.6] },
 ];
 
 export const COGNITIVE: Measure[] = [
-  { id: "mindfulness", unit: "", dp: 2, pre: { mean: 52.4, sd: 2.651 }, post: { mean: 53.0, sd: 2.085 }, p: "< 0.001", domain: [49, 56], ticks: [49, 50, 51, 52, 53, 54, 55, 56] },
-  { id: "memory", unit: "", dp: 2, pre: { mean: 9.32, sd: 3.224 }, post: { mean: 9.43, sd: 3.5 }, p: "< 0.001", domain: [5, 14], ticks: [5, 7, 9, 11, 13] },
-  { id: "speed", unit: "", dp: 2, pre: { mean: 0.55, sd: 0.88 }, post: { mean: 0.64, sd: 0.919 }, p: "< 0.001", domain: [0, 1.6], ticks: [0, 0.4, 0.8, 1.2, 1.6] },
+  { id: "mindfulness", unit: "", dp: 2, sdDp: 3, pre: { mean: 52.4, sd: 2.651 }, post: { mean: 53.0, sd: 2.085 }, p: "< 0.001", domain: [49, 56], ticks: [49, 50, 51, 52, 53, 54, 55, 56] },
+  { id: "memory", unit: "", dp: 2, sdDp: 3, pre: { mean: 9.32, sd: 3.224 }, post: { mean: 9.43, sd: 3.5 }, p: "< 0.001", domain: [5, 14], ticks: [5, 8, 11, 14] },
+  { id: "speed", unit: "", dp: 2, sdDp: 3, pre: { mean: 0.55, sd: 0.88 }, post: { mean: 0.64, sd: 0.919 }, p: "< 0.001", domain: [0, 1.6], ticks: [0, 0.4, 0.8, 1.2, 1.6] },
 ];
 
 /** Domains reported as 1.00 before and after (SPSS footnote "a": no variance). */

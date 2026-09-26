@@ -1,0 +1,323 @@
+/*
+ * Design system for the study site ("Suez Clinical Editorial").
+ * Palette derived from the official poster, the Faculty of Medicine crest
+ * and the symposium logo. Chart colours validated for CVD separation and
+ * contrast in both themes.
+ */
+@import "tailwindcss" source(none);
+@source "../app";
+@source "../components/site";
+@source "../content";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Brand constants (theme-independent) */
+  --color-navy-950: #060f20;
+  --color-navy-900: #0b1b33;
+  --color-navy-800: #13284a;
+  --color-navy-700: #1c3560;
+  --color-crimson-700: #a50e26;
+  --color-crimson-600: #c8102e;
+  --color-crimson-400: #f0506a;
+  --color-gold-600: #8a6a12;
+  --color-gold-500: #c9a227;
+  --color-gold-300: #e3c868;
+  --color-mist: #c9d3e3;
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-reveal: reveal 0.8s var(--ease-out-quart) both;
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      translate: 0 14px;
+    }
+    to {
+      opacity: 1;
+      translate: none;
+    }
+  }
+}
+
+/* Semantic tokens map to runtime variables that flip with the theme. */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-gold: var(--gold);
+  --color-gold-ink: var(--gold-ink);
+  --color-pre: var(--pre);
+  --color-post: var(--post);
+  --color-bar: var(--bar);
+  --color-bar-muted: var(--bar-muted);
+  --color-grid: var(--grid);
+
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+}
+
+:root {
+  --paper: #faf8f3;
+  --paper-2: #f3efe6;
+  --surface: #ffffff;
+  --surface-2: #f6f3ec;
+  --ink: #0b1b33;
+  --ink-2: #33445e;
+  --muted: #5b677a;
+  --line: rgb(11 27 51 / 0.12);
+  --line-strong: rgb(11 27 51 / 0.22);
+  --accent: #c8102e;
+  --accent-ink: #a50e26;
+  --gold: #c9a227;
+  --gold-ink: #8a6a12;
+  --pre: #3d6aa8;
+  --post: #c8102e;
+  --bar: #3d6aa8;
+  --bar-muted: #9aa8bd;
+  --grid: rgb(11 27 51 / 0.08);
+  --ord-1: #9cb0d2;
+  --ord-2: #7690c0;
+  --ord-3: #5070a6;
+  --ord-4: #2f4e84;
+  --ord-5: #16305c;
+  --shadow-card: 0 1px 2px rgb(11 27 51 / 0.04), 0 8px 24px -12px rgb(11 27 51 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(11 27 51 / 0.05), 0 24px 48px -24px rgb(11 27 51 / 0.28);
+
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-newsreader), ui-serif, Georgia, serif;
+  --header-h: 4.25rem;
+  color-scheme: light;
+}
+
+.dark {
+  --paper: #0a1426;
+  --paper-2: #0d1930;
+  --surface: #111f38;
+  --surface-2: #16264a;
+  --ink: #e8ecf3;
+  --ink-2: #c3ccda;
+  --muted: #9da9bc;
+  --line: rgb(255 255 255 / 0.09);
+  --line-strong: rgb(255 255 255 / 0.18);
+  --accent: #ee4b66;
+  --accent-ink: #f27a8e;
+  --gold: #d8b54b;
+  --gold-ink: #e3c868;
+  --pre: #5b8fda;
+  --post: #ee4b66;
+  --bar: #5b8fda;
+  --bar-muted: #4a5b78;
+  --grid: rgb(255 255 255 / 0.07);
+  --ord-1: #3e5b8c;
+  --ord-2: #5877ad;
+  --ord-3: #7995cb;
+  --ord-4: #9db5e3;
+  --ord-5: #c6d6f4;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.5);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 48px -20px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
+
+:root:lang(ar) {
+  --font-body: var(--font-plex-ar), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-naskh), var(--font-newsreader), ui-serif, serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 1.5rem);
+    background: var(--paper);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  :lang(ar) body {
+    line-height: 1.85;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--accent) 24%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  dialog::backdrop {
+    background: rgb(6 15 32 / 0.72);
+    backdrop-filter: blur(4px);
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+@utility eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  &:where(:lang(ar), :lang(ar) *) {
+    font-size: 0.875rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}
+
+/* Scroll-driven reveal. Progressive enhancement: static where unsupported. */
+@utility reveal {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      animation: var(--animate-reveal);
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+
+/* ECG paper: 1 mm minor and 5 mm major squares, as on clinical ECG paper. */
+@utility bg-ecg {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.055) 1px, transparent 1px),
+    linear-gradient(rgb(255 255 255 / 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.022) 1px, transparent 1px);
+  background-size:
+    80px 80px,
+    80px 80px,
+    16px 16px,
+    16px 16px;
+}
+
+@utility prose-study {
+  & p + p {
+    margin-top: 1em;
+  }
+}
+
+/* Header reading-progress bar driven by the page scroll. */
+.scroll-progress {
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+:where([dir="rtl"]) .scroll-progress {
+  transform-origin: 100% 50%;
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: progress-grow linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes progress-grow {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ECG trace scrolling inside the vital-signs monitor. */
+@keyframes ecg-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ecg-strip {
+  animation: ecg-scroll var(--ecg-duration, 8s) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ecg-strip {
+    animation: none !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  details > :not(summary) {
+    display: block !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+}
