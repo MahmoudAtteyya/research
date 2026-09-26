@@ -17,7 +17,7 @@ export const SITE = {
   brand: {
     faculty: "/brand/faculty-crest.png",
     university: "/brand/university-crest.png",
-    symposium: "/brand/symposium-logo.webp",
+    symposium: "/symposium-logo.png",
   },
 } as const;
 
