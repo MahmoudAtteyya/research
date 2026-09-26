@@ -57,17 +57,26 @@ function Reading({
 }) {
   return (
     <div className="min-w-0">
-      <p className="flex items-baseline justify-between gap-2 text-[0.6875rem] font-semibold tracking-[0.08em] uppercase" style={{ color }}>
-        <span>{label}</span>
-        <bdi dir="ltr" className="font-medium tracking-normal normal-case opacity-75">{unit}</bdi>
+      <p className="flex items-baseline justify-between gap-2 font-mono text-xs font-medium tracking-[0.08em] uppercase" style={{ color }}>
+        <span className="truncate">{label}</span>
+        <bdi dir="ltr" className="shrink-0 tracking-normal normal-case opacity-75">
+          {unit}
+        </bdi>
       </p>
-      <p dir="ltr" className={cn("tnum mt-1 leading-none font-semibold text-start rtl:text-end", big ? "text-[2.75rem] sm:text-5xl" : "text-[1.2rem] sm:text-[1.4rem]")} style={{ color }}>
+      <p
+        dir="ltr"
+        className={cn(
+          "tnum mt-1.5 leading-none font-semibold tracking-tight text-start rtl:text-end",
+          big ? "text-[2.5rem] @sm:text-[3.25rem]" : "text-[1.35rem] @md:text-[1.5rem]",
+        )}
+        style={{ color, textShadow: `0 0 24px ${color}55` }}
+      >
         {value}
       </p>
       <p
         dir="ltr"
         className={cn(
-          "tnum mt-1.5 h-4 text-xs text-white/60 transition-opacity duration-500 rtl:text-end",
+          "tnum mt-1.5 h-4 font-mono text-xs text-white/60 transition-opacity duration-500 rtl:text-end",
           phase === "post" ? "opacity-100" : "opacity-0",
         )}
       >
@@ -95,7 +104,7 @@ export function VitalMonitor({ t }: { t: Dictionary["monitor"] }) {
         io.disconnect();
         timer = window.setTimeout(() => {
           if (!touched.current) setPhase("post");
-        }, 1800);
+        }, 2200);
       },
       { threshold: 0.45 },
     );
@@ -113,10 +122,7 @@ export function VitalMonitor({ t }: { t: Dictionary["monitor"] }) {
   const rr = useTween(pick("rr"));
   const temp = useTween(pick("temp"));
 
-  const d = (id: string, dp: number) => {
-    const v = byId[id].post.mean - byId[id].pre.mean;
-    return `+${v.toFixed(dp)}`;
-  };
+  const d = (id: string, dp: number) => `+${(byId[id].post.mean - byId[id].pre.mean).toFixed(dp)}`;
 
   const choose = (p: Phase) => {
     touched.current = true;
@@ -130,76 +136,89 @@ export function VitalMonitor({ t }: { t: Dictionary["monitor"] }) {
   return (
     <figure
       ref={root}
-      className="relative rounded-[1.75rem] border border-white/10 bg-[#050c18] p-4 shadow-[0_50px_100px_-40px_rgb(0_0_0/0.85)] ring-1 ring-white/[0.04] sm:p-5"
+      className="glow-border @container relative rounded-[2rem] bg-linear-to-b from-white/[0.07] to-white/[0.02] p-2 shadow-[0_60px_120px_-50px_rgb(0_0_0/0.95),0_0_80px_-30px_var(--glow-crimson)] [--glow-gradient:linear-gradient(160deg,rgb(255_255_255/0.28),rgb(255_255_255/0.04)_40%,rgb(240_80_106/0.35))]"
     >
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="flex items-center gap-2.5 text-xs text-white/65">
-          <span className="relative flex h-2 w-2" aria-hidden>
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#5ee0a0] opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#5ee0a0]" />
-          </span>
-          <span className="font-semibold text-white/85">{t.title}</span>
-          <span dir="ltr" className="tnum">
-            n = {SAMPLE_SIZE}
-          </span>
-        </p>
-        <fieldset className="flex rounded-full border border-white/10 bg-white/[0.04] p-1">
-          <legend className="sr-only">{t.toggleLabel}</legend>
-          {(["pre", "post"] as const).map((p) => (
-            <label
-              key={p}
-              className={cn(
-                "cursor-pointer rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-crimson-400",
-                phase === p ? "bg-white text-navy-900" : "text-white/70 hover:text-white",
-              )}
+      <div className="relative overflow-hidden rounded-[1.6rem] bg-[#03070f] p-3.5 sm:p-4">
+        {/* screen reflection */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-linear-to-br from-white/[0.05] via-transparent to-transparent" />
+
+        <div className="relative flex flex-wrap items-center justify-between gap-3">
+          <p className="flex min-w-0 items-center gap-2.5 font-mono text-xs text-white/65">
+            <span className="relative flex h-2 w-2 shrink-0" aria-hidden>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-mint" />
+            </span>
+            <span className="truncate font-sans text-[0.8125rem] font-semibold text-white/85">{t.title}</span>
+            <span dir="ltr" className="tnum shrink-0">
+              n = {SAMPLE_SIZE}
+            </span>
+          </p>
+          <fieldset className="flex rounded-full border border-white/10 bg-white/[0.04] p-1">
+            <legend className="sr-only">{t.toggleLabel}</legend>
+            {(["pre", "post"] as const).map((p) => (
+              <label
+                key={p}
+                className={cn(
+                  "tap-target inline-flex h-9 cursor-pointer items-center rounded-full px-4 text-[0.8125rem] font-semibold transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-crimson-400",
+                  phase === p ? "bg-white text-navy-900 shadow-[0_4px_16px_-4px_rgb(255_255_255/0.4)]" : "text-white/70 hover:text-white",
+                )}
+              >
+                <input type="radio" name="monitor-phase" value={p} checked={phase === p} onChange={() => choose(p)} className="sr-only" />
+                {p === "pre" ? t.baseline : t.after}
+              </label>
+            ))}
+          </fieldset>
+        </div>
+
+        <div className="relative mt-4 grid grid-cols-1 items-center gap-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4 @xs:grid-cols-[minmax(0,9.5rem)_minmax(0,1fr)] @xs:gap-4">
+          <Reading label={t.hr} unit="bpm" value={hr.toFixed(2)} delta={d("hr", 2)} phase={phase} color="#5ee0a0" big />
+          <div dir="ltr" className="relative h-16 overflow-hidden @xs:h-20" aria-hidden>
+            <svg
+              viewBox={`0 0 ${beatsPerStrip * 200} 60`}
+              preserveAspectRatio="none"
+              className="ecg-strip absolute inset-y-0 left-0 h-full w-[200%]"
+              style={{ ["--ecg-duration" as string]: ecgDuration }}
             >
-              <input type="radio" name="monitor-phase" value={p} checked={phase === p} onChange={() => choose(p)} className="sr-only" />
-              {p === "pre" ? t.baseline : t.after}
-            </label>
-          ))}
-        </fieldset>
-      </div>
+              <path
+                d={strip}
+                fill="none"
+                stroke="#5ee0a0"
+                strokeWidth="1.8"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+                style={{ filter: "drop-shadow(0 0 4px rgb(94 224 160 / 0.6))" }}
+              />
+            </svg>
+            <div className="absolute inset-y-0 right-0 w-16 bg-linear-to-l from-[#050a14] to-transparent" />
+          </div>
+        </div>
 
-      <div className="mt-4 grid grid-cols-[minmax(0,9rem)_minmax(0,1fr)] items-center gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4 sm:grid-cols-[minmax(0,10.5rem)_minmax(0,1fr)]">
-        <Reading label={t.hr} unit="bpm" value={hr.toFixed(2)} delta={d("hr", 2)} phase={phase} color="#5ee0a0" big />
-        <div dir="ltr" className="relative h-20 overflow-hidden" aria-hidden>
-          <svg
-            viewBox={`0 0 ${beatsPerStrip * 200} 60`}
-            preserveAspectRatio="none"
-            className="ecg-strip absolute inset-y-0 left-0 h-full w-[200%]"
-            style={{ ["--ecg-duration" as string]: ecgDuration }}
-          >
-            <path d={strip} fill="none" stroke="#5ee0a0" strokeWidth="1.6" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-          </svg>
-          <div className="absolute inset-y-0 right-0 w-16 bg-linear-to-l from-[#070e1b] to-transparent" />
+        <div className="relative mt-3 grid grid-cols-2 gap-3 @md:grid-cols-[1.45fr_1fr_1fr]">
+          <div className="col-span-2 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3.5 @md:col-span-1">
+            <Reading
+              label={t.bp}
+              unit="mmHg"
+              value={`${sbp.toFixed(1)}/${dbp.toFixed(1)}`}
+              delta={`${d("sbp", 1)}/${d("dbp", 1)}`}
+              phase={phase}
+              color="#ff8398"
+            />
+          </div>
+          <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3.5">
+            <Reading label={t.rr} unit="/min" value={rr.toFixed(2)} delta={d("rr", 2)} phase={phase} color="#f2c14e" />
+          </div>
+          <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3.5">
+            <Reading label={t.temp} unit="°C" value={temp.toFixed(3)} delta={d("temp", 3)} phase={phase} color="#9dc3f0" />
+          </div>
         </div>
-      </div>
 
-      <div className="mt-3 grid grid-cols-[1.45fr_1fr_1fr] gap-3">
-        <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3.5">
-          <Reading
-            label={t.bp}
-            unit="mmHg"
-            value={`${sbp.toFixed(1)}/${dbp.toFixed(1)}`}
-            delta={`${d("sbp", 1)}/${d("dbp", 1)}`}
-            phase={phase}
-            color="#ff8398"
-          />
-        </div>
-        <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3.5">
-          <Reading label={t.rr} unit="/min" value={rr.toFixed(2)} delta={d("rr", 2)} phase={phase} color="#f2c14e" />
-        </div>
-        <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-3.5">
-          <Reading label={t.temp} unit="°C" value={temp.toFixed(3)} delta={d("temp", 3)} phase={phase} color="#9dc3f0" />
-        </div>
+        <figcaption className="relative mt-4 flex flex-col gap-1.5 text-xs leading-relaxed text-white/55 @md:flex-row @md:items-start @md:justify-between @md:gap-6">
+          <span>{t.note}</span>
+          <span dir="auto" className="shrink-0 font-semibold text-gold-300">
+            {t.significance}
+          </span>
+        </figcaption>
       </div>
-
-      <figcaption className="mt-4 flex flex-col gap-1 text-xs leading-relaxed text-white/55 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
-        <span>{t.note}</span>
-        <span dir="auto" className="shrink-0 font-semibold text-gold-300">
-          {t.significance}
-        </span>
-      </figcaption>
     </figure>
   );
 }

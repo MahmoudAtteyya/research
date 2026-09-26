@@ -14,6 +14,7 @@ import { QuizSection } from "./sections/QuizSection";
 import { Team } from "./sections/Team";
 import { PosterAndCite } from "./sections/PosterAndCite";
 import { ConsoleSignature } from "./interactive/ConsoleSignature";
+import { BackToTop } from "./interactive/BackToTop";
 
 export function HomePage({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
@@ -38,6 +39,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         <PosterAndCite t={t} />
       </main>
       <SiteFooter t={t} locale={locale} />
+      <BackToTop label={t.a11y.backToTop} />
       <ConsoleSignature />
     </>
   );

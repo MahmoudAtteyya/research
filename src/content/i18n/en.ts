@@ -15,6 +15,8 @@ export const en = {
     theme: "Toggle colour theme",
     language: "Switch language",
     progress: "Reading progress",
+    backToTop: "Back to top",
+    scroll: "Scroll to explore",
   },
   brand: {
     study: "Energy Drinks Study",

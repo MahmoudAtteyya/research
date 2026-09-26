@@ -6,8 +6,8 @@ import { SiteProviders } from "@/components/site/layout/SiteProviders";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0b1b33",
-  colorScheme: "light dark",
+  themeColor: "#060b16",
+  colorScheme: "dark light",
 };
 
 export default function EnglishLayout({ children }: { children: React.ReactNode }) {

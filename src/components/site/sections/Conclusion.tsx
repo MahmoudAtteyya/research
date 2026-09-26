@@ -10,7 +10,7 @@ export function Conclusion({ t }: { t: Dictionary }) {
         <div className="absolute -top-40 start-1/3 h-[30rem] w-[30rem] rounded-full bg-crimson-600/15 blur-[120px]" />
       </div>
       <div className="container-page">
-        <SectionHeader id="conclusion" index={6} kicker={t.sections.conclusion.kicker} title={t.sections.conclusion.title} tone="dark" />
+        <SectionHeader id="conclusion" index={6} kicker={t.sections.conclusion.kicker} title={t.sections.conclusion.title} tone="onDark" />
         <p className="reveal max-w-4xl font-display text-[1.75rem] leading-snug font-medium text-white sm:text-[2.35rem]">
           {c.statementBefore}{" "}
           <mark className="rounded-lg bg-crimson-600 px-2 py-0.5 text-white [box-decoration-break:clone]">{c.highlight}</mark>{" "}

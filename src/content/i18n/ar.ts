@@ -17,6 +17,8 @@ export const ar: Dictionary = {
     theme: "تبديل المظهر",
     language: "تغيير اللغة",
     progress: "تقدّم القراءة",
+    backToTop: "العودة إلى الأعلى",
+    scroll: "مرّر للاستكشاف",
   },
   brand: {
     study: "بحث مشروبات الطاقة",

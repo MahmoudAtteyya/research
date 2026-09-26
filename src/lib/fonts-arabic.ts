@@ -1,17 +1,17 @@
-import { IBM_Plex_Sans_Arabic, Noto_Naskh_Arabic } from "next/font/google";
+import { Alexandria, IBM_Plex_Sans_Arabic } from "next/font/google";
 
 export const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-plex-ar",
   display: "swap",
 });
 
-export const naskhArabic = Noto_Naskh_Arabic({
+/** Modern Arabic display face for headings. */
+export const alexandria = Alexandria({
   subsets: ["arabic"],
-  weight: ["500", "600", "700"],
-  variable: "--font-naskh",
+  variable: "--font-alexandria",
   display: "swap",
 });
 
-export const arabicFontVariables = `${plexArabic.variable} ${naskhArabic.variable}`;
+export const arabicFontVariables = `${plexArabic.variable} ${alexandria.variable}`;
