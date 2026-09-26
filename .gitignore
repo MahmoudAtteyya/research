@@ -24,3 +24,6 @@ Thumbs.db
 # Misc
 *.tsbuildinfo
 AGENTS.md
+
+# Next.js generated types
+next-env.d.ts
