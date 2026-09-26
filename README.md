@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Acute Effects of Energy Drinks on Vital Signs & Cognitive Performance
 
-## Getting Started
+An interactive, bilingual (English / العربية) presentation of a research project by **fifth-year medical students of the Faculty of Medicine, Suez University** (Class of 2021–2026), presented at the **4th Annual Student Symposium for Research Projects** on 9 June 2026.
 
-First, run the development server:
+> A pre–post experimental study of 47 adults at Suez University and Suez University Hospital: vital signs and cognitive performance measured before and 30 minutes after one energy drink.
+
+**Live:** [fomsu.com](https://fomsu.com) · Arabic: [fomsu.com/ar](https://fomsu.com/ar) · Slides: [fomsu.com/presentation](https://fomsu.com/presentation)
+
+Website designed & developed by **Mahmoud Attia**, Medical Student, Faculty of Medicine, Suez University.
+
+---
+
+## What's inside
+
+| Route | What it is |
+| --- | --- |
+| `/` and `/ar` | The study site: abstract, methods, results with interactive figures, discussion, conclusion, quiz, research team, poster and citation. |
+| `/presentation` | The symposium slide deck (keyboard, fullscreen, speaker notes, phone remote). |
+| `/admin` | Phone remote control for the slide deck. |
+
+Highlights of the site:
+
+- **Every number comes from the official poster** and lives in one file (`src/content/study.ts`). Charts, tables, the quiz and the text all read from it.
+- **Figures built for reading:** before/after dumbbell charts with ±1 SD bands on each measure's own axis, ordinal and emphasis bar charts, a unit chart of all 47 participants, and a "view as table" option for every figure. Chart colours were checked for colour-blind separation and contrast in both themes.
+- **Patient-monitor hero** that animates the group means from baseline to +30 minutes.
+- **Suez identity throughout:** University and Faculty crests, symposium branding and a palette taken from the poster (navy, crimson, Suez gold).
+- **Bilingual with full right-to-left support:** separate static pages for English and Arabic, each with the correct `lang`/`dir`, so there is no flash of the wrong language.
+- **Accessible:** zero axe violations (WCAG 2.2 AA), keyboard support, skip link, reduced-motion support, pinch-zoom allowed.
+- **Fast:** server-rendered, with small client islands only. The site uses no chart library or animation framework, and fonts are self-hosted with `next/font`.
+- **Shareable:** Open Graph images in both languages, JSON-LD (ScholarlyArticle), sitemap, robots and hreflang.
+
+## Tech stack
+
+Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind CSS v4 · next-themes · lucide-react. The slide deck additionally uses framer-motion and Recharts.
+
+## Getting started
+
+Requires Node.js 20.9 or later.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm ci
+npm run dev        # http://localhost:3000
+npm run typecheck  # TypeScript
+npm run build      # production build (needs network access to Google Fonts for next/font)
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  app/
+    (en)/            English root layout + page            → /
+    (ar)/ar/         Arabic root layout + page             → /ar
+    (deck)/          Slide deck + remote admin (own layout) → /presentation, /admin
+    api/remote/      Server-Sent Events remote-control API
+    global-not-found.tsx, robots.ts, sitemap.ts, icon.svg, apple-icon.png, favicon.ico
+  content/           ← edit content here
+    study.ts         all study results (poster-verified)
+    people.ts        authors (poster order) and supervisors
+    literature.ts    further reading
+    site.ts          site URL, section order, asset paths
+    i18n/en.ts, ar.ts  every string on the site (Arabic is type-checked against English)
+  components/site/   the study site: sections, charts, layout, interactive islands, UI primitives
+  components/presentation/  the slide deck
+  styles/site.css    design tokens (light/dark) and utilities
+scripts/
+  build-assets.mjs   crests, portraits, poster previews and icons (sharp)
+  render-og.mjs      Open Graph images for / and /ar (headless Chromium)
+public/
+  brand/ people/ poster/ downloads/   generated and downloadable assets
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Editing content
 
-## Learn More
+- **Text:** `src/content/i18n/en.ts` and `ar.ts`. A key missing in Arabic fails `npm run typecheck`.
+- **Numbers:** `src/content/study.ts`. Change is computed from the reported means. p-values are shown exactly as printed on the poster.
+- **People:** `src/content/people.ts`.
+- After changing crests, photos or the poster, run `node scripts/build-assets.mjs`. After changing the title or branding, run `node scripts/render-og.mjs`.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The app builds as a standalone Node server (`output: "standalone"`) and ships with a multi-stage `Dockerfile`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+docker build -t energy-drinks-study .
+docker run -p 3000:3000 -e NEXT_PUBLIC_SITE_URL=https://fomsu.com energy-drinks-study
+```
 
-## Deploy on Vercel
+`NEXT_PUBLIC_SITE_URL` (default `https://fomsu.com`) sets canonical URLs, the sitemap and social images. The slide remote keeps its state in memory, so run a single instance.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Credits
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Research team:** Rehab Shaban (team lead), Mahmoud Attia, Nagwa Adel, Abd ElRahman Mahmoud, Abd ElRahman Mostafa, Ahmed Shaban, Deng Ajou Luol, Fatma Ali, Fatma Saad, Kyrollos Ashraf, Laila Roshdy, Mahmoud Eldoreay, Mahmoud ElSayed, Mohamed Abd Elhady, Mohamed Elshahat, Salah Mohamed.
+- **Supervisors:** Prof. Dr. Maysa Ibrahim, Dr. Mohamed Wagih Saleh, Dr. Nanees Kamel Hussein, Dr. Yosra Saeed Abdalla.
+- **Website design & development:** Mahmoud Attia.
+
+© 2026 Research team, Faculty of Medicine, Suez University. For education and research communication; not medical advice.

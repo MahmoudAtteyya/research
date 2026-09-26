@@ -62,7 +62,7 @@ export function PosterViewer({ t }: { t: Dictionary["poster"] }) {
             </button>
           </div>
         </div>
-        <div className="flex-1 overflow-auto bg-[#e9edf3]">
+        <div tabIndex={0} role="region" aria-label={t.posterAlt} className="flex-1 overflow-auto bg-[#e9edf3] focus-visible:outline-offset-[-3px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={SITE.poster.full} alt={t.posterAlt} loading="lazy" className="mx-auto block h-auto w-full max-w-[1600px]" />
         </div>
