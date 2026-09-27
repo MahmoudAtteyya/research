@@ -7,7 +7,7 @@ export function Conclusion({ t }: { t: Dictionary }) {
     <section
       id="conclusion"
       aria-labelledby="conclusion-title"
-      className="relative isolate overflow-hidden bg-navy-975 py-24 text-white sm:py-32 lg:py-40"
+      className="dark-band relative isolate overflow-hidden bg-navy-975 py-24 text-white sm:py-32 lg:py-40"
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="aurora-a absolute -top-1/3 start-1/4 h-[60vmax] w-[60vmax] rounded-full bg-[radial-gradient(closest-side,rgb(200_16_46/0.28),transparent)]" />

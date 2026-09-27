@@ -39,7 +39,7 @@ export function PosterViewer({ t }: { t: Dictionary["poster"] }) {
         onClick={(e) => {
           if (e.target === dialog.current) dialog.current?.close();
         }}
-        className="m-auto h-[92dvh] max-h-none w-[min(64rem,94vw)] max-w-none overflow-hidden rounded-2xl bg-navy-950 p-0 text-white open:flex open:flex-col"
+        className="m-auto h-[92dvh] max-h-none w-[min(64rem,94vw)] max-w-none overflow-hidden rounded-2xl bg-navy-950 p-0 text-white dark-band open:flex open:flex-col"
       >
         <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3">
           <p className="truncate text-sm font-semibold">{t.posterTitle}</p>

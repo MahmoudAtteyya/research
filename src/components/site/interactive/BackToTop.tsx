@@ -44,12 +44,12 @@ export function BackToTop({ label }: { label: string }) {
       title={label}
       inert={!visible}
       className={cn(
-        "no-print fixed end-4 bottom-4 z-40 grid h-12 w-12 place-items-center rounded-full border border-white/10 bg-navy-950/80 text-white shadow-[0_18px_40px_-16px_rgb(0_0_0/0.9)] backdrop-blur-xl transition-[opacity,transform] duration-500 hover:bg-navy-900 sm:end-6 sm:bottom-6 sm:h-14 sm:w-14",
+        "no-print fixed end-4 bottom-4 z-40 grid h-12 w-12 place-items-center rounded-full border border-white/10 bg-navy-950/80 text-white shadow-[0_18px_40px_-16px_rgb(0_0_0/0.9)] backdrop-blur-xl transition-[opacity,transform] duration-500 hover:bg-navy-900 sm:end-6 sm:bottom-6 sm:h-14 sm:w-14 light:border-line light:bg-white/90 light:text-ink light:shadow-[0_14px_32px_-14px_rgb(11_27_51/0.4)] light:hover:bg-white",
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0",
       )}
     >
       <svg viewBox="0 0 48 48" aria-hidden className="absolute inset-0 h-full w-full -rotate-90 rtl:scale-x-[-1]">
-        <circle cx="24" cy="24" r="22" fill="none" stroke="rgb(255 255 255 / 0.1)" strokeWidth="2" />
+        <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-10" />
         <circle
           ref={ring}
           cx="24"

@@ -24,7 +24,7 @@ const NAV_FOR: Partial<Record<SectionId, SectionId>> = {
 };
 
 const iconButton =
-  "tap-target inline-grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/10 text-white/85 transition-colors hover:border-white/25 hover:bg-white/10 hover:text-white";
+  "tap-target inline-grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/10 text-white/85 transition-colors hover:border-white/25 hover:bg-white/10 hover:text-white light:border-line-strong light:text-ink light:hover:border-ink/30 light:hover:bg-surface-2 light:hover:text-ink";
 
 export function SiteHeader({ locale, brand, nav, a11y, lang }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
@@ -76,23 +76,23 @@ export function SiteHeader({ locale, brand, nav, a11y, lang }: HeaderProps) {
           className={cn(
             "pointer-events-auto flex h-14 items-center justify-between gap-2 rounded-full border ps-2 pe-2 transition-[background-color,border-color,box-shadow] duration-500 sm:h-[3.75rem] sm:gap-4 sm:ps-2.5",
             scrolled
-              ? "border-white/10 bg-navy-975/75 shadow-[0_24px_60px_-24px_rgb(0_0_0/0.9)] backdrop-blur-xl backdrop-saturate-150"
-              : "border-white/[0.07] bg-white/[0.03] backdrop-blur-md",
+              ? "border-white/10 bg-navy-975/75 shadow-[0_24px_60px_-24px_rgb(0_0_0/0.9)] backdrop-blur-xl backdrop-saturate-150 light:border-line light:bg-white/90 light:shadow-[0_16px_40px_-24px_rgb(11_27_51/0.35)]"
+              : "border-white/[0.07] bg-white/[0.03] backdrop-blur-md light:border-line light:bg-white/60",
           )}
         >
-          <Link href={localePath(locale)} className="flex min-w-0 items-center gap-2.5 rounded-full py-1 pe-2 text-white">
+          <Link href={localePath(locale)} className="flex min-w-0 items-center gap-2.5 rounded-full py-1 pe-2 text-white light:text-ink">
             <span className="flex shrink-0 -space-x-2 rtl:space-x-reverse">
               <CrestPlate src={SITE.brand.university} alt={brand.universityAlt} size={36} preload />
               <CrestPlate src={SITE.brand.faculty} alt={brand.facultyAlt} size={36} preload />
             </span>
             <span className="hidden min-w-0 leading-tight sm:block">
               <span className="block truncate text-[0.9375rem] font-semibold tracking-tight">{brand.study}</span>
-              <span className="block truncate text-xs text-mist/70 lg:hidden xl:block">{brand.facultyUniversity}</span>
+              <span className="block truncate text-xs text-mist/70 lg:hidden xl:block light:text-muted">{brand.facultyUniversity}</span>
             </span>
           </Link>
 
           <nav aria-label={a11y.primaryNav} className="hidden lg:block">
-            <ul className="flex items-center gap-0.5 rounded-full border border-white/[0.06] bg-white/[0.03] p-1">
+            <ul className="flex items-center gap-0.5 rounded-full border border-white/[0.06] bg-white/[0.03] p-1 light:border-line light:bg-surface-2/70">
               {NAV_IDS.map((id) => (
                 <li key={id}>
                   <a
@@ -100,7 +100,9 @@ export function SiteHeader({ locale, brand, nav, a11y, lang }: HeaderProps) {
                     aria-current={active === id ? "true" : undefined}
                     className={cn(
                       "block rounded-full px-3 py-1.5 text-[0.8125rem] font-medium transition-colors duration-300 xl:px-3.5",
-                      active === id ? "bg-white/[0.12] text-white" : "text-mist/70 hover:text-white",
+                      active === id
+                        ? "bg-white/[0.12] text-white light:bg-ink light:text-white"
+                        : "text-mist/70 hover:text-white light:text-ink-2 light:hover:text-ink",
                     )}
                   >
                     {nav[id]}
@@ -117,7 +119,7 @@ export function SiteHeader({ locale, brand, nav, a11y, lang }: HeaderProps) {
               lang={lang.hrefLang}
               onClick={switchLanguage}
               aria-label={a11y.language}
-              className="tap-target inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-white/10 px-3 text-sm font-semibold text-white/90 transition-colors hover:border-white/25 hover:bg-white/10"
+              className="tap-target inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-white/10 px-3 text-sm font-semibold text-white/90 transition-colors hover:border-white/25 hover:bg-white/10 light:border-line-strong light:text-ink light:hover:border-ink/30 light:hover:bg-surface-2"
             >
               <span className="hidden sm:inline">{lang.switchLabel}</span>
               <span className="sm:hidden">{lang.short}</span>
@@ -125,7 +127,7 @@ export function SiteHeader({ locale, brand, nav, a11y, lang }: HeaderProps) {
             <ThemeToggle label={a11y.theme} className={iconButton} />
             <a
               href="/presentation"
-              className="hidden h-10 items-center gap-2 rounded-full bg-white px-4 text-sm font-semibold text-navy-900 transition-colors hover:bg-mist xl:inline-flex"
+              className="hidden h-10 items-center gap-2 rounded-full bg-white px-4 text-sm font-semibold text-navy-900 transition-colors hover:bg-mist xl:inline-flex light:bg-ink light:text-white light:hover:bg-navy-800"
             >
               <MonitorPlay className="h-4 w-4" aria-hidden />
               {nav.presentation}
@@ -140,11 +142,11 @@ export function SiteHeader({ locale, brand, nav, a11y, lang }: HeaderProps) {
       <dialog
         ref={dialogRef}
         aria-label={a11y.primaryNav}
-        className="pointer-events-auto m-0 h-dvh max-h-none w-full max-w-none bg-navy-975/[0.97] p-0 text-white backdrop-blur-2xl open:flex open:flex-col"
+        className="pointer-events-auto m-0 h-dvh max-h-none w-full max-w-none bg-navy-975/[0.97] p-0 text-white backdrop-blur-2xl open:flex open:flex-col light:bg-paper/[0.98] light:text-ink"
       >
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -top-32 -end-32 h-80 w-80 rounded-full bg-crimson-600/25 blur-[100px]" />
-          <div className="absolute -bottom-32 -start-32 h-80 w-80 rounded-full bg-blue-400/20 blur-[100px]" />
+          <div className="absolute -top-32 -end-32 h-80 w-80 rounded-full bg-crimson-600/25 blur-[100px] light:bg-crimson-600/10" />
+          <div className="absolute -bottom-32 -start-32 h-80 w-80 rounded-full bg-blue-400/20 blur-[100px] light:bg-blue-400/15" />
         </div>
         <div className="container-page relative flex h-[4.5rem] shrink-0 items-center justify-between">
           <span className="flex items-center gap-2.5">
@@ -165,17 +167,17 @@ export function SiteHeader({ locale, brand, nav, a11y, lang }: HeaderProps) {
                 <a
                   href={`#${id}`}
                   onClick={closeMenu}
-                  className="group flex items-baseline gap-4 rounded-2xl px-2 py-2.5 transition-colors hover:bg-white/[0.06]"
+                  className="group flex items-baseline gap-4 rounded-2xl px-2 py-2.5 transition-colors hover:bg-white/[0.06] light:hover:bg-ink/[0.04]"
                 >
-                  <span className="tnum w-6 font-mono text-xs text-white/40">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="text-2xl font-semibold tracking-tight text-white/90 group-hover:text-white sm:text-3xl">{nav[id]}</span>
+                  <span className="tnum w-6 font-mono text-xs text-white/40 light:text-muted">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-2xl font-semibold tracking-tight text-white/90 group-hover:text-white sm:text-3xl light:text-ink light:group-hover:text-accent-ink">{nav[id]}</span>
                 </a>
               </li>
             ))}
           </ol>
         </nav>
-        <div className="container-page relative grid shrink-0 gap-3 border-t border-white/10 py-5 sm:grid-cols-2">
-          <a href="/presentation" className="flex h-12 items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-navy-900">
+        <div className="container-page relative grid shrink-0 gap-3 border-t border-white/10 py-5 sm:grid-cols-2 light:border-line">
+          <a href="/presentation" className="flex h-12 items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-navy-900 light:bg-ink light:text-white">
             <MonitorPlay className="h-4 w-4" aria-hidden />
             {nav.presentation}
           </a>
@@ -183,7 +185,7 @@ export function SiteHeader({ locale, brand, nav, a11y, lang }: HeaderProps) {
             href={localePath(other)}
             hrefLang={lang.hrefLang}
             onClick={switchLanguage}
-            className="flex h-12 items-center justify-center gap-2 rounded-full border border-white/15 text-sm font-semibold"
+            className="flex h-12 items-center justify-center gap-2 rounded-full border border-white/15 text-sm font-semibold light:border-line-strong"
           >
             <span lang={lang.hrefLang}>{lang.switchLabel}</span>
             <ArrowUpRight className="h-4 w-4 rtl:-scale-x-100" aria-hidden />

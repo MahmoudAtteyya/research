@@ -101,8 +101,10 @@
 }
 
 /* ── Dark (default) ─────────────────────────────────────────────────── */
+/* `.dark-band` keeps a section dark in both themes (conclusion, footer). */
 :root,
-.dark {
+.dark,
+.dark-band {
   --paper: #060b16;
   --paper-2: #081022;
   --surface: #0c1426;
@@ -136,20 +138,24 @@
   --heading-from: #ffffff;
   --heading-to: #b9c4d6;
   --noise-opacity: 0.035;
+  --ecg-major: rgb(255 255 255 / 0.05);
+  --ecg-minor: rgb(255 255 255 / 0.02);
   color-scheme: dark;
 }
 
 /* ── Light (optional) ───────────────────────────────────────────────── */
+/* Clean, cool clinical whites with navy ink; glows are kept faint so they
+ * tint rather than smudge, and the grain is switched off. */
 .light {
-  --paper: #f7f6f2;
-  --paper-2: #efece4;
+  --paper: #f8f9fb;
+  --paper-2: #f0f3f7;
   --surface: #ffffff;
-  --surface-2: #f4f1ea;
+  --surface-2: #f2f5f9;
   --ink: #0b1b33;
-  --ink-2: #33445e;
-  --muted: #5b677a;
-  --line: rgb(11 27 51 / 0.1);
-  --line-strong: rgb(11 27 51 / 0.2);
+  --ink-2: #334560;
+  --muted: #566378;
+  --line: rgb(11 27 51 / 0.09);
+  --line-strong: rgb(11 27 51 / 0.17);
   --accent: #c8102e;
   --accent-ink: #a50e26;
   --gold: #c9a227;
@@ -166,14 +172,16 @@
   --ord-5: #16305c;
   --glass: #ffffff;
   --glass-strong: #ffffff;
-  --glass-border: rgb(11 27 51 / 0.1);
-  --glass-shadow: 0 1px 2px rgb(11 27 51 / 0.04), 0 18px 40px -24px rgb(11 27 51 / 0.2);
-  --glow-crimson: rgb(200 16 46 / 0.14);
-  --glow-blue: rgb(61 106 168 / 0.14);
-  --glow-gold: rgb(201 162 39 / 0.18);
+  --glass-border: rgb(11 27 51 / 0.08);
+  --glass-shadow: 0 1px 2px rgb(11 27 51 / 0.04), 0 4px 12px -6px rgb(11 27 51 / 0.06), 0 24px 48px -32px rgb(11 27 51 / 0.24);
+  --glow-crimson: rgb(200 16 46 / 0.07);
+  --glow-blue: rgb(61 106 168 / 0.08);
+  --glow-gold: rgb(201 162 39 / 0.1);
   --heading-from: #0b1b33;
-  --heading-to: #2c4166;
-  --noise-opacity: 0.02;
+  --heading-to: #24406e;
+  --noise-opacity: 0;
+  --ecg-major: rgb(11 27 51 / 0.055);
+  --ecg-minor: rgb(11 27 51 / 0.025);
   color-scheme: light;
 }
 
@@ -404,10 +412,10 @@
 /* ECG paper: 1 mm minor and 5 mm major squares, as on clinical ECG paper. */
 @utility bg-ecg {
   background-image:
-    linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(rgb(255 255 255 / 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 0.02) 1px, transparent 1px);
+    linear-gradient(var(--ecg-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ecg-major) 1px, transparent 1px),
+    linear-gradient(var(--ecg-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ecg-minor) 1px, transparent 1px);
   background-size:
     80px 80px,
     80px 80px,
