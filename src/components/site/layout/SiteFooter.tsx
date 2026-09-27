@@ -12,7 +12,7 @@ export function SiteFooter({ t, locale }: { t: Dictionary; locale: Locale }) {
   const f = t.footer;
   const other: Locale = locale === "ar" ? "en" : "ar";
   return (
-    <footer className="relative isolate overflow-hidden bg-navy-975 text-white">
+    <footer className="dark-band relative isolate overflow-hidden bg-navy-975 text-white">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="hairline-x absolute inset-x-0 top-0" />
         <div className="absolute inset-0 bg-ecg opacity-50 [mask-image:linear-gradient(to_bottom,#000,transparent_70%)]" />

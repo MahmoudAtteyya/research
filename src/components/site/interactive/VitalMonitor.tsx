@@ -136,7 +136,7 @@ export function VitalMonitor({ t }: { t: Dictionary["monitor"] }) {
   return (
     <figure
       ref={root}
-      className="glow-border @container relative rounded-[2rem] bg-linear-to-b from-white/[0.07] to-white/[0.02] p-2 shadow-[0_60px_120px_-50px_rgb(0_0_0/0.95),0_0_80px_-30px_var(--glow-crimson)] [--glow-gradient:linear-gradient(160deg,rgb(255_255_255/0.28),rgb(255_255_255/0.04)_40%,rgb(240_80_106/0.35))]"
+      className="glow-border @container relative rounded-[2rem] bg-linear-to-b from-white/[0.07] to-white/[0.02] p-2 shadow-[0_60px_120px_-50px_rgb(0_0_0/0.95),0_0_80px_-30px_var(--glow-crimson)] light:from-[#1c2638] light:to-[#0a101b] light:shadow-[0_50px_100px_-45px_rgb(11_27_51/0.6),0_0_0_1px_rgb(11_27_51/0.1)] [--glow-gradient:linear-gradient(160deg,rgb(255_255_255/0.28),rgb(255_255_255/0.04)_40%,rgb(240_80_106/0.35))]"
     >
       <div className="relative overflow-hidden rounded-[1.6rem] bg-[#03070f] p-3.5 sm:p-4">
         {/* screen reflection */}
